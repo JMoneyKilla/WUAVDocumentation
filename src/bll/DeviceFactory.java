@@ -5,8 +5,7 @@ import be.devices.IDevice;
 public abstract class DeviceFactory{
 
     public IDevice makeDevice(){
-        IDevice device = createDevice();
-        return device;
+        return createDevice();
     }
 
     public abstract IDevice createDevice();
