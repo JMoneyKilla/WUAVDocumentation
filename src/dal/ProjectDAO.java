@@ -32,4 +32,61 @@ public class ProjectDAO {
         }
         return allProjects;
     }
+
+    public void createProject(Project project) throws SQLException{
+        String name = project.getName();
+        String dateLastVisited = project.dateLastVisited();
+        String customerName = project.getCustomerName();
+        String companyName = project.getCompanyName();
+        int companyType = project.getCompanyType();
+
+        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_name, company_type,)" +
+                " VALUES (?,?,?,?,?)";
+
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, dateLastVisited);
+            ps.setString(3, customerName);
+            ps.setString(4, companyName);
+            ps.setInt(5, companyType);
+            ps.execute();
+        }
+    }
+
+    public boolean deleteProject(Project project) throws SQLException{
+        try (Connection con = dbc.getConnection()) {
+            int id = project.getId();
+            String sql = "DELETE FROM Project WHERE (id=?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int result = ps.executeUpdate();
+            if (result > 0)
+                return true;
+        }
+        return false;
+    }
+
+    public void updateProject(Project project) throws SQLException{
+        int id = project.getId();
+        String name = project.getName();
+        String dateLastVisited = project.dateLastVisited();
+        String customerName = project.getCustomerName();
+        String companyName = project.getCompanyName();
+        int companyType = project.getCompanyType();
+
+        String sql = "Update Project SET project_name = ?, date_last_visited = ?, customer_name = ?,\n" +
+                "company_name = ?, company_type = ? WHERE id = ?";
+
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, dateLastVisited);
+            ps.setString(3, customerName);
+            ps.setString(4, companyName);
+            ps.setInt(5, companyType);
+            ps.setInt(6, id);
+            ps.execute();
+        }
+    }
 }
