@@ -1,8 +1,10 @@
 package dal;
 
-import java.sql.Connection;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+
+import java.sql.Connection;
+
 
 public class DataBaseConnection {
     private static DataBaseConnection instance;
