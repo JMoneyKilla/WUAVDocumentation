@@ -1,3 +1,12 @@
+.background-color {
+    -fx-color: #C6C7C4;
+}
+
 .hbox {
     -fx-background-color: #846A6A;
+}
+.mfx-text-field {
+    -fx-border-radius: 15 15 15 15;
+    -fx-background-radius: 15 15 15 15;
+    -fx-alignment: CENTER;
 }

@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.ProjectsViewController">
    <children>
-      <ScrollPane fitToWidth="true" layoutX="324.0" layoutY="99.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="paneScroll" fitToWidth="true" layoutX="324.0" layoutY="99.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <VBox alignment="CENTER" prefHeight="475.0" prefWidth="875.0">
                <children>
