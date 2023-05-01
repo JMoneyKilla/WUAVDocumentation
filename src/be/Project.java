@@ -11,15 +11,15 @@ public class Project {
     private StringProperty name = new SimpleStringProperty();
     private StringProperty dateLastVisited = new SimpleStringProperty();
     private StringProperty customerName = new SimpleStringProperty();
-    private StringProperty companyName = new SimpleStringProperty();
+    private StringProperty companyAddress = new SimpleStringProperty();
     private IntegerProperty companyType = new SimpleIntegerProperty();
 
-    public Project(int id, String name, String dateLastChecked, String customerName, String companyName, int companyType){
+    public Project(int id, String name, String dateLastChecked, String customerName, String companyAddress, int companyType){
         setId(id);
         setName(name);
         setDateLastVisited(dateLastChecked);
         setCustomerName(customerName);
-        setCompanyName(companyName);
+        setCompanyAddress(companyAddress);
         setCompanyType(companyType);
     }
 
@@ -69,17 +69,17 @@ public class Project {
         this.customerName.set(customerName);
     }
 
-    public String getCompanyName() {
-        return companyName.get();
+    public String getCompanyAddress() {
+        return companyAddress.get();
     }
 
 
-    public StringProperty companyNameProperty() {
-        return companyName;
+    public StringProperty companyAddressProperty() {
+        return companyAddress;
     }
 
-    public void setCompanyName(String companyName){
-        this.companyName.set(companyName);
+    public void setCompanyAddress(String companyName){
+        this.companyAddress.set(companyName);
     }
 
     public int getCompanyType(){
