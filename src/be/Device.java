@@ -1,21 +1,18 @@
-package be.devices;
+package be;
 
-public class Projector implements IDevice{
+public class Device {
+    private int deviceId;
     private int projectId;
     private int userId;
-    private int deviceId;
-    private int deviceType;
-    private String modelNumber;
     private String deviceName;
+    private String description;
 
-    Projector(int projectId, int userId, int deviceId, int deviceType,
-              String modelNumber, String deviceName) {
+    public Device(int deviceId, int projectId, int userId, String deviceName, String description){
+        this.deviceId = deviceId;
         this.projectId = projectId;
         this.userId = userId;
-        this.deviceId = deviceId;
-        this.deviceType = deviceType;
-        this.modelNumber = modelNumber;
         this.deviceName = deviceName;
+        this.description = description;
     }
 
     public int getProjectId() {
@@ -42,27 +39,19 @@ public class Projector implements IDevice{
         this.deviceId = deviceId;
     }
 
-    public int getDeviceType() {
-        return deviceType;
-    }
-
-    public void setDeviceType(int deviceType) {
-        this.deviceType = deviceType;
-    }
-
-    public String getModelNumber() {
-        return modelNumber;
-    }
-
-    public void setModelNumber(String modelNumber) {
-        this.modelNumber = modelNumber;
-    }
-
     public String getDeviceName() {
         return deviceName;
     }
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

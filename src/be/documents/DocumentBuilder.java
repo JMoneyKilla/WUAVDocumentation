@@ -3,6 +3,7 @@ package be.documents;
 public class DocumentBuilder {
     private int projectId;
     private int userId;
+    private int documentId;
     private int documentType;
     private int refNumber;
     private String description;
@@ -16,6 +17,10 @@ public class DocumentBuilder {
     }
     public DocumentBuilder userId(int userId){
         this.userId = userId;
+        return this;
+    }
+    public DocumentBuilder documentId(int documentId){
+        this.documentId = documentId;
         return this;
     }
     public DocumentBuilder documentType(int documentType){
@@ -43,15 +48,28 @@ public class DocumentBuilder {
         return this;
     }
 
+    public IDocument build(int documentType){
+        IDocument document = null;
+        switch (documentType){
+            case 1: document = buildDiagramDoc();
+                    break;
+            case 2: document = buildPictureDoc();
+                    break;
+            case 3: document = buildTextDoc();
+                    break;
+        }
+        return document;
+    }
+
     public IDocument buildDiagramDoc(){
-        return new DiagramDoc(projectId, userId, documentType, refNumber, description, absolutePath,
+        return new DiagramDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
                 documentName, dateAdded);
     }
     public IDocument buildPictureDoc(){
-        return new PictureDoc(projectId, userId, documentType, refNumber, description, absolutePath,
+        return new PictureDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
                 documentName, dateAdded);
     }
     public IDocument buildTextDoc(){
-        return new TextDoc(projectId, userId, documentType, description, documentName, dateAdded);
+        return new TextDoc(projectId, userId, documentId, documentType, description, documentName, dateAdded);
     }
 }

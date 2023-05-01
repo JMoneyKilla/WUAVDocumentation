@@ -3,14 +3,16 @@ package be.documents;
 public class TextDoc implements IDocument{
     private int projectId;
     private int userId;
+    private int documentId;
     private int documentType;
     private String description;
     private String documentName;
     private String dateAdded;
-    TextDoc(int projectId, int userId, int documentType,
-                      String description, String documentName, String dateAdded){
+    TextDoc(int projectId, int userId, int documentType, int documentId,
+            String description, String documentName, String dateAdded){
         this.projectId = projectId;
         this.userId = userId;
+        this.documentId = documentId;
         this.documentType = documentType;
         this.description = description;
         this.documentName = documentName;
@@ -29,6 +31,11 @@ public class TextDoc implements IDocument{
         return userId;
     }
 
+    @Override
+    public int getDocumentId() {
+        return documentId;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -37,12 +44,22 @@ public class TextDoc implements IDocument{
         return documentType;
     }
 
+    @Override
+    public int getRefNumber() {
+        return -4;
+    }
+
     public void setDocumentType(int documentType) {
         this.documentType = documentType;
     }
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getAbsolutePath() {
+        return null;
     }
 
     public void setDescription(String description) {
