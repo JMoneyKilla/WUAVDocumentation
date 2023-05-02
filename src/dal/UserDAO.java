@@ -127,4 +127,15 @@ public class UserDAO {
             ps.execute();
         }
     }
+
+    public void addUserToProject(User user, int projectId) throws SQLException {
+        int userId = user.getId();
+        String sql = "INSERT INTO UserProject(project_id, user_id) VALUES (?,?)";
+        try(Connection con = dbc.getConnection()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            ps.execute();
+        }
+    }
 }

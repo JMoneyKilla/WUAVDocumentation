@@ -6,13 +6,15 @@ public class Device {
     private int userId;
     private String deviceName;
     private String description;
+    private String dateAdded;
 
-    public Device(int deviceId, int projectId, int userId, String deviceName, String description){
+    public Device(int deviceId, int projectId, int userId, String deviceName, String description, String dateAdded){
         this.deviceId = deviceId;
         this.projectId = projectId;
         this.userId = userId;
         this.deviceName = deviceName;
         this.description = description;
+        this.dateAdded = dateAdded;
     }
 
     public int getProjectId() {
@@ -53,5 +55,13 @@ public class Device {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
     }
 }

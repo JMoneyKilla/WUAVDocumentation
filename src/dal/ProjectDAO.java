@@ -32,6 +32,31 @@ public class ProjectDAO {
         }
         return allProjects;
     }
+    public List<Project> getUserProjects(int userId) throws SQLException {
+        List<Project> userProjects = new ArrayList<>();
+        String sql = "SELECT Project.project_id, project_name, Project.date_last_visited, customer_name, \n" +
+                "company_address, company_type, [User].user_id FROM Project\n" +
+                "INNER JOIN UserProject\n" +
+                "ON Project.project_id = UserProject.project_id\n" +
+                "RIGHT JOIN [User]\n" +
+                "ON UserProject.user_id = [User].[user_id]\n" +
+                "WHERE [User].[user_id] = " + userId + ";";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("project_id");
+                String name = rs.getString("project_name");
+                String dateLastVisited = rs.getString("date_last_visited");
+                String customerName = rs.getString("customer_name");
+                String companyAddress = rs.getString("company_address");
+                int type = rs.getInt("company_type");
+                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, type);
+                userProjects.add(project);
+            }
+        }
+        return userProjects;
+    }
 
     public void createProject(Project project) throws SQLException{
         String name = project.getName();
@@ -40,7 +65,7 @@ public class ProjectDAO {
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
 
-        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type,)" +
+        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type)" +
                 " VALUES (?,?,?,?,?)";
 
         try (Connection con = dbc.getConnection();) {
