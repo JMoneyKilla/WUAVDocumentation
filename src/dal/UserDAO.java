@@ -39,7 +39,7 @@ public class UserDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                email = rs.getString("password");
+                email = rs.getString("email");
             }
         }
         return email;
@@ -60,6 +60,53 @@ public class UserDAO {
         return password;
     }
 
+    public boolean validateLogin(String email, String password) throws SQLException {
+        String sql = "SELECT * FROM Login WHERE email = '" + email + "';";
+        try(Connection con = dbc.getConnection()){
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                if(rs.getString("password").equals(password))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public int getUserIdFromEmail(String email) throws SQLException{
+        int userId = 0;
+        String sql = "SELECT user_id FROM Login WHERE email = ?";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userId = rs.getInt("user_id");
+            }
+            return userId;
+        }
+    }
+
+
+    public User getUserInLoginById(int id) throws SQLException {
+        String sql = "SELECT * FROM [User] u\n" +
+                "JOIN Login l \n" +
+                "ON l.user_id = u.user_id\n" +
+                "WHERE l.user_id = ?;";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            User user = null;
+            while (rs.next()) {
+                int userId = rs.getInt("user_id");
+                String name = rs.getString("user_name");
+                int type = rs.getInt("user_type");
+                user = new User(userId, name, type);
+            }
+            return user;
+        }
+    }
 
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO [User] (user_name, user_type) VALUES (?,?)";
