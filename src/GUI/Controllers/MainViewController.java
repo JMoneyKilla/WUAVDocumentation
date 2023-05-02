@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import GUI.Models.UserModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ public class MainViewController implements Initializable {
     private Label lableUserName;
     @FXML
     private CheckBox toggleAddress, toggleProjectName, toggleCompanyName, toggleCustomerName;
+    UserModel userModel = UserModel.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -28,6 +30,7 @@ public class MainViewController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        lableUserName.setText(""+userModel.getLoggedInUser().getName());
     }
 
 }
