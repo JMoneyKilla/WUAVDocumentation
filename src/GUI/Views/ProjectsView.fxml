@@ -13,7 +13,7 @@
          <content>
             <VBox alignment="CENTER" prefHeight="475.0" prefWidth="875.0">
                <children>
-                  <AnchorPane prefHeight="475.0" prefWidth="875.0" VBox.vgrow="ALWAYS" />
+                  <AnchorPane fx:id="paneProject" prefHeight="475.0" prefWidth="875.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_CENTER" nodeOrientation="LEFT_TO_RIGHT">
                      <children>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="303.0" styleClass="hbox" stylesheets="@MainStyleSheet.css">
