@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -39,8 +40,8 @@ public class ProjectsViewController implements Initializable {
             StackPane stackPane = generateEventPane(project);
             paneProject.getChildren().add(stackPane);
             paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
-            AnchorPane.setTopAnchor(stackPane, 25 + row * 160.0);
-            AnchorPane.setLeftAnchor(stackPane, 50 + col * 205.0);
+            AnchorPane.setTopAnchor(stackPane, 10 + row * 145.0);
+            AnchorPane.setLeftAnchor(stackPane, 20 + col * 420.0);
             col++;
             if (col == 2) {
                 col = 0;
@@ -56,10 +57,10 @@ public class ProjectsViewController implements Initializable {
     public StackPane generateEventPane(Project project) {
         StackPane stackPane = new StackPane();
 
-        stackPane.setPrefSize(175, 130);
+        stackPane.setPrefSize(400, 132);
         stackPane.setOnMouseEntered(e -> {
-            stackPane.setScaleX(1.1);
-            stackPane.setScaleY(1.1);
+            stackPane.setScaleX(1.05);
+            stackPane.setScaleY(1.05);
         });
 
         stackPane.setOnMouseExited(e -> {
@@ -69,54 +70,59 @@ public class ProjectsViewController implements Initializable {
 
 
         VBox vBox = new VBox();
-        vBox.setPrefSize(175, 130);
+        vBox.setPrefSize(stackPane.getPrefWidth(), 132);
         vBox.setId("vbox");
 
         Label eventName = new Label();
-        eventName.setPrefSize(175, 16);
+        eventName.setPrefSize(stackPane.getPrefWidth(), 16);
         eventName.setFont(Font.font(16));
         eventName.setStyle("-fx-text-fill: #0C2D48;");
         eventName.setText(project.getName());
-        eventName.setPadding(new Insets(5, 5, 5, 5));
+        eventName.setTextAlignment(TextAlignment.CENTER);
+        eventName.setPadding(new Insets(5, 5, 5, 150));
         eventName.setId("eventName");
+
+        Label customerName = new Label();
+        customerName.setPrefSize(stackPane.getPrefWidth(), 11);
+        customerName.setFont(Font.font(13));
+        customerName.setStyle("-fx-text-fill: #0C2D48;");
+        customerName.setText("Customer: " + project.getCustomerName());
+        customerName.setPadding(new Insets(5, 5, 5, 10));
+        customerName.setId("customerName");
+
+        Label date = new Label();
+        date.setPrefSize(stackPane.getPrefWidth(), 11);
+        date.setFont(Font.font(13));
+        date.setStyle("-fx-text-fill: #0C2D48;");
+        date.setText("Last visited: " + project.dateLastVisited());
+        date.setPadding(new Insets(5, 5, 5, 10));
+        date.setTextAlignment(TextAlignment.CENTER);
+        date.setId("date");
+
+        Label address = new Label();
+        address.setPrefSize(stackPane.getPrefWidth(), 11);
+        address.setFont(Font.font(13));
+        address.setStyle("-fx-text-fill: #0C2D48;");
+        address.setText("Address: " + project.getCompanyAddress());
+        address.setPadding(new Insets(5, 5, 5, 10));
+        address.setId("address");
 
 
         HBox hbox = new HBox();
-        hbox.setPrefSize(175, 25);
+        hbox.setPrefSize(stackPane.getPrefWidth(), 132);
         hbox.setPadding(new Insets(0, 0, 0, 3));
         hbox.setId("hbox");
 
-        MFXButton button1 = new MFXButton();
-        button1.setPrefSize(83, 25);
-        button1.setStyle("-fx-font-family: arial;\n" +
-                "    -fx-font-size: 13px;\n" +
-                "    -fx-text-fill: white;\n" +
-                "    -fx-border-radius: 5px;\n" +
-                "    -fx-border-color: #000000;\n" +
-                "    -fx-background-color: #145DA0;");
-        button1.setPadding(new Insets(0, 0, 0, 5));
-        button1.setText("View");
-        button1.setId("viewButton");
-        MFXButton button2 = new MFXButton();
-        button2.setStyle("-fx-font-family: arial;\n" +
-                "    -fx-font-size: 13px;\n" +
-                "    -fx-text-fill: white;\n" +
-                "    -fx-border-radius: 5px;\n" +
-                "    -fx-border-color: #000000;\n" +
-                "    -fx-background-color: #145DA0;");
-        button2.setText("Edit");
-        button2.setId("editButton");
-        button2.setPrefSize(83, 25);
+
 
         vBox.getChildren().add(eventName);
-        hbox.getChildren().add(button1);
-        hbox.getChildren().add(new Label(" "));
-        hbox.getChildren().add(button2);
+        vBox.getChildren().add(customerName);
+        vBox.getChildren().add(address);
+        vBox.getChildren().add(date);
         vBox.getChildren().add(hbox);
 
-
         stackPane.getChildren().add(vBox);
-        stackPane.setStyle("-fx-background-radius: 10px; -fx-background-color: #ffffff;");
+        stackPane.setStyle("-fx-background-radius: 10px; -fx-background-color: #c6c7c4;");
 
         return stackPane;
     }
