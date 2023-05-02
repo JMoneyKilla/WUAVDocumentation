@@ -7,14 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
@@ -123,6 +121,33 @@ public class ProjectsViewController implements Initializable {
 
         stackPane.getChildren().add(vBox);
         stackPane.setStyle("-fx-background-radius: 10px; -fx-background-color: #c6c7c4;");
+        stackPane.setCursor(Cursor.HAND);
+        stackPane.setOnMousePressed(e -> {
+
+                System.out.println("Clicked on project: " + project.getName());
+
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/GUI/Views/MainView.fxml"));
+            try {
+                Parent root = loader.load();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            MainViewController mainViewController = loader.getController();
+               BorderPane borderPane = mainViewController.borderPane;
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DocumentsView.fxml"));
+            System.out.println(fxmlLoader);
+
+
+            try {
+                borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
+                borderPane.setCenter(fxmlLoader.load());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        });
 
         return stackPane;
     }

@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import GUI.Models.UserModel;
+import be.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,7 +31,7 @@ public class MainViewController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        lableUserName.setText(""+userModel.getLoggedInUser().getName());
+        //lableUserName.setText(""+userModel.getLoggedInUser().getName());
     }
 
 }
