@@ -1,8 +1,7 @@
 package GUI.Models;
 
 import be.User;
-import bll.FacadeManagers;
-
+import bll.FacadeManager;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class UserModel {
 
     private static UserModel instance;
 
-    FacadeManagers bll = new FacadeManagers();
+    FacadeManager bll = new FacadeManager();
     User loggedInUser;
 
     public static UserModel getInstance(){

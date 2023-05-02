@@ -2,6 +2,7 @@ package bll;
 
 import be.Device;
 import be.Project;
+import be.User;
 import be.documents.IDocument;
 import bll.managers.DeviceManager;
 import bll.managers.DocumentManager;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class FacadeManager {
     private ProjectManager projectManager = new ProjectManager();
+    UserManager userManager = new UserManager();
     private DeviceManager deviceManager = new DeviceManager();
     private DocumentManager documentManager = new DocumentManager();
 
@@ -51,5 +53,51 @@ public class FacadeManager {
         documentManager.createDocument(document);
     }
 
-    //Methods for accessing UserManager
+    /*
+    UserManager methods
+     */
+
+    public List getAllUsers() throws SQLException {
+        return userManager.getAllUsers();
+    }
+
+    public String getEmail(User user) throws SQLException{
+        return userManager.getEmail(user);
+    }
+
+    public String getPassword(User user) throws SQLException{
+        return userManager.getPassword(user);
+    }
+
+    public void createUser(User user) throws SQLException{
+        userManager.createUser(user);
+    }
+
+    public void deleteUser(User user) throws SQLException{
+        userManager.deleteUser(user);
+    }
+
+    public void deleteUserLogin(User user) throws SQLException{
+        userManager.deleteUserLogin(user);
+    }
+
+    public void updateUser(User user) throws SQLException{
+        userManager.updateUser(user);
+    }
+
+    public void updateUserLogin(User user, String email, String password) throws SQLException {
+        userManager.updateUserLogin(user, email, password);
+    }
+
+    public boolean validateLogin(String email, String password) throws SQLException {
+        return userManager.validateLogin(email, password);
+    }
+
+    public int getUserIdFromEmail(String email) throws SQLException {
+        return userManager.getUserIdFromEmail(email);
+    }
+
+    public User getUserFromLoginById(int id) throws SQLException {
+        return userManager.getUserFromLoginById(id);
+    }
 }
