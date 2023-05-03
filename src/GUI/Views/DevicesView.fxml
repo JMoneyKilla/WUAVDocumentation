@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DevicesViewController">
+<AnchorPane prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DevicesViewController">
    <children>
       <HBox layoutX="283.0" layoutY="164.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -17,7 +17,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" text="&lt; Back">
+                        <MFXButton fx:id="buttonBack" buttonType="RAISED" onAction="#clickBack" text="&lt; Back">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
@@ -25,12 +25,12 @@
                               <Font size="15.0" />
                            </font>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" text="Documents">
+                        <MFXButton fx:id="buttonDocuments" buttonType="RAISED" onAction="#clickDocuments" text="Documents">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" text="Devicees">
+                        <MFXButton fx:id="buttonDevices" buttonType="RAISED" onAction="#clickDevices" text="Devices">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -42,7 +42,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" text="Get report">
+                        <MFXButton fx:id="buttonGetReport" buttonType="RAISED" onAction="#clickGetReport" text="Get report">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -66,7 +66,7 @@
                         </Label>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <MFXButton buttonType="RAISED" text="Add Devices">
+                              <MFXButton fx:id="buttonAddDevice" buttonType="RAISED" onAction="#clickAddDevice" text="Add Device">
                                  <HBox.margin>
                                     <Insets right="15.0" />
                                  </HBox.margin>
@@ -76,12 +76,12 @@
                      </children>
                   </HBox>
                   <ScrollPane fitToWidth="true" prefHeight="378.0" prefWidth="726.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
                      <VBox.margin>
                         <Insets right="5.0" />
                      </VBox.margin>
+                     <content>
+                        <VBox fx:id="devicesBox" />
+                     </content>
                   </ScrollPane>
                </children>
             </VBox>

@@ -1,8 +1,11 @@
 package GUI.Models;
 
+import be.Device;
 import be.Project;
+import be.documents.IDocument;
 import bll.DateInput;
 import bll.FacadeManager;
+import javafx.collections.FXCollections;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import bll.validator.ProjectValidator;
@@ -14,6 +17,9 @@ import java.util.List;
 public class ProjectModel {
     private static ProjectModel instance;
     private ObservableList<Project> projects;
+    private ObservableList<IDocument> projectDocuments;
+    private ObservableList<Device> projectDevices;
+    private Project selectedProject;
     FacadeManager facadeManager = new FacadeManager();
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
@@ -28,8 +34,37 @@ public class ProjectModel {
         return instance;
     }
 
+    private ProjectModel(){
+        projects = FXCollections.observableArrayList();
+        projectDocuments = FXCollections.observableArrayList();
+        projectDevices = FXCollections.observableArrayList();
+    }
+
     public List<Project> getProjects() {
         return facadeManager.getProjects();
+    }
+
+    public List<IDocument> getProjectDocuments(){
+        return projectDocuments;
+    }
+    public List<Device> getProjectDevices(){
+        return projectDevices;
+    }
+
+    public Project getSelectedProject() {
+        return selectedProject;
+    }
+
+    public void setSelectedProject(Project selectedProject) {
+        this.selectedProject = selectedProject;
+        try {
+            projectDocuments.clear();
+            projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
+            projectDevices.clear();
+            projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public BooleanProperty isProjectSelectedProperty() {
