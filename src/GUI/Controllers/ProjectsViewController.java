@@ -5,13 +5,7 @@ import be.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-<<<<<<< HEAD:src/GUI/Controllers/ProjectsViewController.java
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-=======
->>>>>>> validator:src/GUI/Controllers/ProjectViewController.java
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -20,12 +14,8 @@ import javafx.scene.text.TextAlignment;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-<<<<<<< HEAD:src/GUI/Controllers/ProjectsViewController.java
 public class ProjectsViewController implements Initializable {
 
-=======
-public class ProjectViewController implements Initializable {
->>>>>>> validator:src/GUI/Controllers/ProjectViewController.java
     @FXML
     private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
