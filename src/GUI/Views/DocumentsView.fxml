@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DocumentsViewController">
    <children>
       <HBox layoutX="283.0" layoutY="164.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -18,7 +17,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" text="&lt; Back">
+                        <MFXButton buttonType="RAISED" onAction="#buttonBack" text="&lt; Back">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
@@ -26,12 +25,12 @@
                               <Font size="15.0" />
                            </font>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" text="Documents">
+                        <MFXButton buttonType="RAISED" onAction="#buttonDocuments" text="Documents">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" text="Devicees">
+                        <MFXButton buttonType="RAISED" onAction="#buttonDevices" text="Devices">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -43,7 +42,7 @@
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <MFXButton buttonType="RAISED" text="Get report">
+                        <MFXButton buttonType="RAISED" onAction="#buttonGetReport" text="Get report">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -67,7 +66,7 @@
                         </Label>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <MFXButton buttonType="RAISED" text="Add Documents">
+                              <MFXButton buttonType="RAISED" onAction="#buttonAddDocuments" text="Add Documents">
                                  <HBox.margin>
                                     <Insets right="15.0" />
                                  </HBox.margin>

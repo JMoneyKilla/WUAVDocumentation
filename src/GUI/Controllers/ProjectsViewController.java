@@ -24,9 +24,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProjectsViewController implements Initializable {
+
     @FXML
-    private AnchorPane paneProject;
+    private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadData();
@@ -123,30 +125,8 @@ public class ProjectsViewController implements Initializable {
         stackPane.setStyle("-fx-background-radius: 10px; -fx-background-color: #c6c7c4;");
         stackPane.setCursor(Cursor.HAND);
         stackPane.setOnMousePressed(e -> {
-
-                System.out.println("Clicked on project: " + project.getName());
-
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/GUI/Views/MainView.fxml"));
-            try {
-                Parent root = loader.load();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            MainViewController mainViewController = loader.getController();
-               BorderPane borderPane = mainViewController.borderPane;
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DocumentsView.fxml"));
-            System.out.println(fxmlLoader);
-
-
-            try {
-                borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
-                borderPane.setCenter(fxmlLoader.load());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
+            ProjectModel projectModel = ProjectModel.getInstance();
+            projectModel.setIsProjectSelected(true);
         });
 
         return stackPane;
