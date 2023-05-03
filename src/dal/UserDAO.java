@@ -30,6 +30,20 @@ public class UserDAO {
         return allUsers;
     }
 
+    public List getAllEmails() throws SQLException{
+        List<String> emails = new ArrayList<>();
+        String sql = "SELECT email FROM Login";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String email = rs.getString("email");
+                emails.add(email);
+            }
+            return emails;
+        }
+    }
+
     public String getEmail(User user) throws SQLException{
         int id = user.getId();
         String email = "";
