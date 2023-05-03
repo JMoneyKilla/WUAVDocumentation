@@ -2,14 +2,19 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
-import be.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,9 +71,26 @@ public class MainViewController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
+    public void clickCreateNewProject(ActionEvent actionEvent) {
+                Node n = (Node) actionEvent.getSource();
+                Window stage = n.getScene().getWindow();
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/CreateNewProjectView.fxml"));
+                    Stage createNewUserView = new Stage();
+                    createNewUserView.setScene(new Scene(root));
+                    createNewUserView.setTitle("New Project");
+                    createNewUserView.initModality(Modality.WINDOW_MODAL);
+                    createNewUserView.centerOnScreen();
+                    createNewUserView.initOwner(stage);
+                    createNewUserView.show();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }}
 }
 

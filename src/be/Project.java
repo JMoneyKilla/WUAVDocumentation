@@ -23,6 +23,13 @@ public class Project {
         setCompanyType(companyType);
     }
 
+    public Project(String name, String dateLastChecked, String customerName, String companyAddress, int companyType){
+        setName(name);
+        setDateLastVisited(dateLastChecked);
+        setCustomerName(customerName);
+        setCompanyAddress(companyAddress);
+        setCompanyType(companyType);
+    }
 
     public int getId() {
         return id.get();

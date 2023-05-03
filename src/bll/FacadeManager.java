@@ -22,6 +22,10 @@ public class FacadeManager {
         return projectManager.getProjects();
     }
 
+    public void createProject(Project project) throws SQLException {
+        projectManager.createProject(project);
+    }
+
 
 
     //Methods for accessing DeviceManager

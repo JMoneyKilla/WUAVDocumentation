@@ -11,7 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ public class LoginViewController implements Initializable {
 
     @FXML
     private MFXPasswordField txtFieldPassword;
+    @FXML
+    private Button enterButton;
 
     UserModel userModel = UserModel.getInstance();
 
@@ -57,5 +61,5 @@ public class LoginViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    }
+  }
 }

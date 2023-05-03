@@ -16,4 +16,8 @@ public class ProjectManager {
             throw new RuntimeException(e);
         }
     }
+
+    public void createProject(Project project) throws SQLException {
+        projectDAO.createProject(project);
+    }
 }
