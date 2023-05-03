@@ -2,7 +2,6 @@ package GUI.Controllers;
 
 import GUI.Models.UserModel;
 import be.User;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
@@ -12,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
@@ -31,7 +31,7 @@ public class LoginViewController implements Initializable {
     @FXML
     private MFXPasswordField txtFieldPassword;
     @FXML
-    private MFXButton enterButton;
+    private Button enterButton;
 
     UserModel userModel = UserModel.getInstance();
 
@@ -61,10 +61,5 @@ public class LoginViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        enterButton.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER)) {
-                enterButton.fire();
-            }
-    });
   }
 }
