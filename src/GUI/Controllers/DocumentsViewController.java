@@ -26,9 +26,10 @@ public class DocumentsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (IDocument document: projectModel.getProjectDocuments()) {
-            documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
-        }
+        System.out.println("initialized");
+     //  for (IDocument document: projectModel.getProjectDocuments()) {
+     //       documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
+     //   }
     }
 
     public void clickBack(ActionEvent actionEvent) {

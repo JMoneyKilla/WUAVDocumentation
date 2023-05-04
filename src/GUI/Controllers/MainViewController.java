@@ -92,5 +92,9 @@ public class MainViewController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }}
+
+    public BorderPane getBorderPane(){
+        return borderPane;
+    }
 }
 

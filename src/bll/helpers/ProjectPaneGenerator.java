@@ -99,7 +99,7 @@ public class ProjectPaneGenerator {
                 throw new RuntimeException(ex);
             }
             MainViewController mainViewController = loader.getController();
-            BorderPane borderPane = mainViewController.borderPane;
+            BorderPane borderPane = mainViewController.getBorderPane();
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DocumentsView.fxml"));
             System.out.println(fxmlLoader);
