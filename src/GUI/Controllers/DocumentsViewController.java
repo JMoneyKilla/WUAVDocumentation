@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class DocumentsViewController implements Initializable {
 
     @FXML
-    private MFXButton buttonAddDocument, buttonGetReport, buttonDevices, buttonDocuments, buttonBack;
+    private MFXButton buttonAddDocument;
     @FXML
     private VBox documentsBox;
     DocumentBoxGenerator docBoxGenerator = new DocumentBoxGenerator();
@@ -27,26 +27,9 @@ public class DocumentsViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("initialized");
-     //  for (IDocument document: projectModel.getProjectDocuments()) {
-     //       documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
-     //   }
-    }
-
-    public void clickBack(ActionEvent actionEvent) {
-        projectModel.setIsProjectSelected(false);
-        projectModel.setSelectedProject(null);
-    }
-
-    public void clickDocuments(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickDevices(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickGetReport(ActionEvent actionEvent) {
-        //TODO
+       for (IDocument document: projectModel.getProjectDocuments()) {
+            documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
+      }
     }
 
     public void clickAddDocument(ActionEvent actionEvent) {

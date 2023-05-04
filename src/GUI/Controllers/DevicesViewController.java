@@ -28,24 +28,6 @@ public class DevicesViewController implements Initializable {
             devicesBox.getChildren().add(deviceBoxGenerator.buildDeviceBox(device));
         }
     }
-
-
-    public void clickBack(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickDocuments(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickDevices(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickGetReport(ActionEvent actionEvent) {
-        //TODO
-    }
-
     public void clickAddDevice(ActionEvent actionEvent) {
         //TODO
     }

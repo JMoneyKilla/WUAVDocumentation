@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -22,6 +23,8 @@ import java.util.EventListener;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
+    @FXML
+    private VBox sideBar;
     ProjectsViewController projectsViewController = null;
     @FXML
     private BorderPane borderPane;
@@ -33,23 +36,18 @@ public class MainViewController implements Initializable {
     ProjectModel projectModel = ProjectModel.getInstance();
 
 
-
+    //listens for the user to click on a project so it can switch to the documents
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        borderPane.getChildren().remove(sideBar);
         projectModel.isProjectSelectedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue==true){
                     try {
                         documentsSwitch();
+                        borderPane.setLeft(sideBar);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-            }
-            if(newValue==false){
-                try {
-                    projectsSwitch();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -59,6 +57,7 @@ public class MainViewController implements Initializable {
             throw new RuntimeException(e);
         }
         //lableUserName.setText(""+userModel.getLoggedInUser().getName());
+
     }
     public void projectsSwitch() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectsView.fxml"));
@@ -119,6 +118,42 @@ public class MainViewController implements Initializable {
 
     public BorderPane getBorderPane(){
         return borderPane;
+    }
+
+    public void clickBack(ActionEvent actionEvent) {
+        borderPane.getChildren().remove(sideBar);
+        projectModel.setIsProjectSelected(false);
+        projectModel.setSelectedProject(null);
+        try {
+            projectsSwitch();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickDocuments(ActionEvent actionEvent) {
+        if(borderPane.getLeft()!=sideBar){
+            borderPane.setLeft(sideBar);
+        }
+        try {
+            documentsSwitch();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickDevices(ActionEvent actionEvent) {
+        if(borderPane.getLeft()!=sideBar){
+            borderPane.setLeft(sideBar);
+        }
+        try {
+            devicesSwitch();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void clickGetReport(ActionEvent actionEvent) {
     }
 }
 
