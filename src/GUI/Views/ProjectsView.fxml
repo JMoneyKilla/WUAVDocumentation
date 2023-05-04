@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="paneMainProject" prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.ProjectsViewController">
+<AnchorPane fx:id="paneMainProject" prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.ProjectsViewController">
    <children>
       <ScrollPane fx:id="paneScroll" fitToWidth="true" layoutX="324.0" layoutY="99.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -16,16 +16,16 @@
                   <AnchorPane fx:id="paneProject" prefHeight="475.0" prefWidth="875.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_CENTER" nodeOrientation="LEFT_TO_RIGHT">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="34.0" prefWidth="303.0" styleClass="hbox" stylesheets="@MainStyleSheet.css">
+                        <HBox alignment="CENTER" prefHeight="34.0" prefWidth="303.0" styleClass="hboxSmall" stylesheets="@MainStyleSheet.css">
                            <children>
-                              <Button mnemonicParsing="false" text="&lt;&lt;" />
-                              <Button mnemonicParsing="false" text="&lt;" />
+                              <Button mnemonicParsing="false" onAction="#clickPageToFront" text="&lt;&lt;" />
+                              <Button mnemonicParsing="false" onAction="#clickPageBackward" text="&lt;" />
                               <Label text=" Page " textFill="WHITE" />
-                              <Label text="X" textFill="WHITE" />
+                              <Label fx:id="lableCurrentPage" text="X" textFill="WHITE" />
                               <Label text=" of " textFill="WHITE" />
-                              <Label text="Y " textFill="WHITE" />
-                              <Button mnemonicParsing="false" text="&gt;" />
-                              <Button mnemonicParsing="false" text="&gt;&gt;" />
+                              <Label fx:id="lableMaxPage" text="Y " textFill="WHITE" />
+                              <Button mnemonicParsing="false" onAction="#clickPageForward" text="&gt;" />
+                              <Button mnemonicParsing="false" onAction="#clickPageToTheBack" text="&gt;&gt;" />
                            </children>
                         </HBox>
                      </children>

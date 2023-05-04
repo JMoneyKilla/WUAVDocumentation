@@ -4,6 +4,12 @@
 
 .hbox {
     -fx-background-color: #846A6A;
+
+}
+.hboxSmall {
+    -fx-background-color: #846A6A;
+    -fx-border-radius: 0 0 15 15;
+    -fx-background-radius: 15 15 15 15;
 }
 .mfx-text-field {
     -fx-border-radius: 15 15 15 15;

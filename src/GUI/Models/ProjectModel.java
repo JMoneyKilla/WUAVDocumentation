@@ -59,9 +59,11 @@ public class ProjectModel {
         this.selectedProject = selectedProject;
         try {
             projectDocuments.clear();
-            projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
             projectDevices.clear();
-            projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
+            if(selectedProject != null){
+                projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
+                projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

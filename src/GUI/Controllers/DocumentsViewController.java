@@ -33,7 +33,8 @@ public class DocumentsViewController implements Initializable {
     }
 
     public void clickBack(ActionEvent actionEvent) {
-        //TODO
+        projectModel.setIsProjectSelected(false);
+        projectModel.setSelectedProject(null);
     }
 
     public void clickDocuments(ActionEvent actionEvent) {
@@ -52,18 +53,5 @@ public class DocumentsViewController implements Initializable {
         //TODO
     }
 
-    public void buttonBack(ActionEvent actionEvent) {
-    }
 
-    public void buttonDocuments(ActionEvent actionEvent) {
-    }
-
-    public void buttonDevices(ActionEvent actionEvent) {
-    }
-
-    public void buttonGetReport(ActionEvent actionEvent) {
-    }
-
-    public void buttonAddDocuments(ActionEvent actionEvent) {
-    }
 }

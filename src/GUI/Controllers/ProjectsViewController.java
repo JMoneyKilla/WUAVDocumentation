@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import be.Project;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class ProjectsViewController implements Initializable {
 
+    @FXML
+    private Label lableCurrentPage,lableMaxPage;
     @FXML
     private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
@@ -118,9 +121,21 @@ public class ProjectsViewController implements Initializable {
         stackPane.setOnMousePressed(e -> {
             ProjectModel projectModel = ProjectModel.getInstance();
             projectModel.setIsProjectSelected(true);
+            projectModel.setSelectedProject(project);
         });
 
         return stackPane;
     }
 
+    public void clickPageToFront(ActionEvent actionEvent) {
+    }
+
+    public void clickPageBackward(ActionEvent actionEvent) {
+    }
+
+    public void clickPageForward(ActionEvent actionEvent) {
+    }
+
+    public void clickPageToTheBack(ActionEvent actionEvent) {
+    }
 }

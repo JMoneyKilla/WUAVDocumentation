@@ -32,15 +32,27 @@ public class MainViewController implements Initializable {
     UserModel userModel = UserModel.getInstance();
     ProjectModel projectModel = ProjectModel.getInstance();
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         projectModel.isProjectSelectedProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                documentsSwitch();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(newValue==true){
+                    try {
+                        documentsSwitch();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+            }
+            if(newValue==false){
+                try {
+                    projectsSwitch();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
         try {
             projectsSwitch();
         } catch (IOException e) {
@@ -63,6 +75,18 @@ public class MainViewController implements Initializable {
     public void documentsSwitch() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DocumentsView.fxml"));
         System.out.println("DocumentsView loaded");
+        borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
+        try {
+            borderPane.setCenter(fxmlLoader.load());
+            System.out.println(borderPane.getCenter());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void devicesSwitch() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DevicesView.fxml"));
+        System.out.println("DevicesView loaded");
         borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
         try {
             borderPane.setCenter(fxmlLoader.load());
