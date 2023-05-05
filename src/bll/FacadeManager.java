@@ -29,7 +29,17 @@ public class FacadeManager {
         projectManager.createProject(project);
     }
 
+    public void updateProject(Project project) throws SQLException {
+        projectManager.updateProject(project);
+    }
 
+    public void deleteProject(Project project) throws SQLException {
+        projectManager.deleteProject(project);
+    }
+
+    public void deleteProjectFromUserProject(Project project) throws SQLException{
+        projectManager.deleteProjectFromUserProject(project);
+    }
 
     //Methods for accessing DeviceManager
     public List<Device> getDevicesOnProject(int projectId) throws SQLException {

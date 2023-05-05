@@ -23,16 +23,38 @@ public class CreateNewProjectViewController implements Initializable {
     private Label lblWarning;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
+
+    private boolean isEditTrue = false;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+     if(projectModel.getSelectedProject()!=null) isEditTrue = true;
+     if(isEditTrue){
+         txtFieldProjectName.setText(projectModel.getSelectedProject().getName());
+         txtFieldAddress.setText(projectModel.getSelectedProject().getCompanyAddress());
+         txtFieldName.setText(projectModel.getSelectedProject().getCustomerName());
+         System.out.println(isEditTrue);
+     }
     }
 
     public void clickSave(ActionEvent actionEvent) {
-        if(projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText())){
+        if(isEditTrue){
+            projectModel.updateProject(new Project(projectModel.getSelectedProject().getId(),
+                    txtFieldProjectName.getText(), projectModel.getSelectedProject().getDateLastVisited(),
+                    txtFieldName.getText(), txtFieldAddress.getText(),
+                    projectModel.getSelectedProject().getCompanyType()));
+
+            projectModel.setSelectedProject(null);
+            projectModel.getProjects();
+
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
+        }
+        if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText())){
             projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(), 1));
             userModel.addUserToProject(userModel.getLoggedInUser());
+            projectModel.getProjects();
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
@@ -41,6 +63,7 @@ public class CreateNewProjectViewController implements Initializable {
     }
 
     public void clickCancel(ActionEvent actionEvent) {
+        projectModel.setSelectedProject(null);
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();

@@ -7,6 +7,7 @@ import be.Project;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +16,9 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -103,14 +106,14 @@ public class ProjectsViewController implements Initializable {
         vBox.setPrefSize(stackPane.getPrefWidth(), 132);
         vBox.setId("vbox");
 
-        Label eventName = new Label();
-        eventName.setPrefSize(stackPane.getPrefWidth(), 16);
-        eventName.setFont(Font.font(16));
-        eventName.setStyle("-fx-text-fill: #0C2D48;");
-        eventName.setText(project.getName());
-        eventName.setTextAlignment(TextAlignment.CENTER);
-        eventName.setPadding(new Insets(5, 5, 5, 150));
-        eventName.setId("eventName");
+        Label projectName = new Label();
+        projectName.setPrefSize(stackPane.getPrefWidth(), 16);
+        projectName.setFont(Font.font(16));
+        projectName.setStyle("-fx-text-fill: #0C2D48;");
+        projectName.setText(project.getName());
+        projectName.setTextAlignment(TextAlignment.CENTER);
+        projectName.setPadding(new Insets(5, 5, 5, 150));
+        projectName.setId("projectName");
 
         Label customerName = new Label();
         customerName.setPrefSize(stackPane.getPrefWidth(), 11);
@@ -124,7 +127,7 @@ public class ProjectsViewController implements Initializable {
         date.setPrefSize(stackPane.getPrefWidth(), 11);
         date.setFont(Font.font(13));
         date.setStyle("-fx-text-fill: #0C2D48;");
-        date.setText("Last visited: " + project.dateLastVisited());
+        date.setText("Last visited: " + project.getDateLastVisited());
         date.setPadding(new Insets(5, 5, 5, 10));
         date.setTextAlignment(TextAlignment.CENTER);
         date.setId("date");
@@ -139,38 +142,88 @@ public class ProjectsViewController implements Initializable {
 
 
         HBox hbox = new HBox();
-        hbox.setPrefSize(stackPane.getPrefWidth(), 132);
+        hbox.setPrefSize(stackPane.getPrefWidth(), 80);
         hbox.setPadding(new Insets(0, 0, 0, 3));
         hbox.setId("hbox");
 
-        Button button = new Button();
-        button.setStyle("-fx-font-family: arial;\n" +
+        Button addButton = new Button();
+        addButton.setStyle("-fx-font-family: arial;\n" +
                 "    -fx-font-size: 10px;\n" +
                 "    -fx-text-fill: #0C2D48;\n" +
                 "    -fx-background-color: #A2999E;");
-        button.setText("Edit");
-        button.setId("editButton");
-        button.setPrefSize(80, 20);
+        addButton.setText("Add...");
+        addButton.setId("addButton");
+        addButton.setPrefSize(60, 20);
+        addButton.setTranslateY(-10);
 
-        Button button1 = new Button();
-        button1.setStyle("-fx-font-family: arial;\n" +
+        Button editButton = new Button();
+        editButton.setStyle("-fx-font-family: arial;\n" +
                 "    -fx-font-size: 10px;\n" +
                 "    -fx-text-fill: #0C2D48;\n" +
                 "    -fx-background-color: #A2999E;");
-        button1.setText("Add...");
-        button1.setId("addButton");
-        button1.setPrefSize(80, 20);
+        editButton.setText("Edit...");
+        editButton.setId("editButton");
+        editButton.setPrefSize(60, 20);
+        editButton.setTranslateY(-10);
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                projectModel.setSelectedProject(project);
+                Node n = (Node) actionEvent.getSource();
+                Window stage = n.getScene().getWindow();
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/CreateNewProjectView.fxml"));
+                    Stage createNewUserView = new Stage();
+                    createNewUserView.setScene(new Scene(root));
+                    createNewUserView.setTitle("New Project");
+                    createNewUserView.initModality(Modality.WINDOW_MODAL);
+                    createNewUserView.centerOnScreen();
+                    createNewUserView.initOwner(stage);
+                    createNewUserView.show();
 
 
-        vBox.getChildren().add(eventName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }}
+    });
+
+        Button deleteButton = new Button();
+        deleteButton.setStyle("-fx-font-family: arial;\n" +
+                "    -fx-font-size: 10px;\n" +
+                "    -fx-text-fill: #0C2D48;\n" +
+                "    -fx-background-color: #A2999E;");
+        deleteButton.setText("Delete");
+        deleteButton.setId("deleteButton");
+        deleteButton.setPrefSize(60, 20);
+        deleteButton.setTranslateY(-10);
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove " + project.getName() + "?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.YES) {
+                    projectModel.deleteProjectFromUserProject(project);
+                    projectModel.deleteProject(project);
+                    projectModel.getProjects();
+                }
+            }
+        });
+
+        vBox.getChildren().add(projectName);
         vBox.getChildren().add(customerName);
         vBox.getChildren().add(address);
         vBox.getChildren().add(date);
         vBox.getChildren().add(hbox);
-        if(userModel.getLoggedInUser().getType()!=3){
-        vBox.getChildren().add(button);}
+        hbox.getChildren().add(new Label("                                                         "));
         if(userModel.getLoggedInUser().getType()==1){
-            vBox.getChildren().add(button1);
+        hbox.getChildren().add(addButton);
+        hbox.getChildren().add(new Label(" "));
+        hbox.getChildren().add(deleteButton);
+        }
+        if(userModel.getLoggedInUser().getType()!=3){
+            hbox.getChildren().add(new Label(" "));
+            hbox.getChildren().add(editButton);
         }
 
 
@@ -188,7 +241,7 @@ public class ProjectsViewController implements Initializable {
         return stackPane;
     }
 
-    public void clickPageToFront(ActionEvent actionEvent) {
+        public void clickPageToFront(ActionEvent actionEvent) {
     }
 
     public void clickPageBackward(ActionEvent actionEvent) {

@@ -24,4 +24,16 @@ public class ProjectManager {
     public void createProject(Project project) throws SQLException {
         projectDAO.createProject(project);
     }
+
+    public void updateProject(Project project) throws SQLException {
+        projectDAO.updateProject(project);
+    }
+
+    public void deleteProject(Project project) throws SQLException {
+        projectDAO.deleteProject(project);
+    }
+
+    public void deleteProjectFromUserProject(Project project) throws SQLException{
+        projectDAO.deleteFromProjectFromUserProject(project);
+    }
 }

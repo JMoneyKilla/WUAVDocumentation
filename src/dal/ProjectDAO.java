@@ -60,7 +60,7 @@ public class ProjectDAO {
 
     public void createProject(Project project) throws SQLException{
         String name = project.getName();
-        String dateLastVisited = project.dateLastVisited();
+        String dateLastVisited = project.getDateLastVisited();
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
@@ -92,16 +92,26 @@ public class ProjectDAO {
         return false;
     }
 
+    public void deleteFromProjectFromUserProject(Project project) throws SQLException{
+        int id = project.getId();
+        String sql = "DELETE FROM UserProject WHERE (project_id=?)";
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+        }
+    }
+
     public void updateProject(Project project) throws SQLException{
         int id = project.getId();
         String name = project.getName();
-        String dateLastVisited = project.dateLastVisited();
+        String dateLastVisited = project.getDateLastVisited();
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
 
         String sql = "Update Project SET project_name = ?, date_last_visited = ?, customer_name = ?,\n" +
-                "company_address = ?, company_type = ? WHERE id = ?";
+                "company_address = ?, company_type = ? WHERE project_id = ?";
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);

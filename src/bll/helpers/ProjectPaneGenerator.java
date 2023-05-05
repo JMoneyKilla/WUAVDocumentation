@@ -57,7 +57,7 @@ public class ProjectPaneGenerator {
         date.setPrefSize(stackPane.getPrefWidth(), 11);
         date.setFont(Font.font(13));
         date.setStyle("-fx-text-fill: #0C2D48;");
-        date.setText("Last visited: " + project.dateLastVisited());
+        date.setText("Last visited: " + project.getDateLastVisited());
         date.setPadding(new Insets(5, 5, 5, 10));
         date.setTextAlignment(TextAlignment.CENTER);
         date.setId("date");

@@ -56,7 +56,7 @@ public class Project {
         return dateLastVisited;
     }
 
-    public String dateLastVisited(){
+    public String getDateLastVisited(){
         return dateLastVisited.get();
     }
     public void setDateLastVisited(String dateLastVisited) {

@@ -88,9 +88,34 @@ public class ProjectModel {
     public void setIsProjectSelected(boolean isProjectSelected) {
         this.isProjectSelected.set(isProjectSelected);}
 
+
     public void createProject(Project project){
         try {
             facadeManager.createProject(project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProject(Project project) {
+        try {
+            facadeManager.updateProject(project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteProject(Project project) {
+        try {
+            facadeManager.deleteProject(project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteProjectFromUserProject(Project project){
+        try {
+            facadeManager.deleteProjectFromUserProject(project);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -107,4 +132,5 @@ public class ProjectModel {
     public String getDateToday(){
         return inputManager.getDateToday();
     }
+
 }
