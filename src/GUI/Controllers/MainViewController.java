@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,10 @@ public class MainViewController implements Initializable {
     @FXML
     private CheckBox toggleAddress, toggleProjectName, toggleCompanyName, toggleCustomerName;
     UserModel userModel = UserModel.getInstance();
+
+    @FXML
+    private Button btnCreateNewProject;
+
     ProjectModel projectModel = ProjectModel.getInstance();
 
     @Override
@@ -47,6 +52,9 @@ public class MainViewController implements Initializable {
             throw new RuntimeException(e);
         }
         //lableUserName.setText(""+userModel.getLoggedInUser().getName());
+        if(userModel.getLoggedInUser().getType()!= 1){
+            btnCreateNewProject.setVisible(false);
+        }
     }
     public void projectsSwitch() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectsView.fxml"));

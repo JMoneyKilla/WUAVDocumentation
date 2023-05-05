@@ -17,6 +17,10 @@ public class ProjectManager {
         }
     }
 
+    public List getUserProjects(int userId) throws SQLException {
+        return projectDAO.getUserProjects(userId);
+    }
+
     public void createProject(Project project) throws SQLException {
         projectDAO.createProject(project);
     }

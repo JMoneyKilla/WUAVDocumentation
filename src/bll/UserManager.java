@@ -1,5 +1,6 @@
 package bll;
 
+import be.Project;
 import be.User;
 import dal.UserDAO;
 
@@ -52,5 +53,9 @@ public class UserManager {
 
     public User getUserFromLoginById(int id) throws SQLException {
         return userDAO.getUserInLoginById(id);
+    }
+
+    public void addUserToProject(User user) throws SQLException {
+        userDAO.addUserToProject(user);
     }
 }
