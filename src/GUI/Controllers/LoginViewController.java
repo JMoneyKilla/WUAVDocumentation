@@ -61,5 +61,7 @@ public class LoginViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtFieldUsername.setText("tinatran@live.dk");
+        txtFieldPassword.setText("hej123123");
   }
 }

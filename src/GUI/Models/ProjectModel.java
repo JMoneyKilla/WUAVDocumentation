@@ -3,7 +3,7 @@ package GUI.Models;
 import be.Device;
 import be.Project;
 import be.documents.IDocument;
-import bll.DateInput;
+import bll.InputManager;
 import bll.FacadeManager;
 import javafx.collections.FXCollections;
 import javafx.beans.property.BooleanProperty;
@@ -19,13 +19,14 @@ public class ProjectModel {
     private ObservableList<Project> projects;
     private ObservableList<IDocument> projectDocuments;
     private ObservableList<Device> projectDevices;
+    private ObservableList<Project> userProjects;
     private Project selectedProject;
     FacadeManager facadeManager = new FacadeManager();
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
 
     ProjectValidator validator = new ProjectValidator();
-    DateInput dateInput = new DateInput();
+    InputManager inputManager = new InputManager();
 
 
     public static ProjectModel getInstance() {
@@ -38,6 +39,8 @@ public class ProjectModel {
         projects = FXCollections.observableArrayList();
         projectDocuments = FXCollections.observableArrayList();
         projectDevices = FXCollections.observableArrayList();
+        userProjects = FXCollections.observableArrayList();
+
     }
 
     public List<Project> getProjects() {
@@ -49,6 +52,15 @@ public class ProjectModel {
     }
     public List<Device> getProjectDevices(){
         return projectDevices;
+    }
+
+    public ObservableList<Project> getUserProjects(int userId){
+        try {
+            userProjects.addAll(facadeManager.getUserProjects(userId));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userProjects;
     }
 
     public Project getSelectedProject() {
@@ -93,6 +105,6 @@ public class ProjectModel {
     // Date method
 
     public String getDateToday(){
-        return dateInput.getDateToday();
+        return inputManager.getDateToday();
     }
 }

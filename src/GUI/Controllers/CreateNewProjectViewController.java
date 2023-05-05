@@ -1,7 +1,9 @@
 package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
+import GUI.Models.UserModel;
 import be.Project;
+import be.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ public class CreateNewProjectViewController implements Initializable {
     @FXML
     private Label lblWarning;
     ProjectModel projectModel = ProjectModel.getInstance();
+    UserModel userModel = UserModel.getInstance();
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -29,6 +32,7 @@ public class CreateNewProjectViewController implements Initializable {
     public void clickSave(ActionEvent actionEvent) {
         if(projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText())){
             projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(), 1));
+            userModel.addUserToProject(userModel.getLoggedInUser());
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();

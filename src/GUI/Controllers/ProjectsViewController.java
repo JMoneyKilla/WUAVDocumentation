@@ -1,17 +1,30 @@
 package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
+import GUI.Models.UserModel;
 import be.Project;
+
+import io.github.palexdev.materialfx.controls.MFXButton;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,10 +35,14 @@ public class ProjectsViewController implements Initializable {
     @FXML
     private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
+    UserModel userModel = UserModel.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadData();
+        if(userModel.getLoggedInUser().getType()==2){
+            loadUserProjectData();
+        }
+        else loadData();
     }
     public void loadData(){
         int row = 0;
@@ -43,6 +60,25 @@ public class ProjectsViewController implements Initializable {
             }
         }
     }
+
+    public void loadUserProjectData(){
+        int row = 0;
+        int col = 0;
+        for (Project project : projectModel.getUserProjects(userModel.getLoggedInUser().getId())) {
+            StackPane stackPane = generateEventPane(project);
+            paneProject.getChildren().add(stackPane);
+            paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
+            AnchorPane.setTopAnchor(stackPane, 10 + row * 145.0);
+            AnchorPane.setLeftAnchor(stackPane, 20 + col * 420.0);
+            col++;
+            if (col == 2) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+
     /**
      * Generates a stackpane which will be used as visual tile for an event that the user can interact with
      * @param project
@@ -107,6 +143,23 @@ public class ProjectsViewController implements Initializable {
         hbox.setPadding(new Insets(0, 0, 0, 3));
         hbox.setId("hbox");
 
+        Button button = new Button();
+        button.setStyle("-fx-font-family: arial;\n" +
+                "    -fx-font-size: 10px;\n" +
+                "    -fx-text-fill: #0C2D48;\n" +
+                "    -fx-background-color: #A2999E;");
+        button.setText("Edit");
+        button.setId("editButton");
+        button.setPrefSize(80, 20);
+
+        Button button1 = new Button();
+        button1.setStyle("-fx-font-family: arial;\n" +
+                "    -fx-font-size: 10px;\n" +
+                "    -fx-text-fill: #0C2D48;\n" +
+                "    -fx-background-color: #A2999E;");
+        button1.setText("Add...");
+        button1.setId("addButton");
+        button1.setPrefSize(80, 20);
 
 
         vBox.getChildren().add(eventName);
@@ -114,6 +167,12 @@ public class ProjectsViewController implements Initializable {
         vBox.getChildren().add(address);
         vBox.getChildren().add(date);
         vBox.getChildren().add(hbox);
+        if(userModel.getLoggedInUser().getType()!=3){
+        vBox.getChildren().add(button);}
+        if(userModel.getLoggedInUser().getType()==1){
+            vBox.getChildren().add(button1);
+        }
+
 
         stackPane.getChildren().add(vBox);
         stackPane.setStyle("-fx-background-radius: 10px; -fx-background-color: #c6c7c4;");

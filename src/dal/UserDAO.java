@@ -1,5 +1,6 @@
 package dal;
 
+import be.Project;
 import be.User;
 
 import java.sql.Connection;
@@ -189,8 +190,21 @@ public class UserDAO {
         }
     }
 
-    public void addUserToProject(User user, int projectId) throws SQLException {
+    private int getNextEventId() {
+        try (Connection con = dbc.getConnection()) {
+            ResultSet rs = con.createStatement().executeQuery("SELECT TOP 1 * FROM Project ORDER BY project_id DESC;");
+            rs.next();
+            int id = rs.getInt("project_id");
+            int nextID = id;
+            return nextID;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addUserToProject(User user) throws SQLException {
         int userId = user.getId();
+        int projectId = getNextEventId();
         String sql = "INSERT INTO UserProject(project_id, user_id) VALUES (?,?)";
         try(Connection con = dbc.getConnection()){
             PreparedStatement ps = con.prepareStatement(sql);

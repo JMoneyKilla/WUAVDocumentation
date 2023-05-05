@@ -22,6 +22,9 @@ public class FacadeManager {
         return projectManager.getProjects();
     }
 
+    public List getUserProjects(int userId) throws SQLException {
+        return projectManager.getUserProjects(userId);
+    }
     public void createProject(Project project) throws SQLException {
         projectManager.createProject(project);
     }
@@ -103,5 +106,9 @@ public class FacadeManager {
 
     public User getUserFromLoginById(int id) throws SQLException {
         return userManager.getUserFromLoginById(id);
+    }
+
+    public void addUserToProject(User user) throws SQLException {
+        userManager.addUserToProject(user);
     }
 }

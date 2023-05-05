@@ -57,4 +57,12 @@ public class UserModel {
     public User getLoggedInUser(){
         return loggedInUser;
     }
+
+    public void addUserToProject(User user) {
+        try {
+            bll.addUserToProject(user);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
