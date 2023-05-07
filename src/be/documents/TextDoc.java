@@ -8,7 +8,7 @@ public class TextDoc implements IDocument{
     private String description;
     private String documentName;
     private String dateAdded;
-    TextDoc(int projectId, int userId, int documentType, int documentId,
+    TextDoc(int projectId, int userId, int documentId, int documentType,
             String description, String documentName, String dateAdded){
         this.projectId = projectId;
         this.userId = userId;

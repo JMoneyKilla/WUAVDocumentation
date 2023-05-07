@@ -56,8 +56,12 @@ public class FacadeManager {
     public void updateDocument(IDocument document) throws SQLException{
         documentManager.updateDocument(document);
     }
-    public void createDocument(IDocument document) throws SQLException{
-        documentManager.createDocument(document);
+    public void createDocument(IDocument document){
+        try {
+            documentManager.createDocument(document);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*

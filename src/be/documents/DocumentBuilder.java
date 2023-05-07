@@ -65,10 +65,12 @@ public class DocumentBuilder {
         return new DiagramDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
                 documentName, dateAdded);
     }
+
     public IDocument buildPictureDoc(){
         return new PictureDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
                 documentName, dateAdded);
     }
+
     public IDocument buildTextDoc(){
         return new TextDoc(projectId, userId, documentId, documentType, description, documentName, dateAdded);
     }
