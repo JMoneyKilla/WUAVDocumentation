@@ -35,6 +35,15 @@ public class ProjectModel {
         return instance;
     }
 
+    public void refreshProjectDocuments(){
+        try {
+            projectDocuments.clear();
+            projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private ProjectModel(){
         projects = FXCollections.observableArrayList();
         projectDocuments = FXCollections.observableArrayList();

@@ -76,7 +76,6 @@ public class DocumentDAO {
     public void createDocument(IDocument document) throws SQLException{
         int projectId = document.getProjectId();
         int userId = document.getUserId();
-        int documentId = document.getDocumentId();
         String description = document.getDescription();
         String absolutePath = document.getAbsolutePath();
         String documentName = document.getDocumentName();
@@ -84,21 +83,20 @@ public class DocumentDAO {
         int refNumber = document.getRefNumber();
         String dateAdded = document.getDateAdded();
 
-        String sql = "INSERT INTO Document (project_id, user_id, document_id, description, absolute_path," +
+        String sql = "INSERT INTO Document (project_id, user_id, description, absolute_path," +
                 "document_name, document_type, ref_num, date_added)" +
-                " VALUES (?,?,?,?,?,?,?,?,?)";
+                " VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, projectId);
             ps.setInt(2, userId);
-            ps.setInt(3, documentId);
-            ps.setString(4, description);
-            ps.setString(5, absolutePath);
-            ps.setString(6, documentName);
-            ps.setInt(7, documentType);
-            ps.setInt(8, refNumber);
-            ps.setString(9, dateAdded);
+            ps.setString(3, description);
+            ps.setString(4, absolutePath);
+            ps.setString(5, documentName);
+            ps.setInt(6, documentType);
+            ps.setInt(7, refNumber);
+            ps.setString(8, dateAdded);
             ps.execute();
         }
     }

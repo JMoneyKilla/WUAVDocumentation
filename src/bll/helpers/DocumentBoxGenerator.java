@@ -10,59 +10,70 @@ import javafx.scene.layout.VBox;
 public class DocumentBoxGenerator {
 
     public HBox buildDocumentBox(IDocument document){
-        HBox hBox = switch (document.getDocumentType()) {
-            case 1, 2 -> diagramPictureDocBox(document);
-            case 3 -> textDocBox(document);
-            default -> null;
-        };
+        int docType = document.getDocumentType();
+        HBox hBox = null;
+        if(docType == 1 ||docType == 2)
+            return diagramPictureDocBox(document);
+        if(docType == 3)
+            return textDocBox(document);
         return hBox;
     }
 
     public HBox diagramPictureDocBox(IDocument document){
-        HBox hbox = new HBox();
-        VBox vBoxLeft = new VBox();
-        VBox vBoxRight = new VBox();
-        ImageView imageView = new ImageView(document.getAbsolutePath());
-        TextArea description = new TextArea(document.getDescription());
-        Label documentName = new Label(document.getDocumentName());
-        Label dateAdded = new Label("Date added: " + document.getDateAdded());
-        Label createdBy = new Label("Created by:" + document.getUserId());
-        Label refNumb = new Label("Reference number: " + document.getRefNumber());
-        Label documentId = new Label("Document ID: " + document.getDocumentId());
+            HBox hbox = new HBox();
+            hbox.setPrefSize(1000, 300);
 
-        hbox.setPrefSize(725, 200);
-        hbox.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
+            VBox leftVbox = new VBox();
+            leftVbox.setPrefSize(300, 300);
 
-        vBoxLeft.setPrefSize(200, 200);
-        vBoxLeft.getChildren().addAll(documentName, imageView, refNumb);
+            ImageView imageView = new ImageView(document.getAbsolutePath());
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(200);
 
-        vBoxRight.setPrefSize(525, 200);
-        vBoxRight.getChildren().addAll(description, createdBy, dateAdded, documentId);
+            Label createdByLabel = new Label("Created by: " + document.getUserId());
+            Label dateAddedLabel = new Label("Date added: " + document.getDateAdded());
+            Label documentIdLabel = new Label("Document ID: " + document.getDocumentId());
 
-        hbox.getChildren().addAll(vBoxLeft, vBoxRight);
+            leftVbox.getChildren().addAll(imageView, createdByLabel, dateAddedLabel, documentIdLabel);
 
-        return hbox;
+            VBox rightVbox = new VBox();
+            rightVbox.setPrefSize(700, 300);
 
+            TextArea descriptionTextArea = new TextArea(document.getDescription());
+            descriptionTextArea.setEditable(false);
+            descriptionTextArea.setWrapText(true);
+
+            rightVbox.getChildren().add(descriptionTextArea);
+
+            hbox.getChildren().addAll(leftVbox, rightVbox);
+
+            return hbox;
     }
 
     public HBox textDocBox(IDocument document){
         HBox hbox = new HBox();
-        VBox vBox = new VBox();
-        TextArea description = new TextArea(document.getDescription());
-        Label documentName = new Label(document.getDocumentName());
-        Label dateAdded = new Label("Date added: " + document.getDateAdded());
-        Label createdBy = new Label("Created by:" + document.getUserId());
-        Label documentId = new Label("Document ID: " + document.getDocumentId());
+        hbox.setPrefSize(1000, 150);
 
-        hbox.setPrefSize(370, 100);
-        hbox.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
+        VBox leftVbox = new VBox();
+        leftVbox.setPrefSize(300, 150);
 
-        vBox.setPrefSize(100, 100);
-        vBox.getChildren().addAll(documentName, description, createdBy, dateAdded, documentId);
+        Label createdByLabel = new Label("Created by: " + document.getUserId());
+        Label dateAddedLabel = new Label("Date added: " + document.getDateAdded());
+        Label documentIdLabel = new Label("Document ID: " + document.getDocumentId());
 
-        hbox.getChildren().add(vBox);
+        leftVbox.getChildren().addAll(createdByLabel, dateAddedLabel, documentIdLabel);
+
+        VBox rightVbox = new VBox();
+        rightVbox.setPrefSize(700, 150);
+
+        TextArea descriptionTextArea = new TextArea(document.getDescription());
+        descriptionTextArea.setEditable(false);
+        descriptionTextArea.setWrapText(true);
+
+        rightVbox.getChildren().add(descriptionTextArea);
+
+        hbox.getChildren().addAll(leftVbox, rightVbox);
 
         return hbox;
-
     }
 }

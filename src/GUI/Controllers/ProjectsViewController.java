@@ -232,10 +232,8 @@ public class ProjectsViewController implements Initializable {
         stackPane.setCursor(Cursor.HAND);
         stackPane.setOnMousePressed(e -> {
             ProjectModel projectModel = ProjectModel.getInstance();
-
-            projectModel.setIsProjectSelected(true);
             projectModel.setSelectedProject(project);
-
+            projectModel.setIsProjectSelected(true);
         });
 
         return stackPane;

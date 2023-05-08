@@ -7,12 +7,20 @@ import bll.helpers.DocumentBoxGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DocumentsViewController implements Initializable {
@@ -28,6 +36,17 @@ public class DocumentsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        projectModel.refreshProjectDocuments();
+        System.out.println(projectModel.getProjectDocuments().get(0).getDocumentType());
+        for (IDocument document: projectModel.getProjectDocuments()) {
+            HBox hBox = docBoxGenerator.buildDocumentBox(document);
+            documentsBox.getChildren().add(hBox);
+        }
+    }
+
+
+    public void clickBack(ActionEvent actionEvent) {
+        //TODO
         System.out.println("initialized");
 
        for (IDocument document: projectModel.getProjectDocuments()) {
@@ -42,9 +61,6 @@ public class DocumentsViewController implements Initializable {
         }
     }
 
-    public void clickBack(ActionEvent actionEvent) {
-        //TODO
-    }
 
     public void clickDocuments(ActionEvent actionEvent) {
         //TODO
@@ -60,7 +76,19 @@ public class DocumentsViewController implements Initializable {
     }
 
     public void clickAddDocument(ActionEvent actionEvent) {
-        //TODO
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/NewDocumentView.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+
+        Stage popupStage = new Stage();
+        popupStage.setScene(scene);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.showAndWait();
     }
 
 
