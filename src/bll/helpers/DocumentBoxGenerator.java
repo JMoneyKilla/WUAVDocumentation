@@ -1,5 +1,7 @@
 package bll.helpers;
 
+import GUI.Models.ProjectModel;
+import GUI.Models.UserModel;
 import be.documents.IDocument;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -8,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class DocumentBoxGenerator {
-
+    UserModel userModel = UserModel.getInstance();
     public HBox buildDocumentBox(IDocument document){
         int docType = document.getDocumentType();
         HBox hBox = null;
@@ -30,7 +32,7 @@ public class DocumentBoxGenerator {
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
 
-            Label createdByLabel = new Label("Created by: " + document.getUserId());
+            Label createdByLabel = new Label("Created by: " + userModel.getUserName(document.getUserId()));
             Label dateAddedLabel = new Label("Date added: " + document.getDateAdded());
             Label documentIdLabel = new Label("Document ID: " + document.getDocumentId());
 
@@ -57,7 +59,7 @@ public class DocumentBoxGenerator {
         VBox leftVbox = new VBox();
         leftVbox.setPrefSize(300, 150);
 
-        Label createdByLabel = new Label("Created by: " + document.getUserId());
+        Label createdByLabel = new Label("Created by: " + userModel.getUserName(document.getUserId()));
         Label dateAddedLabel = new Label("Date added: " + document.getDateAdded());
         Label documentIdLabel = new Label("Document ID: " + document.getDocumentId());
 

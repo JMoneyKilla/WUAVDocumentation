@@ -67,12 +67,16 @@ public class NewDocumentViewController implements Initializable {
                 projectId(projectId).userId(userId).documentType(documentType).dateAdded(dateAdded);
         if((documentType == 1 || documentType == 2) && documentValidator.isDiagramOrPictureDocValid(docName, docDescription, docFilePath)){
                 facadeManager.createDocument(documentBuilder.build(documentType));
+                projectModel.refreshProjectDocuments();
+                Stage stage = (Stage) buttonAddDocument.getScene().getWindow();
+                stage.close();
         }
         if(documentType == 3 && documentValidator.isTextDocValid(docName, docDescription)){
             facadeManager.createDocument(documentBuilder.build(documentType));
+            projectModel.refreshProjectDocuments();
+            Stage stage = (Stage) buttonAddDocument.getScene().getWindow();
+            stage.close();
         }
-
-        System.out.println(textAreaDescription.getText());
     }
 
     public void clickCancel(ActionEvent actionEvent) {

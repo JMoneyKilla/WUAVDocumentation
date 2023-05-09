@@ -30,6 +30,18 @@ public class UserDAO {
         }
         return allUsers;
     }
+    public String getUserName(int userId) throws SQLException {
+        String userName = "could not find user";
+        String sql = "Select user_name FROM [USER] WHERE user_id = " + userId + ";";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                userName = rs.getString("user_name");
+            }
+        }
+        return userName;
+    }
 
     public List getAllEmails() throws SQLException{
         List<String> emails = new ArrayList<>();

@@ -205,6 +205,7 @@ public class ProjectsViewController implements Initializable {
                 if (alert.getResult() == ButtonType.YES) {
                     projectModel.deleteProjectFromUserProject(project);
                     projectModel.deleteProject(project);
+                    projectModel.refreshUserProjects();
                     projectModel.getProjects();
                 }
             }

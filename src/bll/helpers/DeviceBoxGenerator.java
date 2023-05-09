@@ -1,5 +1,6 @@
 package bll.helpers;
 
+import GUI.Models.UserModel;
 import be.Device;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -7,14 +8,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class DeviceBoxGenerator {
+    UserModel userModel = UserModel.getInstance();
 
     public HBox buildDeviceBox(Device device){
         HBox hBox = new HBox();
         VBox vBoxLeft = new VBox();
         VBox vBoxRight = new VBox();
         Label deviceName = new Label(device.getDeviceName());
-        Label deviceId = new Label("Device ID: " + deviceName.getId());
-        Label userId = new Label("Added by: " + device.getUserId());
+        Label deviceId = new Label("Device ID: " + device.getDeviceId());
+        Label userId = new Label("Added by: " + userModel.getUserName(userModel.getLoggedInUser().getId()));
         Label dateAdded = new Label("Date added: " + device.getDateAdded());
 
         TextArea description = new TextArea(device.getDescription());

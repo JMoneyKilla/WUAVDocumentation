@@ -36,44 +36,17 @@ public class DocumentsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        projectModel.refreshProjectDocuments();
-        System.out.println(projectModel.getProjectDocuments().get(0).getDocumentType());
-        for (IDocument document: projectModel.getProjectDocuments()) {
-            HBox hBox = docBoxGenerator.buildDocumentBox(document);
-            documentsBox.getChildren().add(hBox);
+        try{
+            projectModel.refreshProjectDocuments();
+            for (IDocument document : projectModel.getProjectDocuments()) {
+                HBox hBox = docBoxGenerator.buildDocumentBox(document);
+                documentsBox.getChildren().add(hBox);
+            }
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("No documents");
         }
     }
 
-
-    public void clickBack(ActionEvent actionEvent) {
-        //TODO
-        System.out.println("initialized");
-
-       for (IDocument document: projectModel.getProjectDocuments()) {
-            documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
-      }
-
-     //  for (IDocument document: projectModel.getProjectDocuments()) {
-     //       documentsBox.getChildren().add(docBoxGenerator.buildDocumentBox(document));
-     //   }
-        if(userModel.getLoggedInUser().getType()==3){
-            buttonAddDocument.setVisible(false);
-        }
-    }
-
-
-    public void clickDocuments(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickDevices(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void clickGetReport(ActionEvent actionEvent) {
-        //TODO
-
-    }
 
     public void clickAddDocument(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/NewDocumentView.fxml"));

@@ -65,4 +65,11 @@ public class UserModel {
             throw new RuntimeException(e);
         }
     }
-}
+    public String getUserName(int userId){
+        try {
+            return bll.getUserName(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    }

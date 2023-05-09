@@ -43,7 +43,7 @@ public class CreateNewProjectViewController implements Initializable {
                     txtFieldProjectName.getText(), projectModel.getSelectedProject().getDateLastVisited(),
                     txtFieldName.getText(), txtFieldAddress.getText(),
                     projectModel.getSelectedProject().getCompanyType()));
-
+            projectModel.refreshUserProjects();
             projectModel.setSelectedProject(null);
             projectModel.getProjects();
 
@@ -53,6 +53,7 @@ public class CreateNewProjectViewController implements Initializable {
         }
         if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText())){
             projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(), 1));
+            projectModel.refreshUserProjects();
             userModel.addUserToProject(userModel.getLoggedInUser());
             projectModel.getProjects();
             Node n = (Node) actionEvent.getSource();

@@ -125,4 +125,7 @@ public class FacadeManager {
     public void addUserToProject(User user) throws SQLException {
         userManager.addUserToProject(user);
     }
-}
+    public String getUserName(int userId) throws SQLException {
+        return userManager.getUserName(userId);
+    }
+    }

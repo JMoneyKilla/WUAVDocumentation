@@ -2,6 +2,7 @@ package GUI.Models;
 
 import be.Device;
 import be.Project;
+import be.User;
 import be.documents.IDocument;
 import bll.InputManager;
 import bll.FacadeManager;
@@ -22,6 +23,7 @@ public class ProjectModel {
     private ObservableList<Project> userProjects;
     private Project selectedProject;
     FacadeManager facadeManager = new FacadeManager();
+    UserModel userModel = UserModel.getInstance();
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
 
@@ -39,6 +41,23 @@ public class ProjectModel {
         try {
             projectDocuments.clear();
             projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void refreshProjectDevices(){
+        try{
+            projectDevices.clear();
+            projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void refreshUserProjects(){
+        projects.clear();
+        try {
+            projects.addAll(facadeManager.getUserProjects(userModel.getLoggedInUser().getId()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

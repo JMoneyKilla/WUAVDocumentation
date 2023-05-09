@@ -58,4 +58,7 @@ public class UserManager {
     public void addUserToProject(User user) throws SQLException {
         userDAO.addUserToProject(user);
     }
-}
+    public String getUserName(int userId) throws SQLException {
+        return userDAO.getUserName(userId);
+    }
+    }
