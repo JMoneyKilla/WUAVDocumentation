@@ -6,11 +6,6 @@
     -fx-background-color: #846A6A;
 
 }
-.hboxSmall {
-    -fx-background-color: #846A6A;
-    -fx-border-radius: 0 0 15 15;
-    -fx-background-radius: 15 15 15 15;
-}
 .mfx-text-field {
     -fx-border-radius: 15 15 15 15;
     -fx-background-radius: 15 15 15 15;
@@ -30,4 +25,5 @@
 
 .text-field-custom {
     -fx-background-color: #C6C7C4;
+    -fx-font-family: Segoe UI Semibold;
 }

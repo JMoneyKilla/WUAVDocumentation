@@ -29,38 +29,40 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectsViewController implements Initializable {
 
     @FXML
-    private Label lableCurrentPage,lableMaxPage;
-    @FXML
     private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
 
+
+    List<Project> projectsList= projectModel.getProjects();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(userModel.getLoggedInUser().getType()==2){
             loadUserProjectData();
         }
-        else loadData();
+        else loadData(projectsList);
     }
-    public void loadData(){
+    public void loadData(List<Project> projectsList){
         int row = 0;
         int col = 0;
-        for (Project project : projectModel.getProjects()) {
+        for (Project project : projectsList) {
             StackPane stackPane = generateEventPane(project);
             paneProject.getChildren().add(stackPane);
             paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
-            AnchorPane.setTopAnchor(stackPane, 10 + row * 145.0);
+            AnchorPane.setTopAnchor(stackPane, 10 + row * 150.0);
             AnchorPane.setLeftAnchor(stackPane, 20 + col * 420.0);
             col++;
             if (col == 2) {
                 col = 0;
                 row++;
             }
+
         }
     }
 
@@ -110,6 +112,7 @@ public class ProjectsViewController implements Initializable {
         projectName.setPrefSize(stackPane.getPrefWidth(), 16);
         projectName.setFont(Font.font(16));
         projectName.setStyle("-fx-text-fill: #0C2D48;");
+        projectName.setFont(Font.font("Segoe UI Semibold"));
         projectName.setText(project.getName());
         projectName.setTextAlignment(TextAlignment.CENTER);
         projectName.setPadding(new Insets(5, 5, 5, 150));
@@ -118,6 +121,7 @@ public class ProjectsViewController implements Initializable {
         Label customerName = new Label();
         customerName.setPrefSize(stackPane.getPrefWidth(), 11);
         customerName.setFont(Font.font(13));
+        customerName.setFont(Font.font("Segoe UI Semibold"));
         customerName.setStyle("-fx-text-fill: #0C2D48;");
         customerName.setText("Customer: " + project.getCustomerName());
         customerName.setPadding(new Insets(5, 5, 5, 10));
@@ -127,6 +131,7 @@ public class ProjectsViewController implements Initializable {
         date.setPrefSize(stackPane.getPrefWidth(), 11);
         date.setFont(Font.font(13));
         date.setStyle("-fx-text-fill: #0C2D48;");
+        date.setFont(Font.font("Segoe UI Semibold"));
         date.setText("Last visited: " + project.getDateLastVisited());
         date.setPadding(new Insets(5, 5, 5, 10));
         date.setTextAlignment(TextAlignment.CENTER);
@@ -134,6 +139,7 @@ public class ProjectsViewController implements Initializable {
 
         Label address = new Label();
         address.setPrefSize(stackPane.getPrefWidth(), 11);
+        address.setFont(Font.font("Segoe UI Semibold"));
         address.setFont(Font.font(13));
         address.setStyle("-fx-text-fill: #0C2D48;");
         address.setText("Address: " + project.getCompanyAddress());
@@ -247,6 +253,8 @@ public class ProjectsViewController implements Initializable {
     }
 
     public void clickPageForward(ActionEvent actionEvent) {
+        if(projectsList.size() > 6){
+        }
     }
 
     public void clickPageToTheBack(ActionEvent actionEvent) {

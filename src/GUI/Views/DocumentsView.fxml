@@ -19,8 +19,11 @@
                      <children>
                         <Label text="Documents">
                            <font>
-                              <Font size="25.0" />
+                              <Font name="Segoe UI Semibold" size="25.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
                         </Label>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -28,6 +31,9 @@
                                  <HBox.margin>
                                     <Insets right="15.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Segoe UI Semibold" size="13.0" />
+                                 </font>
                               </MFXButton>
                            </children>
                         </HBox>

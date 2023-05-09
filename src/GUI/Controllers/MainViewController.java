@@ -2,6 +2,14 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
+import be.Project;
+import bll.InputManager;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.beans.Observable;
+import javafx.beans.property.ListProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +28,14 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.EventListener;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
+    @FXML
+    private MFXTextField textSearch;
     @FXML
     private VBox sideBar;
     ProjectsViewController projectsViewController = null;
@@ -39,11 +51,22 @@ public class MainViewController implements Initializable {
     private Button btnCreateNewProject;
 
     ProjectModel projectModel = ProjectModel.getInstance();
-
+    InputManager inputManager = new InputManager();
 
     //listens for the user to click on a project so it can switch to the documents
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                List<Project> filteredList = inputManager.searchProjectName(textSearch.getText());
+                //loadData(filteredList);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
         borderPane.getChildren().remove(sideBar);
         projectModel.isProjectSelectedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue==true){

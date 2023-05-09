@@ -17,14 +17,14 @@
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="600.0" text="Add New Document">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Segoe UI Semibold" size="24.0" />
                </font>
             </Label>
             <HBox prefHeight="54.0" prefWidth="600.0">
                <children>
                   <Label prefHeight="27.0" prefWidth="199.0" text="Document Name: ">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Segoe UI Semibold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -32,7 +32,7 @@
                   </Label>
                   <TextField fx:id="textFieldDocumentName">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Segoe UI Semibold" size="14.0" />
                      </font>
                   </TextField>
                </children>
@@ -41,7 +41,7 @@
                <children>
                   <Label prefHeight="27.0" prefWidth="200.0" text="Document Type:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Segoe UI Semibold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -54,7 +54,7 @@
                <children>
                   <Label prefHeight="27.0" prefWidth="200.0" text="Description: ">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Segoe UI Semibold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
@@ -62,7 +62,7 @@
                   </Label>
                   <TextArea fx:id="textAreaDescription" prefHeight="100.0" prefWidth="371.0" wrapText="true">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Segoe UI Semibold" size="14.0" />
                      </font>
                   </TextArea>
                </children>
@@ -71,17 +71,23 @@
                <children>
                   <Label fx:id="labelAddFile" prefHeight="27.0" prefWidth="200.0" text="Add File:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Segoe UI Semibold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <MFXButton fx:id="buttonChooseFile" onAction="#clickChooseFile" text="choose file..." />
+                  <MFXButton fx:id="buttonChooseFile" onAction="#clickChooseFile" text="choose file...">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="12.0" />
+                     </font></MFXButton>
                   <TextField fx:id="textFieldFilePath">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Semibold" size="12.0" />
+                     </font>
                   </TextField>
                </children>
                <VBox.margin>
@@ -92,13 +98,16 @@
                <children>
                   <Label fx:id="labelAddFile1" prefHeight="27.0" prefWidth="200.0" text="Reference Number: ">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Segoe UI Semibold" size="18.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="textFieldRefNum" prefHeight="25.0" prefWidth="99.0" />
+                  <TextField fx:id="textFieldRefNum" prefHeight="25.0" prefWidth="99.0">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="12.0" />
+                     </font></TextField>
                </children>
             </HBox>
             <HBox prefHeight="45.0" prefWidth="600.0">
@@ -107,11 +116,17 @@
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Semibold" size="13.0" />
+                     </font>
                   </MFXButton>
                   <MFXButton fx:id="buttonCancel" onAction="#clickCancel" text="Cancel">
                      <HBox.margin>
                         <Insets left="420.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Semibold" size="12.0" />
+                     </font>
                   </MFXButton>
                </children>
             </HBox>

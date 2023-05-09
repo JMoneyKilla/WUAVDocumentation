@@ -27,12 +27,12 @@
                               <Insets left="15.0" />
                            </HBox.margin>
                            <font>
-                              <Font size="20.0" />
+                              <Font name="Segoe UI Semibold" size="20.0" />
                            </font>
                         </Label>
                         <Label fx:id="lableUserName" prefHeight="30.0" prefWidth="226.0" text="User" textFill="WHITE">
                            <font>
-                              <Font size="20.0" />
+                              <Font name="Segoe UI Semibold" size="20.0" />
                            </font>
                         </Label>
                      </children>
@@ -66,7 +66,7 @@
                               <Insets bottom="20.0" right="15.0" top="20.0" />
                            </HBox.margin>
                         </MenuButton>
-                        <MFXTextField floatMode="BORDER" prefHeight="40.0" prefWidth="250.0" promptText="Search.." HBox.hgrow="ALWAYS">
+                        <MFXTextField fx:id="textSearch" floatMode="BORDER" prefHeight="40.0" prefWidth="250.0" promptText="Search.." HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="15.0" right="15.0" top="15.0" />
                            </HBox.margin>
@@ -74,7 +74,7 @@
                               <Insets bottom="5.0" left="15.0" top="5.0" />
                            </padding>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="Segoe UI Semibold" size="15.0" />
                            </font>
                         </MFXTextField>
                         <Button fx:id="btnCreateNewProject" mnemonicParsing="false" onAction="#clickCreateNewProject" styleClass="button-top" stylesheets="@MainStyleSheet.css" text="Create new Project..." translateX="-9.0" />
@@ -93,17 +93,17 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                            <font>
-                              <Font size="15.0" />
+                              <Font name="Segoe UI Semibold" size="15.0" />
                            </font>
                         </MFXButton>
                         <MFXButton fx:id="buttonDocuments" buttonType="RAISED" onAction="#clickDocuments" text="Documents">
                            <font>
-                              <Font size="15.0" />
+                              <Font name="Segoe UI Semibold" size="15.0" />
                            </font>
                         </MFXButton>
                         <MFXButton fx:id="buttonDevices" buttonType="RAISED" onAction="#clickDevices" text="Devices">
                            <font>
-                              <Font size="15.0" />
+                              <Font name="Segoe UI Semibold" size="15.0" />
                            </font>
                         </MFXButton>
                      </children>
@@ -115,7 +115,7 @@
                      <children>
                         <MFXButton fx:id="buttonGetReport" buttonType="RAISED" onAction="#clickGetReport" text="Get report">
                            <font>
-                              <Font size="16.0" />
+                              <Font name="Segoe UI Semibold" size="16.0" />
                            </font>
                         </MFXButton>
                      </children>
