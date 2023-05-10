@@ -151,8 +151,8 @@ public class ProjectModel {
 
     // Validator methods
 
-    public boolean isProjectValid(String name, String companyName, String address){
-        return validator.isProjectValid(name, companyName, address);
+    public boolean isProjectValid(String name, String companyName, String address, String zipcode){
+        return validator.isProjectValid(name, companyName, address, zipcode);
     }
 
     // Date method

@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXToggleButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneMainProject" prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.ProjectsViewController">
+<AnchorPane fx:id="paneMainProject" prefHeight="475.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.ProjectsViewController">
    <children>
-      <ScrollPane fx:id="paneScroll" fitToWidth="true" layoutX="324.0" layoutY="99.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="paneScroll" fitToWidth="true" layoutX="1.0" layoutY="42.0" prefHeight="475.0" prefWidth="875.0" AnchorPane.bottomAnchor="-42.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="42.0">
          <content>
             <VBox alignment="CENTER" prefHeight="475.0" prefWidth="875.0">
                <children>
-                  <AnchorPane fx:id="paneProject" prefHeight="475.0" prefWidth="875.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_CENTER" nodeOrientation="LEFT_TO_RIGHT" />
+                  <AnchorPane fx:id="paneProject" prefHeight="487.0" prefWidth="870.0" />
                </children>
             </VBox>
          </content>
       </ScrollPane>
+      <MFXToggleButton contentDisposition="CENTER" layoutX="405.0" onAction="#toggleView" prefHeight="26.0" prefWidth="66.0" />
+      <Label layoutX="373.0" layoutY="8.0" text="Grid">
+         <font>
+            <Font name="Segoe UI Semibold" size="16.0" />
+         </font></Label>
+      <Label layoutX="471.0" layoutY="8.0" text="List">
+         <font>
+            <Font name="Segoe UI Semibold" size="16.0" />
+         </font></Label>
    </children>
 </AnchorPane>

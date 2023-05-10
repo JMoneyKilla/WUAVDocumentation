@@ -25,8 +25,9 @@ public class ProjectDAO {
                 String dateLastVisited = rs.getString("date_last_visited");
                 String customerName = rs.getString("customer_name");
                 String companyAddress = rs.getString("company_address");
+                int zipCode = rs.getInt("zip_code");
                 int type = rs.getInt("company_type");
-                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, type);
+                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, zipCode, type);
                 allProjects.add(project);
             }
         }
@@ -50,8 +51,9 @@ public class ProjectDAO {
                 String dateLastVisited = rs.getString("date_last_visited");
                 String customerName = rs.getString("customer_name");
                 String companyAddress = rs.getString("company_address");
+                int zipCode = rs.getInt("zip_code");
                 int type = rs.getInt("company_type");
-                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, type);
+                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress,zipCode, type);
                 userProjects.add(project);
             }
         }

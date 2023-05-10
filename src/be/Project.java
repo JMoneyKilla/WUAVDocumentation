@@ -12,22 +12,25 @@ public class Project {
     private StringProperty dateLastVisited = new SimpleStringProperty();
     private StringProperty customerName = new SimpleStringProperty();
     private StringProperty companyAddress = new SimpleStringProperty();
+    private IntegerProperty zipCode = new SimpleIntegerProperty();
     private IntegerProperty companyType = new SimpleIntegerProperty();
 
-    public Project(int id, String name, String dateLastChecked, String customerName, String companyAddress, int companyType){
+    public Project(int id, String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType){
         setId(id);
         setName(name);
         setDateLastVisited(dateLastChecked);
         setCustomerName(customerName);
+        setZipCode(zipCode);
         setCompanyAddress(companyAddress);
         setCompanyType(companyType);
     }
 
-    public Project(String name, String dateLastChecked, String customerName, String companyAddress, int companyType){
+    public Project(String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType){
         setName(name);
         setDateLastVisited(dateLastChecked);
         setCustomerName(customerName);
         setCompanyAddress(companyAddress);
+        setZipCode(zipCode);
         setCompanyType(companyType);
     }
 
@@ -95,6 +98,22 @@ public class Project {
 
     public void setCompanyType(int companyType) {
         this.companyType.set(companyType);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public int getZipCode() {
+        return zipCode.get();
+    }
+
+    public IntegerProperty zipCodeProperty() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode.set(zipCode);
     }
 }
 

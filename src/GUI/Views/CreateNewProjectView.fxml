@@ -8,23 +8,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="312.0" prefWidth="408.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.CreateNewProjectViewController">
+<AnchorPane prefHeight="312.0" prefWidth="408.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.CreateNewProjectViewController">
    <children>
-      <TextField fx:id="txtFieldProjectName" layoutX="122.0" layoutY="84.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
-      <TextField fx:id="txtFieldName" layoutX="122.0" layoutY="156.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
-      <Text layoutX="40.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project name:">
+      <TextField fx:id="txtFieldProjectName" layoutX="122.0" layoutY="62.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
+      <TextField fx:id="txtFieldName" layoutX="122.0" layoutY="133.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
+      <Text layoutX="40.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project name:">
          <font>
             <Font name="Segoe UI Semibold" size="12.0" />
          </font></Text>
-      <Text layoutX="67.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+      <Text layoutX="77.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
          <font>
             <Font name="Segoe UI Semibold" size="12.0" />
          </font></Text>
-      <Text layoutX="62.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+      <Text layoutX="62.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
          <font>
             <Font name="Segoe UI Semibold" size="13.0" />
          </font></Text>
-      <TextField fx:id="txtFieldAddress" layoutX="122.0" layoutY="199.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
+      <TextField fx:id="txtFieldAddress" layoutX="122.0" layoutY="176.0" prefHeight="25.0" prefWidth="228.0" styleClass="text-field-custom" />
       <Pane layoutY="-4.0" prefHeight="55.0" prefWidth="408.0" style="-fx-background-color: #846A6A;" />
       <Button layoutX="288.0" layoutY="264.0" mnemonicParsing="false" onAction="#clickSave" text="Save" textFill="WHITE">
          <font>
@@ -35,5 +35,11 @@
             <Font name="Segoe UI Semibold" size="13.0" />
          </font></Button>
       <Label fx:id="lblWarning" layoutX="212.0" layoutY="233.0" prefHeight="17.0" prefWidth="161.0" />
+      <TextField fx:id="txtFieldZipcode" layoutX="122.0" layoutY="220.0" prefHeight="26.0" prefWidth="75.0" styleClass="text-field-custom" />
+      <Text layoutX="61.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zip code">
+         <font>
+            <Font name="Segoe UI Semibold" size="13.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

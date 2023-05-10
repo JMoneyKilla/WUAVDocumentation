@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class CreateNewProjectViewController implements Initializable {
 
     @FXML
-    private TextField txtFieldProjectName, txtFieldName, txtFieldAddress;
+    private TextField txtFieldProjectName, txtFieldName, txtFieldAddress, txtFieldZipcode;
     @FXML
     private Label lblWarning;
     ProjectModel projectModel = ProjectModel.getInstance();
@@ -39,9 +39,13 @@ public class CreateNewProjectViewController implements Initializable {
 
     public void clickSave(ActionEvent actionEvent) {
         if(isEditTrue){
-            projectModel.updateProject(new Project(projectModel.getSelectedProject().getId(),
-                    txtFieldProjectName.getText(), projectModel.getSelectedProject().getDateLastVisited(),
-                    txtFieldName.getText(), txtFieldAddress.getText(),
+            projectModel.updateProject(new Project(
+                    projectModel.getSelectedProject().getId(),
+                    txtFieldProjectName.getText(),
+                    projectModel.getSelectedProject().getDateLastVisited(),
+                    txtFieldName.getText(),
+                    txtFieldAddress.getText(),
+                    Integer.parseInt(txtFieldZipcode.getText()),
                     projectModel.getSelectedProject().getCompanyType()));
             projectModel.refreshUserProjects();
             projectModel.setSelectedProject(null);
@@ -51,8 +55,8 @@ public class CreateNewProjectViewController implements Initializable {
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
         }
-        if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText())){
-            projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(), 1));
+        if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText(),txtFieldZipcode.getText())){
+            projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(),Integer.parseInt(txtFieldZipcode.getText()), 1));
             projectModel.refreshUserProjects();
             userModel.addUserToProject(userModel.getLoggedInUser());
             projectModel.getProjects();

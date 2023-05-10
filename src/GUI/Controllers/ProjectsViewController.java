@@ -6,6 +6,10 @@ import be.Project;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,10 +20,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -35,18 +37,28 @@ import java.util.ResourceBundle;
 public class ProjectsViewController implements Initializable {
 
     @FXML
+    private ScrollPane paneScroll;
+    @FXML
     private AnchorPane paneProject, paneMainProject;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
 
 
     List<Project> projectsList= projectModel.getProjects();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(userModel.getLoggedInUser().getType()==2){
             loadUserProjectData();
         }
         else loadData(projectsList);
+        toggleView.addListener((obs, oldVal, newVal) -> {
+            if (newVal==true) {
+                changeViewList();
+            } else {
+                changeViewGrid();
+            }
+        });
     }
     public void loadData(List<Project> projectsList){
         int row = 0;
@@ -152,15 +164,15 @@ public class ProjectsViewController implements Initializable {
         hbox.setPadding(new Insets(0, 0, 0, 3));
         hbox.setId("hbox");
 
-        Button addButton = new Button();
-        addButton.setStyle("-fx-font-family: arial;\n" +
+        Button AssignButton = new Button();
+        AssignButton.setStyle("-fx-font-family: arial;\n" +
                 "    -fx-font-size: 10px;\n" +
                 "    -fx-text-fill: #0C2D48;\n" +
                 "    -fx-background-color: #A2999E;");
-        addButton.setText("Add...");
-        addButton.setId("addButton");
-        addButton.setPrefSize(60, 20);
-        addButton.setTranslateY(-10);
+        AssignButton.setText("Assign");
+        AssignButton.setId("AssignButton");
+        AssignButton.setPrefSize(60, 20);
+        AssignButton.setTranslateY(-10);
 
         Button editButton = new Button();
         editButton.setStyle("-fx-font-family: arial;\n" +
@@ -224,7 +236,7 @@ public class ProjectsViewController implements Initializable {
         vBox.getChildren().add(hbox);
         hbox.getChildren().add(new Label("                                                         "));
         if(userModel.getLoggedInUser().getType()==1){
-        hbox.getChildren().add(addButton);
+        hbox.getChildren().add(AssignButton);
         hbox.getChildren().add(new Label(" "));
         hbox.getChildren().add(deleteButton);
         }
@@ -246,17 +258,37 @@ public class ProjectsViewController implements Initializable {
         return stackPane;
     }
 
-        public void clickPageToFront(ActionEvent actionEvent) {
+    BooleanProperty toggleView = new SimpleBooleanProperty();
+    public void toggleView(ActionEvent actionEvent) {
+        toggleView.set(!toggleView.get());
+
     }
 
-    public void clickPageBackward(ActionEvent actionEvent) {
-    }
+    private void changeViewList() {
+        paneProject.getChildren().remove(0, paneProject.getChildren().size());
+       ObservableList<Project> observableList = FXCollections.observableArrayList(projectsList);
+        TableView tableView = new TableView(observableList);
+        TableColumn<Project, String> nameColumn = new TableColumn<>("Project Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Project, String> customerColumn = new TableColumn<>("Customer");
+        customerColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        TableColumn<Project, String> addressColumn = new TableColumn<>("Address");
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("companyAddress"));
+        TableColumn<Project, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateLastVisited"));
+        TableColumn<Project, String> zipColumn = new TableColumn<>("Zip code");
+        zipColumn.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
 
-    public void clickPageForward(ActionEvent actionEvent) {
-        if(projectsList.size() > 6){
-        }
-    }
+        tableView.getColumns().addAll(nameColumn, customerColumn, addressColumn, dateColumn, zipColumn);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setPrefSize(paneProject.getPrefWidth(), paneProject.getPrefHeight());
 
-    public void clickPageToTheBack(ActionEvent actionEvent) {
+        paneProject.getChildren().add(tableView);
+
+    }
+    private void changeViewGrid(){
+        paneProject.getChildren().remove(0, paneProject.getChildren().size());
+        loadData(projectsList);
+
     }
 }
