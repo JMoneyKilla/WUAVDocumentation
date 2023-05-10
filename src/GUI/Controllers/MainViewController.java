@@ -41,9 +41,31 @@ public class MainViewController implements Initializable {
     ProjectModel projectModel = ProjectModel.getInstance();
 
 
-    //listens for the user to click on a project so it can switch to the documents
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if(!projectModel.getOldProjects().isEmpty()) {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ReminderView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Create the scene and set it on a new stage
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("Delete old projects?");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.setAlwaysOnTop(true);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
+        //listens for the user to click on a project so it can switch to the documents
         borderPane.getChildren().remove(sideBar);
         projectModel.isProjectSelectedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue==true){
@@ -61,12 +83,11 @@ public class MainViewController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //lableUserName.setText(""+userModel.getLoggedInUser().getName());
+        lableUserName.setText(""+userModel.getLoggedInUser().getName());
 
         if(userModel.getLoggedInUser().getType()!= 1){
             btnCreateNewProject.setVisible(false);
         }
-
     }
     public void projectsSwitch() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectsView.fxml"));
