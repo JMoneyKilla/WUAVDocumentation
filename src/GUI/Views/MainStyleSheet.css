@@ -3,24 +3,34 @@
 }
 
 .hbox {
-    -fx-background-color: #846A6A;
+    -fx-background-color: #856a6a;
 
 }
 .mfx-text-field {
-    -fx-border-radius: 15 15 15 15;
-    -fx-background-radius: 15 15 15 15;
     -fx-alignment: CENTER;
+    -fx-background-radius: 15 15 15 15;
+    -fx-border-radius: 15 15 15 15;
 }
 
 .button{
-    -fx-background-color: #846A6A;
+    -fx-background-color: #856a6a;
     -fx-text-fill: 	white;
 }
 
 .button-top{
     -fx-background-color: #A2999E;
     -fx-text-fill: #000000;
+}
 
+.text-field-custom {
+    -fx-background-color: #C6C7C4;
+    -fx-font-family: Segoe UI Semibold;
+}
+
+
+.button-top{
+    -fx-background-color: #A2999E;
+    -fx-text-fill: #000000;
 }
 
 .text-field-custom {

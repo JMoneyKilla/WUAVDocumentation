@@ -3,13 +3,14 @@ package dal;
 
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 
 public class DataBaseConnection {
     private static DataBaseConnection instance;
+
 
     public static DataBaseConnection getInstance(){
         if(instance == null)
@@ -21,7 +22,7 @@ public class DataBaseConnection {
      * Creates a connection to our database.
      * @return database connection.
      */
-    public Connection getConnection() {
+    public Connection getConnection()  {
         SQLServerDataSource ds;
         ds = new SQLServerDataSource();
         ds.setDatabaseName("CSe2022B_e_14_WUAV_Documentation");
@@ -32,8 +33,8 @@ public class DataBaseConnection {
         ds.setTrustServerCertificate(true);
         try {
             return ds.getConnection();
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DALException(e.getMessage());
         }
     }
 }
