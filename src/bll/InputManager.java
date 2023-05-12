@@ -5,6 +5,7 @@ import dal.ProjectDAO;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,38 @@ public class InputManager {
 
 
     // Date input
-    public String getDateToday(){
+    public String getDateToday() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.now();
         return dtf.format(localDate);
     }
 
-    // Filter input
+    public boolean isDate48MonthsOld(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate dateToCheck = localDate;
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(dateToCheck, now);
+        int months = (int) period.toTotalMonths();
+        if (months >= 48) {
+            return true;
+        } else return false;
+
+    }
+
+    public List getOldProjects() throws SQLException {
+        List<Project> getAllProjects = projectDAO.getAllProjects();
+        List<Project> oldProjects = new ArrayList<>();
+
+        for(Project p : getAllProjects){
+            if(isDate48MonthsOld(p.getDateLastVisited())){
+                oldProjects.add(p);
+            }
+        }
+        return oldProjects;
+    }
+
+        // Filter input
 
     public List<Project> searchProjectName(String str) throws SQLException {
         List<Project> getAllProjects = projectDAO.getAllProjects();

@@ -17,11 +17,15 @@ import java.util.List;
 
 public class ProjectModel {
     private static ProjectModel instance;
-    private ObservableList<Project> projects;
-    private ObservableList<IDocument> projectDocuments;
-    private ObservableList<Device> projectDevices;
-    private ObservableList<Project> userProjects;
+    private final ObservableList<Project> projects;
+    private final ObservableList<IDocument> projectDocuments;
+    private final ObservableList<Device> projectDevices;
+    private final ObservableList<Project> userProjects;
+    private final ObservableList<Project> oldProjects;
+
     private Project selectedProject;
+
+    private List ids;
     FacadeManager facadeManager = new FacadeManager();
     UserModel userModel = UserModel.getInstance();
 
@@ -68,11 +72,27 @@ public class ProjectModel {
         projectDocuments = FXCollections.observableArrayList();
         projectDevices = FXCollections.observableArrayList();
         userProjects = FXCollections.observableArrayList();
+        oldProjects = FXCollections.observableArrayList();
+        fetchAllOldProjects();
 
     }
 
     public List<Project> getProjects() {
         return facadeManager.getProjects();
+    }
+
+    public void fetchAllOldProjects() {
+        oldProjects.clear();
+        try {
+            oldProjects.addAll(inputManager.getOldProjects());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ObservableList<Project> getOldProjects() {
+        return oldProjects;
     }
 
     public List<IDocument> getProjectDocuments(){
@@ -149,6 +169,32 @@ public class ProjectModel {
         }
     }
 
+    public void setMultipleIds(List<Integer> ids){
+        this.ids=ids;
+    }
+
+    public List getMultipleIds(){
+        return ids;
+    }
+
+    public void deleteMultipleProjectsInUserProject(){
+        ids = getMultipleIds();
+        try {
+            facadeManager.deleteMultipleProjectsFromUserProject(ids);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteMultipleProjects() {
+        try {
+            ids = getMultipleIds();
+            facadeManager.deleteMultipleProjects(ids);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Validator methods
 
     public boolean isProjectValid(String name, String companyName, String address, String zipcode){
@@ -160,5 +206,4 @@ public class ProjectModel {
     public String getDateToday(){
         return inputManager.getDateToday();
     }
-
 }
