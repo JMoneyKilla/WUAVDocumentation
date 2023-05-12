@@ -21,7 +21,10 @@ public class ProjectModel {
     private final ObservableList<Device> projectDevices;
     private final ObservableList<Project> userProjects;
     private final ObservableList<Project> oldProjects;
+
     private Project selectedProject;
+
+    private List ids;
     FacadeManager facadeManager = new FacadeManager();
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
@@ -142,6 +145,32 @@ public class ProjectModel {
     public void deleteProjectFromUserProject(Project project){
         try {
             facadeManager.deleteProjectFromUserProject(project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setMultipleIds(List<Integer> ids){
+        this.ids=ids;
+    }
+
+    public List getMultipleIds(){
+        return ids;
+    }
+
+    public void deleteMultipleProjectsInUserProject(){
+        ids = getMultipleIds();
+        try {
+            facadeManager.deleteMultipleProjectsFromUserProject(ids);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteMultipleProjects() {
+        try {
+            ids = getMultipleIds();
+            facadeManager.deleteMultipleProjects(ids);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

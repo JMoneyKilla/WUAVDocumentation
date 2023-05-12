@@ -41,6 +41,13 @@ public class FacadeManager {
         projectManager.deleteProjectFromUserProject(project);
     }
 
+    public void deleteMultipleProjectsFromUserProject(List ids) throws SQLException {
+        projectManager.deleteMultipleProjectsFromUserProject(ids);
+    }
+    public void deleteMultipleProjects(List ids) throws SQLException {
+        projectManager.deleteMultipleProjects(ids);
+    }
+
     //Methods for accessing DeviceManager
     public List<Device> getDevicesOnProject(int projectId) throws SQLException {
         return deviceManager.getDevicesOnProject(projectId);
@@ -125,4 +132,5 @@ public class FacadeManager {
     public void addUserToProject(User user) throws SQLException {
         userManager.addUserToProject(user);
     }
+
 }

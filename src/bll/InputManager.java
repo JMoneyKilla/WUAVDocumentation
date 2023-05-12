@@ -30,12 +30,9 @@ public class InputManager {
         Period period = Period.between(dateToCheck, now);
         int months = (int) period.toTotalMonths();
         if (months >= 48) {
-            System.out.println("The date is more than 48 months old.");
             return true;
-        } else {
-            System.out.println("The date is less than 48 months old.");
-            return false;
-        }
+        } else return false;
+
     }
 
     public List getOldProjects() throws SQLException {

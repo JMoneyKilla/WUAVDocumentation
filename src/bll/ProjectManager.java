@@ -36,4 +36,12 @@ public class ProjectManager {
     public void deleteProjectFromUserProject(Project project) throws SQLException{
         projectDAO.deleteFromProjectFromUserProject(project);
     }
+
+    public void deleteMultipleProjects(List ids) throws SQLException {
+        projectDAO.deleteMultipleProjects(ids);
+    }
+
+    public void deleteMultipleProjectsFromUserProject(List ids) throws SQLException {
+        projectDAO.deleteMultipleProjectsFromUserProject(ids);
+    }
 }

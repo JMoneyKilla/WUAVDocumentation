@@ -102,6 +102,32 @@ public class ProjectDAO {
         }
     }
 
+    public void deleteMultipleProjectsFromUserProject(List<Integer> ids) throws SQLException {
+        String sql = "DELETE FROM UserProject WHERE project_id = ?";
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement statement = con.prepareStatement(sql);
+            List<Integer> idsToDelete = ids;
+            for (int project_id : idsToDelete) {
+                statement.setInt(1, project_id);
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        }
+    }
+    public void deleteMultipleProjects(List<Integer> ids) throws SQLException {
+        String sql = "DELETE FROM Project WHERE project_id = ?";
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement statement = con.prepareStatement(sql);
+            List<Integer> idsToDelete = ids;
+            for (int project_id : idsToDelete) {
+                statement.setInt(1, project_id);
+                statement.addBatch();
+            }
+            int[] rowsAffected = statement.executeBatch();
+            System.out.println(rowsAffected.length + " rows deleted.");
+        }
+    }
+
     public void updateProject(Project project) throws SQLException{
         int id = project.getId();
         String name = project.getName();
