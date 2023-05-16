@@ -18,7 +18,7 @@
    <children>
       <BorderPane fx:id="borderPane" layoutX="352.0" layoutY="109.0" prefHeight="550.0" prefWidth="1227.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: 846A6A;" BorderPane.alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: #846A6A;" BorderPane.alignment="CENTER_LEFT">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="hbox" stylesheets="@MainStyleSheet.css" HBox.hgrow="ALWAYS">
                      <children>

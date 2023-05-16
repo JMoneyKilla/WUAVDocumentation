@@ -3,13 +3,9 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
-import bll.InputManager;
+import bll.*;
+import bll.helpers.PDFReportGenerator;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.beans.Observable;
-import javafx.beans.property.ListProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +25,6 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.EventListener;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -52,11 +47,14 @@ public class MainViewController implements Initializable {
 
     ProjectModel projectModel = ProjectModel.getInstance();
     InputManager inputManager = new InputManager();
+    PDFReportGenerator pdfReportGenerator = new PDFReportGenerator();
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
+        lableUserName.setText(""+userModel.getLoggedInUser().getName());
         textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 List<Project> filteredList = inputManager.searchProjectName(textSearch.getText());
@@ -208,6 +206,7 @@ public class MainViewController implements Initializable {
     }
 
     public void clickGetReport(ActionEvent actionEvent) {
+        pdfReportGenerator.generatePDF(projectModel.getSelectedProject());
     }
 }
 
