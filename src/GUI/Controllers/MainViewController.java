@@ -2,14 +2,11 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
-import be.Project;
-import bll.InputManager;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.beans.Observable;
-import javafx.beans.property.ListProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -28,9 +26,6 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.EventListener;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -45,26 +40,38 @@ public class MainViewController implements Initializable {
     private Label lableUserName;
     @FXML
     private CheckBox toggleAddress, toggleProjectName, toggleCompanyName, toggleCustomerName;
+
+    @FXML
+    private ComboBox comboBox;
+
     UserModel userModel = UserModel.getInstance();
 
     @FXML
     private Button btnCreateNewProject;
 
     ProjectModel projectModel = ProjectModel.getInstance();
-    InputManager inputManager = new InputManager();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList("Address", "Customer name", "Project name", "Zip code");
+        comboBox.setItems(choiceBoxOptions);
 
-
-        textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                List<Project> filteredList = inputManager.searchProjectName(textSearch.getText());
-                //loadData(filteredList);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        textSearch.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(comboBox.getSelectionModel().getSelectedItem().equals("Address")){
+                    projectModel.searchAddress(newValue);
+                }
+                if(comboBox.getSelectionModel().getSelectedItem().equals("Customer name")){
+                    projectModel.searchCustomerName(newValue);
+                }
+                if(comboBox.getSelectionModel().getSelectedItem().equals("Project name")){
+                    projectModel.searchProjectName(newValue);
+                }
+                if(comboBox.getSelectionModel().getSelectedItem().equals("Zip code")){
+                    projectModel.searchZipCode(newValue);
+                }
             }
-
         });
 
         if(!projectModel.getOldProjects().isEmpty()) {

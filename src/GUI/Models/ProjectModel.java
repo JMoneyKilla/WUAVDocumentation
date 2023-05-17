@@ -2,7 +2,6 @@ package GUI.Models;
 
 import be.Device;
 import be.Project;
-import be.User;
 import be.documents.IDocument;
 import bll.InputManager;
 import bll.FacadeManager;
@@ -31,6 +30,7 @@ public class ProjectModel {
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
 
+    private String inputText;
     ProjectValidator validator = new ProjectValidator();
     InputManager inputManager = new InputManager();
 
@@ -73,12 +73,22 @@ public class ProjectModel {
         projectDevices = FXCollections.observableArrayList();
         userProjects = FXCollections.observableArrayList();
         oldProjects = FXCollections.observableArrayList();
+        fetchAllProjects();
         fetchAllOldProjects();
 
     }
 
-    public List<Project> getProjects() {
+    /*public List<Project> getProjects() {
         return facadeManager.getProjects();
+    }*/
+
+    public void fetchAllProjects(){
+        projects.clear();
+        projects.addAll(facadeManager.getProjects());
+    }
+
+    public ObservableList<Project> getProjects(){
+        return projects;
     }
 
     public void fetchAllOldProjects() {
@@ -195,15 +205,59 @@ public class ProjectModel {
         }
     }
 
+    public void setInputText(String inputText){
+        this.inputText=inputText;
+    }
+
+    public String getInputText(){
+        return inputText;
+    }
+
     // Validator methods
 
     public boolean isProjectValid(String name, String companyName, String address, String zipcode){
         return validator.isProjectValid(name, companyName, address, zipcode);
     }
 
-    // Date method
+    // Input methods
 
     public String getDateToday(){
         return inputManager.getDateToday();
+    }
+
+    public void searchAddress(String str){
+        projects.clear();
+        try {
+            projects.addAll(inputManager.searchCompanyAddress(str));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchCustomerName(String str){
+        projects.clear();
+        try {
+            projects.addAll(inputManager.searchCustomerName(str));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchProjectName(String str){
+        projects.clear();
+        try {
+            projects.addAll(inputManager.searchProjectName(str));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void searchZipCode(String str){
+        projects.clear();
+        try {
+            projects.addAll(inputManager.searchZipCode(str));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
