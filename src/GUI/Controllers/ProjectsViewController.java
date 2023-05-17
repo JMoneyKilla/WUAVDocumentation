@@ -331,7 +331,7 @@ public class ProjectsViewController implements Initializable {
                     getClass().getResource("/GUI/Views/MainStyleSheet.css").toExternalForm());
         }
 
-        private void changeViewGrid () throws IOException {
+        private void changeViewGrid() throws IOException {
             paneProject.getChildren().clear();
             loadData();
             projectModel.fetchAllProjects();
