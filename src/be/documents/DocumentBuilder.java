@@ -1,5 +1,7 @@
 package be.documents;
 
+import java.io.File;
+
 public class DocumentBuilder {
     private int projectId;
     private int userId;
@@ -7,7 +9,7 @@ public class DocumentBuilder {
     private int documentType;
     private int refNumber;
     private String description;
-    private String absolutePath;
+    private File imageFile;
     private String documentName;
     private String dateAdded;
 
@@ -35,8 +37,8 @@ public class DocumentBuilder {
         this.description = description;
         return this;
     }
-    public DocumentBuilder absolutePath(String absolutePath){
-        this.absolutePath = absolutePath;
+    public DocumentBuilder absolutePath(File imageFile){
+        this.imageFile = imageFile;
         return this;
     }
     public DocumentBuilder documentName(String documentName){
@@ -62,12 +64,12 @@ public class DocumentBuilder {
     }
 
     public IDocument buildDiagramDoc(){
-        return new DiagramDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
+        return new DiagramDoc(projectId, userId, documentId, documentType, refNumber, description, imageFile,
                 documentName, dateAdded);
     }
 
     public IDocument buildPictureDoc(){
-        return new PictureDoc(projectId, userId, documentId, documentType, refNumber, description, absolutePath,
+        return new PictureDoc(projectId, userId, documentId, documentType, refNumber, description, imageFile,
                 documentName, dateAdded);
     }
 

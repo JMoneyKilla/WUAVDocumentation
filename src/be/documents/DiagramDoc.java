@@ -1,5 +1,7 @@
 package be.documents;
 
+import java.io.File;
+
 public class DiagramDoc implements IDocument{
     private int projectId;
     private int userId;
@@ -7,18 +9,18 @@ public class DiagramDoc implements IDocument{
     private int documentType;
     private int refNumber;
     private String description;
-    private String absolutePath;
+    private File imageFile;
     private String documentName;
     private String dateAdded;
     DiagramDoc(int projectId, int userId, int documentId, int documentType, int refNumber,
-                      String description, String absolutePath, String documentName, String dateAdded){
+               String description, File imageFile, String documentName, String dateAdded){
         this.projectId = projectId;
         this.userId = userId;
         this.documentId = documentId;
         this.documentType = documentType;
         this.refNumber = refNumber;
         this.description = description;
-        this.absolutePath = absolutePath;
+        this.imageFile = imageFile;
         this.documentName = documentName;
         this.dateAdded = dateAdded;
     }
@@ -68,12 +70,12 @@ public class DiagramDoc implements IDocument{
         this.description = description;
     }
 
-    public String getAbsolutePath() {
-        return absolutePath;
+    public File getImageFile() {
+        return imageFile;
     }
 
-    public void setAbsolutePath(String absolutePath) {
-        this.absolutePath = absolutePath;
+    public void setImageFile(File imageFile) {
+        this.imageFile = imageFile;
     }
 
     public String getDocumentName() {

@@ -1,6 +1,5 @@
 package bll.helpers;
 
-import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.documents.IDocument;
 import javafx.scene.control.Label;
@@ -28,7 +27,7 @@ public class DocumentBoxGenerator {
             VBox leftVbox = new VBox();
             leftVbox.setPrefSize(300, 300);
 
-            ImageView imageView = new ImageView(document.getAbsolutePath());
+            ImageView imageView = new ImageView(document.getImageFile().getAbsolutePath());
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
 

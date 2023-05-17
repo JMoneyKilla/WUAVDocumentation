@@ -1,9 +1,11 @@
 package dal;
 
-import be.Project;
 import be.documents.DocumentBuilder;
 import be.documents.IDocument;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class DocumentDAO {
     DataBaseConnection dbc = DataBaseConnection.getInstance();
-    public List<IDocument> getAllProjectDocuments(int id) throws SQLException {
+    public List<IDocument> getAllProjectDocuments(int id) throws SQLException, IOException {
         List<IDocument> projectDocuments = new ArrayList<>();
         DocumentBuilder documentBuilder = new DocumentBuilder();
         String sql = "SELECT * FROM Document WHERE project_id = " + id + ";";
@@ -25,13 +27,15 @@ public class DocumentDAO {
                 int userId = rs.getInt("user_id");
                 int documentId = rs.getInt("document_id");
                 String description = rs.getString("description");
-                String absolutePath = rs.getString("absolute_path");
+                byte[] imageBytes = rs.getBytes("absolute_path");
                 String documentName = rs.getString("document_name");
+                File imageFile = new File("savedImages/" + documentName + "_" + documentId + ".png");
+                Files.write(imageFile.toPath(), imageBytes);
                 int documentType = rs.getInt("document_type");
                 int refNumber = rs.getInt("ref_num");
                 String dateAdded = rs.getString("date_added");
                 documentBuilder.projectId(projectId).userId(userId).documentId(documentId).description(description).
-                        absolutePath(absolutePath).documentName(documentName).documentType(documentType).
+                        absolutePath(imageFile).documentName(documentName).documentType(documentType).
                         refNumber(refNumber).dateAdded(dateAdded);
                 IDocument document = documentBuilder.build(documentType);
                 projectDocuments.add(document);
@@ -51,11 +55,10 @@ public class DocumentDAO {
         }
         return false;
     }
-    public void updateDocument(IDocument document) throws SQLException{
+    public void updateDocument(IDocument document) throws SQLException, IOException {
         int id = document.getDocumentId();
         String description = document.getDescription();
-        String absolutePath = document.getAbsolutePath();
-        String documentName = document.getDocumentName();
+        byte[] absolutePath = Files.readAllBytes(document.getImageFile().toPath());        String documentName = document.getDocumentName();
         int refNumber = document.getRefNumber();
         String dateAdded = document.getDateAdded();
 
@@ -65,7 +68,7 @@ public class DocumentDAO {
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, description);
-            ps.setString(2, absolutePath);
+            ps.setBytes(2, absolutePath);
             ps.setString(3, documentName);
             ps.setInt(4, refNumber);
             ps.setString(5, dateAdded);
@@ -73,11 +76,11 @@ public class DocumentDAO {
             ps.execute();
         }
     }
-    public void createDocument(IDocument document) throws SQLException{
+    public void createDocument(IDocument document) throws SQLException, IOException {
         int projectId = document.getProjectId();
         int userId = document.getUserId();
         String description = document.getDescription();
-        String absolutePath = document.getAbsolutePath();
+        byte[] absolutePath = Files.readAllBytes(document.getImageFile().toPath());
         String documentName = document.getDocumentName();
         int documentType = document.getDocumentType();
         int refNumber = document.getRefNumber();
@@ -92,7 +95,7 @@ public class DocumentDAO {
             ps.setInt(1, projectId);
             ps.setInt(2, userId);
             ps.setString(3, description);
-            ps.setString(4, absolutePath);
+            ps.setBytes(4, absolutePath);
             ps.setString(5, documentName);
             ps.setInt(6, documentType);
             ps.setInt(7, refNumber);

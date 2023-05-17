@@ -1,5 +1,7 @@
 package be.documents;
 
+import java.io.File;
+
 public class TextDoc implements IDocument{
     private int projectId;
     private int userId;
@@ -58,7 +60,7 @@ public class TextDoc implements IDocument{
     }
 
     @Override
-    public String getAbsolutePath() {
+    public File getImageFile() {
         return null;
     }
 

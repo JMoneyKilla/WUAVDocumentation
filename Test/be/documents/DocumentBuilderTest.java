@@ -24,7 +24,7 @@ class DocumentBuilderTest {
         assertEquals(1, diagramDoc.getDocumentType());
         assertEquals(2338, diagramDoc.getRefNumber());
         assertEquals("diagram document", diagramDoc.getDescription());
-        assertEquals("/folder/user/picture", diagramDoc.getAbsolutePath());
+        assertEquals("/folder/user/picture", diagramDoc.getImageFile());
         assertEquals("Sound diagram", diagramDoc.getDocumentName());
         assertEquals("01/01/2021", diagramDoc.getDateAdded());
     }
@@ -46,7 +46,7 @@ class DocumentBuilderTest {
         assertEquals(2, pictureDoc.getDocumentType());
         assertEquals(2338, pictureDoc.getRefNumber());
         assertEquals("picture document", pictureDoc.getDescription());
-        assertEquals("/folder/user/picture", pictureDoc.getAbsolutePath());
+        assertEquals("/folder/user/picture", pictureDoc.getImageFile());
         assertEquals("Speaker picture", pictureDoc.getDocumentName());
         assertEquals("01/01/2021", pictureDoc.getDateAdded());
     }

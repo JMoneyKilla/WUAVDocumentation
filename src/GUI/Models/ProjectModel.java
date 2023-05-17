@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import bll.validator.ProjectValidator;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ProjectModel {
         try {
             projectDocuments.clear();
             projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -134,7 +135,7 @@ public class ProjectModel {
                 projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
                 projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }

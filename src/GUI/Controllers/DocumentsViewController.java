@@ -31,20 +31,11 @@ public class DocumentsViewController implements Initializable {
     private VBox documentsBox;
     DocumentBoxGenerator docBoxGenerator = new DocumentBoxGenerator();
     ProjectModel projectModel = ProjectModel.getInstance();
-    UserModel userModel = UserModel.getInstance();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try{
-            projectModel.refreshProjectDocuments();
-            for (IDocument document : projectModel.getProjectDocuments()) {
-                HBox hBox = docBoxGenerator.buildDocumentBox(document);
-                documentsBox.getChildren().add(hBox);
-            }
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("No documents");
-        }
+        populateDocumentView();
     }
 
 
@@ -62,6 +53,18 @@ public class DocumentsViewController implements Initializable {
         popupStage.setScene(scene);
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.showAndWait();
+    }
+
+    public void populateDocumentView(){
+        try{
+            projectModel.refreshProjectDocuments();
+            for (IDocument document : projectModel.getProjectDocuments()) {
+                HBox hBox = docBoxGenerator.buildDocumentBox(document);
+                documentsBox.getChildren().add(hBox);
+            }
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("No documents");
+        }
     }
 
 

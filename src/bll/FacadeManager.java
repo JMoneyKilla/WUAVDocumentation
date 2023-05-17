@@ -7,6 +7,7 @@ import be.documents.IDocument;
 import bll.managers.DeviceManager;
 import bll.managers.DocumentManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -64,21 +65,17 @@ public class FacadeManager {
 
 
     //Methods for accessing DocumentManager
-    public List<IDocument> getAllProjectDocuments(int id) throws SQLException {
+    public List<IDocument> getAllProjectDocuments(int id) throws SQLException, IOException {
         return documentManager.getAllProjectDocuments(id);
     }
     public boolean deleteDocument(IDocument document) throws SQLException{
         return documentManager.deleteDocument(document);
     }
-    public void updateDocument(IDocument document) throws SQLException{
+    public void updateDocument(IDocument document) throws SQLException, IOException {
         documentManager.updateDocument(document);
     }
-    public void createDocument(IDocument document){
-        try {
+    public void createDocument(IDocument document) throws SQLException, IOException {
             documentManager.createDocument(document);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /*
