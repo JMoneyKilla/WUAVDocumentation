@@ -66,9 +66,10 @@ public class ProjectDAO {
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
+        int zipCode = project.getZipCode();
 
-        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type)" +
-                " VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type, zip_code)" +
+                " VALUES (?,?,?,?,?,?)";
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -77,6 +78,7 @@ public class ProjectDAO {
             ps.setString(3, customerName);
             ps.setString(4, companyAddress);
             ps.setInt(5, companyType);
+            ps.setInt(6, zipCode);
             ps.execute();
         }
     }

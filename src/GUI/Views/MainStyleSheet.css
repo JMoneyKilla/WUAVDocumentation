@@ -15,6 +15,7 @@
 .button{
     -fx-background-color: #856a6a;
     -fx-text-fill: 	white;
+    -fx-font-family: "Arial";
 }
 
 .button-top{
@@ -70,3 +71,25 @@
     -fx-background-color: #C6C7C4;
 }
 
+.combo-box{
+  -fx-background-radius: 10, 10, 10, 10;
+  -fx-background-color: #A2999E;
+}
+
+.root-project{
+
+   -fx-background-radius: 10px;
+   -fx-border-radius: 10, 10, 10, 10;
+   -fx-background-color: #C6C7C4;
+}
+
+.label-project{
+   -fx-font-family: "Arial";
+   -fx-text-fill: #0C2D48;
+}
+
+.root-project:hover{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-scale-z: 1.05;
+}

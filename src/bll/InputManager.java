@@ -54,7 +54,7 @@ public class InputManager {
         List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
-            if(p.getName().toLowerCase().equals(str.toLowerCase())){
+            if(p.getName().toLowerCase().contains(str.toLowerCase())){
                 filtered.add(p);
             }
         }
@@ -66,7 +66,7 @@ public class InputManager {
     List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
-        if(p.getCustomerName().toLowerCase().equals(str.toLowerCase())){
+        if(p.getCustomerName().toLowerCase().contains(str.toLowerCase())){
             filtered.add(p);
         }
     }
@@ -78,7 +78,19 @@ public class InputManager {
         List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
-            if(p.getCompanyAddress().toLowerCase().equals(str.toLowerCase())){
+            if(p.getCompanyAddress().toLowerCase().contains(str.toLowerCase())){
+                filtered.add(p);
+            }
+        }
+        return filtered;
+    }
+
+    public List<Project> searchZipCode(String str) throws SQLException {
+        List<Project> getAllProjects = projectDAO.getAllProjects();
+        List<Project> filtered = new ArrayList<>();
+
+        for(Project p : getAllProjects){
+            if(Integer.toString(p.getZipCode()).contains(str)){
                 filtered.add(p);
             }
         }

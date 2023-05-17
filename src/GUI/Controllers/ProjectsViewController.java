@@ -4,81 +4,113 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-
+import io.github.palexdev.materialfx.controls.MFXToggleButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectsViewController implements Initializable {
 
     @FXML
+    private MFXToggleButton toggleButton;
+    @FXML
     private ScrollPane paneScroll;
     @FXML
     private AnchorPane paneProject, paneMainProject;
+
+    @FXML
+    private VBox vBoxProjects;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
+    private BooleanProperty toggleView = new SimpleBooleanProperty();
 
+    private boolean isListViewTrue = false;
 
-    List<Project> projectsList= projectModel.getProjects();
+    private ListChangeListener<Project> currentListener;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(userModel.getLoggedInUser().getType()==2){
-            loadUserProjectData();
+        System.out.println(projectModel.getProjects());
+
+        if (userModel.getLoggedInUser().getType() == 2) {
+            try {
+                loadUserProjectData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                loadData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            projectModel.fetchAllProjects();
         }
-        else loadData(projectsList);
         toggleView.addListener((obs, oldVal, newVal) -> {
-            if (newVal==true) {
+            if (newVal == true) {
+                isListViewTrue = true;
                 changeViewList();
             } else {
-                changeViewGrid();
+                try {
+                    isListViewTrue = false;
+                    changeViewGrid();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
-    public void loadData(List<Project> projectsList){
-        int row = 0;
-        int col = 0;
-        for (Project project : projectsList) {
-            StackPane stackPane = generateEventPane(project);
-            paneProject.getChildren().add(stackPane);
-            paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
-            AnchorPane.setTopAnchor(stackPane, 10 + row * 150.0);
-            AnchorPane.setLeftAnchor(stackPane, 20 + col * 420.0);
-            col++;
-            if (col == 2) {
-                col = 0;
-                row++;
-            }
 
+    public void loadData() throws IOException {
+            if (currentListener != null)
+                ProjectModel.getInstance().getProjects().removeListener(currentListener);
+
+            currentListener = c -> {
+                if(!isListViewTrue) {
+                    paneProject.getChildren().clear();
+                    int row = 0;
+                    int col = 0;
+                    for (Project project : projectModel.getProjects()) {
+                        StackPane stackPane;
+                        try {
+                            stackPane = generateEventPane(project);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        paneProject.getChildren().add(stackPane);
+                        paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
+                        AnchorPane.setTopAnchor(stackPane, 10 + row * 145.0);
+                        AnchorPane.setLeftAnchor(stackPane, 20 + col * 420.0);
+                        col++;
+                        if (col == 2) {
+                            col = 0;
+                            row++;
+                            paneProject.setMinHeight(row * 220);
+                            //paneScroll.setMinHeight(row*200);
+                        }
+                    }
+                }
+            };
+            ProjectModel.getInstance().getProjects().addListener(currentListener);
         }
-    }
 
-    public void loadUserProjectData(){
+
+
+    public void loadUserProjectData() throws IOException {
         int row = 0;
         int col = 0;
         for (Project project : projectModel.getUserProjects(userModel.getLoggedInUser().getId())) {
@@ -98,11 +130,25 @@ public class ProjectsViewController implements Initializable {
 
     /**
      * Generates a stackpane which will be used as visual tile for an event that the user can interact with
+     *
      * @param project
      * @return
      */
-    public StackPane generateEventPane(Project project) {
-        StackPane stackPane = new StackPane();
+    public StackPane generateEventPane(Project project) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectTemplateView.fxml"));
+        StackPane sp = loader.load();
+        ProjectTemplateController controller = loader.getController();
+        controller.setLabels(project);
+
+        sp.setOnMousePressed(e -> {
+            ProjectModel projectModel = ProjectModel.getInstance();
+            projectModel.setSelectedProject(project);
+            projectModel.setIsProjectSelected(true);});
+
+
+        return sp;
+
+        /*StackPane stackPane = new StackPane();
 
         stackPane.setPrefSize(400, 132);
         stackPane.setOnMouseEntered(e -> {
@@ -224,7 +270,6 @@ public class ProjectsViewController implements Initializable {
                     projectModel.deleteProjectFromUserProject(project);
                     projectModel.deleteProject(project);
                     projectModel.refreshUserProjects();
-                    projectModel.getProjects();
                 }
             }
         });
@@ -255,40 +300,41 @@ public class ProjectsViewController implements Initializable {
             projectModel.setIsProjectSelected(true);
         });
 
-        return stackPane;
+        return stackPane;*/
     }
 
-    BooleanProperty toggleView = new SimpleBooleanProperty();
-    public void toggleView(ActionEvent actionEvent) {
-        toggleView.set(!toggleView.get());
 
-    }
+        public void toggleView (ActionEvent actionEvent){
+            toggleView.set(!toggleView.get());
+            System.out.println(isListViewTrue);
+        }
 
-    private void changeViewList() {
-        paneProject.getChildren().remove(0, paneProject.getChildren().size());
-       ObservableList<Project> observableList = FXCollections.observableArrayList(projectsList);
-        TableView tableView = new TableView(observableList);
-        TableColumn<Project, String> nameColumn = new TableColumn<>("Project Name");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<Project, String> customerColumn = new TableColumn<>("Customer");
-        customerColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        TableColumn<Project, String> addressColumn = new TableColumn<>("Address");
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("companyAddress"));
-        TableColumn<Project, String> dateColumn = new TableColumn<>("Date");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateLastVisited"));
-        TableColumn<Project, String> zipColumn = new TableColumn<>("Zip code");
-        zipColumn.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
+        private void changeViewList () {
+            ObservableList<Project> observableList = projectModel.getProjects();
+            TableView tableView = new TableView(observableList);
+            TableColumn<Project, String> nameColumn = new TableColumn<>("Project Name");
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            TableColumn<Project, String> customerColumn = new TableColumn<>("Customer");
+            customerColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            TableColumn<Project, String> addressColumn = new TableColumn<>("Address");
+            addressColumn.setCellValueFactory(new PropertyValueFactory<>("companyAddress"));
+            TableColumn<Project, String> dateColumn = new TableColumn<>("Date");
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateLastVisited"));
+            TableColumn<Project, String> zipColumn = new TableColumn<>("Zip code");
+            zipColumn.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
 
-        tableView.getColumns().addAll(nameColumn, customerColumn, addressColumn, dateColumn, zipColumn);
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableView.setPrefSize(paneProject.getPrefWidth(), paneProject.getPrefHeight());
+            tableView.getColumns().addAll(nameColumn, customerColumn, addressColumn, dateColumn, zipColumn);
+            tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+            tableView.setPrefSize(paneProject.getPrefWidth(), paneProject.getPrefHeight());
+            paneProject.getChildren().add(tableView);
+            tableView.getStylesheets().add(
+                    getClass().getResource("/GUI/Views/MainStyleSheet.css").toExternalForm());
+        }
 
-        paneProject.getChildren().add(tableView);
+        private void changeViewGrid() throws IOException {
+            paneProject.getChildren().clear();
+            loadData();
+            projectModel.fetchAllProjects();
 
-    }
-    private void changeViewGrid(){
-        paneProject.getChildren().remove(0, paneProject.getChildren().size());
-        loadData(projectsList);
-
-    }
+        }
 }

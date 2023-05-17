@@ -47,9 +47,9 @@ public class CreateNewProjectViewController implements Initializable {
                     txtFieldAddress.getText(),
                     Integer.parseInt(txtFieldZipcode.getText()),
                     projectModel.getSelectedProject().getCompanyType()));
-            projectModel.refreshUserProjects();
+            //projectModel.refreshUserProjects();
             projectModel.setSelectedProject(null);
-            projectModel.getProjects();
+            projectModel.fetchAllProjects();
 
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
@@ -57,9 +57,9 @@ public class CreateNewProjectViewController implements Initializable {
         }
         if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText(),txtFieldZipcode.getText())){
             projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(),Integer.parseInt(txtFieldZipcode.getText()), 1));
-            projectModel.refreshUserProjects();
+            //projectModel.refreshUserProjects();
             userModel.addUserToProject(userModel.getLoggedInUser());
-            projectModel.getProjects();
+            projectModel.fetchAllProjects();
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
