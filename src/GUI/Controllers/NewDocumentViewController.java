@@ -53,9 +53,9 @@ public class NewDocumentViewController implements Initializable {
         String docFilePath = textFieldFilePath.getText();
         int projectId = projectModel.getSelectedProject().getId();
         int userId = userModel.getLoggedInUser().getId();
-
+        int refNum= 0;
         try{
-            int refNum = Integer.parseInt(textFieldRefNum.getText());
+            refNum = Integer.parseInt(textFieldRefNum.getText());
         } catch (NumberFormatException e){
             System.out.println("ref num is not an int");
             return;
@@ -68,7 +68,7 @@ public class NewDocumentViewController implements Initializable {
         };
         String dateAdded = inputManager.getDateToday();
         documentBuilder.documentName(docName).description(docDescription).absolutePath(new File(docFilePath)).
-                projectId(projectId).userId(userId).documentType(documentType).dateAdded(dateAdded);
+                projectId(projectId).userId(userId).documentType(documentType).dateAdded(dateAdded).refNumber(refNum);
         if((documentType == 1 || documentType == 2) && documentValidator.isDiagramOrPictureDocValid(docName, docDescription, docFilePath)){
                 documentModel.createDocument(documentBuilder.build(documentType));
                 projectModel.refreshProjectDocuments();

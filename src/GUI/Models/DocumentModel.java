@@ -29,9 +29,7 @@ public class DocumentModel {
     public void createDocument(IDocument document){
         try {
             documentManager.createDocument(document);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }

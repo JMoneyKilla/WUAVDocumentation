@@ -30,7 +30,8 @@ public class DocumentDAO {
                 byte[] imageBytes = rs.getBytes("absolute_path");
                 String documentName = rs.getString("document_name");
                 File imageFile = new File("savedImages/" + documentName + "_" + documentId + ".png");
-                Files.write(imageFile.toPath(), imageBytes);
+                if(imageBytes != null)
+                    Files.write(imageFile.toPath(), imageBytes);
                 int documentType = rs.getInt("document_type");
                 int refNumber = rs.getInt("ref_num");
                 String dateAdded = rs.getString("date_added");
@@ -80,7 +81,9 @@ public class DocumentDAO {
         int projectId = document.getProjectId();
         int userId = document.getUserId();
         String description = document.getDescription();
-        byte[] absolutePath = Files.readAllBytes(document.getImageFile().toPath());
+        byte[] absolutePath = null;
+        if(document.getImageFile() != null)
+            absolutePath = Files.readAllBytes(document.getImageFile().toPath());
         String documentName = document.getDocumentName();
         int documentType = document.getDocumentType();
         int refNumber = document.getRefNumber();

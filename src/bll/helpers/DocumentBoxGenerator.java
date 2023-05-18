@@ -77,4 +77,11 @@ public class DocumentBoxGenerator {
 
         return hbox;
     }
+
+    public HBox formatToPdf(HBox hBox){
+        hBox.setMaxSize(300, 30);
+        hBox.setPrefSize(200, 20);
+        return hBox;
+    }
+
 }

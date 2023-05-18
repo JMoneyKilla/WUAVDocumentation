@@ -1,6 +1,13 @@
 package bll.helpers;
 
+import GUI.Models.ProjectModel;
 import be.Project;
+import be.documents.IDocument;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -9,9 +16,14 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+
 public class PDFReportGenerator {
+    ProjectModel projectModel = ProjectModel.getInstance();
+    DocumentBoxGenerator docBoxGenerator = new DocumentBoxGenerator();
     public void generatePDF(Project project){
         try {
             // Create a new PDF document
@@ -65,29 +77,36 @@ public class PDFReportGenerator {
             contentStream.newLineAtOffset(0, -15);
             contentStream.showText("Company address: " + companyAddress + ", " + zipCode);
             contentStream.endText();
+            page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+            contentStream.close();
+            contentStream = new PDPageContentStream(document, page);
+            int currentHeight = 20;
+            int docNum = 1;
 
             // Add an image to the page
-            PDImageXObject image = PDImageXObject.createFromFile("Reports/test.jpg", document);
-            contentStream.drawImage(image, 0, 50, pageWidth, pageHeight-200);
-
+            for (IDocument d: projectModel.getProjectDocuments()) {
+                if(docNum > 4){
+                    page = new PDPage(PDRectangle.A4);
+                    document.addPage(page);
+                    contentStream.close();
+                    contentStream = new PDPageContentStream(document, page);
+                    currentHeight = 20;
+                    docNum = 1;
+                }
+                if(d.getDocumentType() == 1 || d.getDocumentType() == 2){
+                    PDImageXObject pdfImage = PDImageXObject.createFromFile(d.getImageFile().getPath(), document);
+                    contentStream.drawImage(pdfImage, 10, pageHeight-currentHeight-140, pageWidth/4, 140);
+                }
+                if (d.getDocumentType() == 3) {
+                    break;
+                }
+                docNum++;
+                currentHeight += 200;
+            }
 
             // Close the content stream
             contentStream.close();
-
-            // Create a new page
-            PDPage secondPage = new PDPage(PDRectangle.A4);
-            document.addPage(secondPage);
-
-            // Create a content stream for the second page
-            PDPageContentStream contentStream2 = new PDPageContentStream(document, secondPage);
-
-            // Add text and images to the second page
-            contentStream2.beginText();
-            contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);
-            contentStream2.newLineAtOffset(50, 700);
-            contentStream2.showText("Second Page");
-            contentStream2.endText();
-            contentStream2.close();
 
             // Save the document to a file
             document.save("Reports/report.pdf");
