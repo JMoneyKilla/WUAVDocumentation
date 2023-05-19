@@ -4,10 +4,13 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
 import be.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,53 +21,100 @@ import java.util.ResourceBundle;
 public class CreateNewProjectViewController implements Initializable {
 
     @FXML
-    private TextField txtFieldProjectName, txtFieldName, txtFieldAddress, txtFieldZipcode;
+    private TextField txtFieldProjectName, txtFieldName, txtFieldAddress, txtFieldZipcode, txtFieldPhoneNumber, txtFieldEmail;
     @FXML
     private Label lblWarning;
+
+    @FXML
+    private ComboBox comboBox;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
 
     private boolean isEditTrue = false;
+    private boolean isValid;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList("Corporate", "Private");
+        comboBox.setItems(choiceBoxOptions);
+
+
      if(projectModel.getSelectedProject()!=null) isEditTrue = true;
      if(isEditTrue){
+         if(projectModel.getSelectedProject().getCompanyType()==1)
+             comboBox.getSelectionModel().select(0);
+         else comboBox.getSelectionModel().select(1);
          txtFieldProjectName.setText(projectModel.getSelectedProject().getName());
          txtFieldAddress.setText(projectModel.getSelectedProject().getCompanyAddress());
          txtFieldName.setText(projectModel.getSelectedProject().getCustomerName());
+         txtFieldEmail.setText(projectModel.getSelectedProject().getCustomerEmail());
+         txtFieldPhoneNumber.setText(Integer.toString(projectModel.getSelectedProject().getPhoneNumber()));
+         txtFieldZipcode.setText(Integer.toString(projectModel.getSelectedProject().getZipCode()));
          System.out.println(isEditTrue);
      }
     }
 
     public void clickSave(ActionEvent actionEvent) {
-        if(isEditTrue){
-            projectModel.updateProject(new Project(
-                    projectModel.getSelectedProject().getId(),
-                    txtFieldProjectName.getText(),
-                    projectModel.getSelectedProject().getDateLastVisited(),
-                    txtFieldName.getText(),
-                    txtFieldAddress.getText(),
-                    Integer.parseInt(txtFieldZipcode.getText()),
-                    projectModel.getSelectedProject().getCompanyType()));
-            //projectModel.refreshUserProjects();
-            projectModel.setSelectedProject(null);
-            projectModel.fetchAllProjects();
+        String invalidFields = "Invalid fields: ";
 
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
+        if (!projectModel.isEmailValid(txtFieldEmail.getText())) {
+            invalidFields += "Email, ";
+            isValid = false;
         }
-        if(!isEditTrue && projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText(),txtFieldZipcode.getText())){
-            projectModel.createProject(new Project(txtFieldProjectName.getText(), projectModel.getDateToday(), txtFieldName.getText(), txtFieldAddress.getText(),Integer.parseInt(txtFieldZipcode.getText()), 1));
-            //projectModel.refreshUserProjects();
-            userModel.addUserToProject(userModel.getLoggedInUser());
-            projectModel.fetchAllProjects();
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
+        if (!projectModel.isNumberValid(txtFieldZipcode.getText())) {
+            invalidFields += "Zipcode, ";
+            isValid = false;
         }
-        else lblWarning.setText("Please input text in all fields");
+        if (!projectModel.isNumberValid(txtFieldPhoneNumber.getText())) {
+            invalidFields += "Phone number, ";
+            isValid = false;
+        }
+        if(comboBox.getSelectionModel().getSelectedItem()==null){
+            invalidFields += "Unselected item in combo box, ";
+            isValid = false;
+        }
+        if(!isValid){
+            if(!projectModel.isProjectValid(txtFieldProjectName.getText(), txtFieldName.getText(), txtFieldAddress.getText(), txtFieldZipcode.getText(), txtFieldPhoneNumber.getText(), txtFieldEmail.getText()))
+                lblWarning.setText("Please input text in all fields");
+            else lblWarning.setText(invalidFields.substring(0, invalidFields.length()-2));
+        }
+        if(invalidFields.length()<17)
+            isValid = true;
+        if(isValid) {
+            int companyType = switch ((String) comboBox.getSelectionModel().getSelectedItem()) {
+                case "Corporate" -> 1;
+                case "Private" -> 2;
+                default -> 0;
+            };
+
+            lblWarning.setText("");
+            if (isEditTrue) {
+                projectModel.updateProject(new Project(
+                        projectModel.getSelectedProject().getId(),
+                        txtFieldProjectName.getText().trim(),
+                        projectModel.getSelectedProject().getDateLastVisited(),
+                        txtFieldName.getText().trim(),
+                        txtFieldAddress.getText().trim(),
+                        Integer.parseInt(txtFieldZipcode.getText().trim()),
+                        companyType, Integer.parseInt(txtFieldPhoneNumber.getText().trim()),
+                        txtFieldEmail.getText().trim()));
+                projectModel.setSelectedProject(null);
+                projectModel.fetchAllProjects();
+
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            }
+            if (!isEditTrue) {
+                projectModel.createProject(new Project(txtFieldProjectName.getText().trim(), projectModel.getDateToday(), txtFieldName.getText().trim(), txtFieldAddress.getText().trim(), Integer.parseInt(txtFieldZipcode.getText().trim()), companyType,
+                        Integer.parseInt(txtFieldPhoneNumber.getText().trim()), txtFieldEmail.getText().trim()));
+                userModel.addUserToProject(userModel.getLoggedInUser());
+                projectModel.fetchAllProjects();
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            }
+        }
     }
 
     public void clickCancel(ActionEvent actionEvent) {
@@ -72,5 +122,6 @@ public class CreateNewProjectViewController implements Initializable {
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
+
     }
 }

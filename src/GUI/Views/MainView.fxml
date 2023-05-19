@@ -101,6 +101,11 @@
                               <Insets bottom="10.0" left="5.0" top="10.0" />
                            </VBox.margin>
                         </MFXButton>
+                        <MFXButton fx:id="btnCustomerInfo" buttonType="RAISED" onAction="#clickGetCustomerInfo" prefHeight="33.0" prefWidth="141.0" text="Customer info..." translateX="10.0" translateY="10.0">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </MFXButton>
                      </children>
                      <VBox.margin>
                         <Insets bottom="15.0" />

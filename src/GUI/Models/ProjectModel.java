@@ -114,6 +114,7 @@ public class ProjectModel {
     }
 
     public ObservableList<Project> getUserProjects(int userId){
+        userProjects.clear();
         try {
             userProjects.addAll(facadeManager.getUserProjects(userId));
         } catch (SQLException e) {
@@ -216,8 +217,16 @@ public class ProjectModel {
 
     // Validator methods
 
-    public boolean isProjectValid(String name, String companyName, String address, String zipcode){
-        return validator.isProjectValid(name, companyName, address, zipcode);
+    public boolean isProjectValid(String name, String companyName, String address, String zipcode, String phoneNumber, String email){
+        return validator.isProjectValid(name, companyName, address, zipcode, phoneNumber, email);
+    }
+
+    public boolean isEmailValid(String email){
+        return validator.isEmailValid(email);
+    }
+
+    public boolean isNumberValid(String number){
+        return validator.isNumberValid(number);
     }
 
     // Input methods

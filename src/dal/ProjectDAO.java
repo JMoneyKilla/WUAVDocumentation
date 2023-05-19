@@ -27,7 +27,9 @@ public class ProjectDAO {
                 String companyAddress = rs.getString("company_address");
                 int zipCode = rs.getInt("zip_code");
                 int type = rs.getInt("company_type");
-                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, zipCode, type);
+                int phoneNumber = rs.getInt("phone_number");
+                String customerEmail = rs.getString("customer_email");
+                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress, zipCode, type, phoneNumber, customerEmail);
                 allProjects.add(project);
             }
         }
@@ -36,7 +38,7 @@ public class ProjectDAO {
     public List<Project> getUserProjects(int userId) throws SQLException {
         List<Project> userProjects = new ArrayList<>();
         String sql = "SELECT Project.project_id, project_name, Project.date_last_visited, customer_name, \n" +
-                "company_address, company_type, [User].user_id FROM Project\n" +
+                "company_address, company_type, zip_code, phone_number, customer_email, [User].user_id FROM Project\n" +
                 "INNER JOIN UserProject\n" +
                 "ON Project.project_id = UserProject.project_id\n" +
                 "RIGHT JOIN [User]\n" +
@@ -53,7 +55,9 @@ public class ProjectDAO {
                 String companyAddress = rs.getString("company_address");
                 int zipCode = rs.getInt("zip_code");
                 int type = rs.getInt("company_type");
-                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress,zipCode, type);
+                int phoneNumber = rs.getInt("phone_number");
+                String customerEmail = rs.getString("customer_email");
+                Project project = new Project(id, name, dateLastVisited, customerName, companyAddress,zipCode, type, phoneNumber, customerEmail);
                 userProjects.add(project);
             }
         }
@@ -67,9 +71,11 @@ public class ProjectDAO {
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
         int zipCode = project.getZipCode();
+        int phoneNumber = project.getPhoneNumber();
+        String email = project.getCustomerEmail();
 
-        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type, zip_code)" +
-                " VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO Project (project_name, date_last_visited, customer_name, company_address, company_type, zip_code, phone_number, customer_email)" +
+                " VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -79,6 +85,8 @@ public class ProjectDAO {
             ps.setString(4, companyAddress);
             ps.setInt(5, companyType);
             ps.setInt(6, zipCode);
+            ps.setInt(7, phoneNumber);
+            ps.setString(8, email);
             ps.execute();
         }
     }
@@ -139,9 +147,12 @@ public class ProjectDAO {
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
         int companyType = project.getCompanyType();
+        int zipCode = project.getZipCode();
+        int phoneNumber = project.getPhoneNumber();
+        String customerEmail = project.getCustomerEmail();
 
         String sql = "Update Project SET project_name = ?, date_last_visited = ?, customer_name = ?,\n" +
-                "company_address = ?, company_type = ? WHERE project_id = ?";
+                "company_address = ?, company_type = ?, zip_code = ?, phone_number = ?, customer_email = ? WHERE project_id = ?";
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -150,7 +161,10 @@ public class ProjectDAO {
             ps.setString(3, customerName);
             ps.setString(4, companyAddress);
             ps.setInt(5, companyType);
-            ps.setInt(6, id);
+            ps.setInt(6, zipCode);
+            ps.setInt(7, phoneNumber);
+            ps.setString(8, customerEmail);
+            ps.setInt(9, id);
             ps.execute();
         }
     }

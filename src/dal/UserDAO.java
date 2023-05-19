@@ -30,6 +30,25 @@ public class UserDAO {
         }
         return allUsers;
     }
+
+    public List getAllTechnicians() throws SQLException {
+        List<User> allTechUsers = new ArrayList<>();
+        String sql = "SELECT * FROM [User] WHERE user_type = 2";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("user_id");
+                String name = rs.getString("user_name");
+                int type = rs.getInt("user_type");
+                User user = new User(id, name, type);
+                allTechUsers.add(user);
+            }
+        }
+        return allTechUsers;
+    }
+
+
     public String getUserName(int userId) throws SQLException {
         String userName = "could not find user";
         String sql = "Select user_name FROM [USER] WHERE user_id = " + userId + ";";
@@ -43,7 +62,7 @@ public class UserDAO {
         return userName;
     }
 
-    public List getAllEmails() throws SQLException{
+    public List getAllEmails() throws SQLException {
         List<String> emails = new ArrayList<>();
         String sql = "SELECT email FROM Login";
         try (Connection connection = dbc.getConnection()) {
@@ -57,7 +76,7 @@ public class UserDAO {
         }
     }
 
-    public String getEmail(User user) throws SQLException{
+    public String getEmail(User user) throws SQLException {
         int id = user.getId();
         String email = "";
         String sql = "SELECT email FROM Login WHERE user_id = ?";
@@ -72,9 +91,9 @@ public class UserDAO {
         return email;
     }
 
-    public String getPassWord(User user) throws SQLException{
-    int id = user.getId();
-    String password = "";
+    public String getPassWord(User user) throws SQLException {
+        int id = user.getId();
+        String password = "";
         String sql = "SELECT password FROM Login WHERE user_id = ?";
         try (Connection connection = dbc.getConnection()) {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -89,18 +108,18 @@ public class UserDAO {
 
     public boolean validateLogin(String email, String password) throws SQLException {
         String sql = "SELECT * FROM Login WHERE email = '" + email + "';";
-        try(Connection con = dbc.getConnection()){
+        try (Connection con = dbc.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("password").equals(password))
+            while (rs.next()) {
+                if (rs.getString("password").equals(password))
                     return true;
             }
         }
         return false;
     }
 
-    public int getUserIdFromEmail(String email) throws SQLException{
+    public int getUserIdFromEmail(String email) throws SQLException {
         int userId = 0;
         String sql = "SELECT user_id FROM Login WHERE email = ?";
         try (Connection connection = dbc.getConnection()) {
@@ -160,7 +179,7 @@ public class UserDAO {
         }
     }
 
-    public void deleteUserLogin(User user) throws SQLException{
+    public void deleteUserLogin(User user) throws SQLException {
         int id = user.getId();
         String sql = "DELETE FROM Login WHERE user_id=?";
 
@@ -171,7 +190,7 @@ public class UserDAO {
         }
     }
 
-    public void updateUser(User user) throws SQLException{
+    public void updateUser(User user) throws SQLException {
         int id = user.getId();
         String name = user.getName();
         int userType = user.getType();
@@ -188,7 +207,7 @@ public class UserDAO {
     }
 
 
-    public void updateUserLogin(User user, String email, String password) throws SQLException{
+    public void updateUserLogin(User user, String email, String password) throws SQLException {
         int id = user.getId();
 
         String sql = "Update Login SET email = ?, password = ? WHERE id = ?";
@@ -218,11 +237,32 @@ public class UserDAO {
         int userId = user.getId();
         int projectId = getNextEventId();
         String sql = "INSERT INTO UserProject(project_id, user_id) VALUES (?,?)";
-        try(Connection con = dbc.getConnection()){
+        try (Connection con = dbc.getConnection()) {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, projectId);
             ps.setInt(2, userId);
             ps.execute();
         }
+    }
+
+    public List<User> getUserByProject(int project_id) throws SQLException {
+        List<User> userByProject = new ArrayList<>();
+        String sql = "SELECT * FROM [User] u\n" +
+                "JOIN UserProject up\n" +
+                "ON up.user_id = u.user_id\n" +
+                "WHERE up.project_id = ?;";
+        try (Connection connection = dbc.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, project_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("user_id");
+                String name = rs.getString("user_name");
+                int type = rs.getInt("user_type");
+                User user = new User(id, name, type);
+                userByProject.add(user);
+            }
+        }
+        return userByProject;
     }
 }

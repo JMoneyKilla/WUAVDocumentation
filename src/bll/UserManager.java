@@ -5,6 +5,7 @@ import be.User;
 import dal.UserDAO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
@@ -13,6 +14,18 @@ public class UserManager {
 
     public List getAllUsers() throws SQLException {
         return userDAO.getAllUsers();
+    }
+
+    public List getAllTechnicians() throws SQLException {
+        return userDAO.getAllTechnicians();
+    }
+
+    public List<User> getMissingTechs(int project_id) throws SQLException {
+        List<User> getAllTechs = userDAO.getAllTechnicians();
+        List<User> userProjects = userDAO.getUserByProject(project_id);
+        List<User> missingTechs = new ArrayList<>(getAllTechs);
+        missingTechs.removeIf(user -> userProjects.stream().anyMatch(user1 -> user1.getId() == user.getId()));
+        return missingTechs;
     }
 
     public String getEmail(User user) throws SQLException{
@@ -61,4 +74,5 @@ public class UserManager {
     public String getUserName(int userId) throws SQLException {
         return userDAO.getUserName(userId);
     }
-    }
+}
+
