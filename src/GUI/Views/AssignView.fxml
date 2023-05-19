@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="420.0" prefWidth="407.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AssignViewController">
+   <children>
+      <TableView fx:id="tableView" layoutX="37.0" layoutY="101.0" prefHeight="196.0" prefWidth="334.0">
+        <columns>
+          <TableColumn fx:id="tableColumnTech" prefWidth="194.6666774749756" text="Technician" />
+        </columns>
+      </TableView>
+      <Button layoutX="261.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickSave" text="Save" />
+      <Button layoutX="318.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
+      <Label fx:id="lblAssign" layoutX="38.0" layoutY="317.0" prefHeight="33.0" prefWidth="334.0" />
+      <Pane prefHeight="71.0" prefWidth="407.0" style="-fx-background-color: #856a6a;" />
+   </children>
+</AnchorPane>

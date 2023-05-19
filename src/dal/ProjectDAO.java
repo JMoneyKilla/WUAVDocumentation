@@ -38,7 +38,7 @@ public class ProjectDAO {
     public List<Project> getUserProjects(int userId) throws SQLException {
         List<Project> userProjects = new ArrayList<>();
         String sql = "SELECT Project.project_id, project_name, Project.date_last_visited, customer_name, \n" +
-                "company_address, company_type, [User].user_id FROM Project\n" +
+                "company_address, company_type, zip_code, phone_number, customer_email, [User].user_id FROM Project\n" +
                 "INNER JOIN UserProject\n" +
                 "ON Project.project_id = UserProject.project_id\n" +
                 "RIGHT JOIN [User]\n" +

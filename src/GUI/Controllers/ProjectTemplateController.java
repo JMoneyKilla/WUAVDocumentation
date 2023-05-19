@@ -48,7 +48,21 @@ public class ProjectTemplateController implements Initializable {
         lblAddress.setText("Address: "+project.getCompanyAddress());
         lblZipCode.setText("Zip code: "+project.getZipCode());
         btnAssign.setOnAction(e->{
-
+            projectModel.setSelectedProject(project);
+            Node n = (Node) e.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/AssignView.fxml"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Stage assignView = new Stage();
+                assignView.setScene(new Scene(root));
+                assignView.initModality(Modality.WINDOW_MODAL);
+                assignView.centerOnScreen();
+                assignView.initOwner(stage);
+                assignView.show();
         });
 
         btnDelete.setOnAction(e->{

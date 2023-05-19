@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -100,7 +99,6 @@ public class ProjectsViewController implements Initializable {
                             col = 0;
                             row++;
                             paneProject.setMinHeight(row * 220);
-                            //paneScroll.setMinHeight(row*200);
                         }
                     }
                 }
@@ -111,10 +109,21 @@ public class ProjectsViewController implements Initializable {
 
 
     public void loadUserProjectData() throws IOException {
-        int row = 0;
-        int col = 0;
+        if (currentListener != null)
+            ProjectModel.getInstance().getProjects().removeListener(currentListener);
+
+        currentListener = c -> {
+            if(!isListViewTrue) {
+            paneProject.getChildren().clear();
+                int row = 0;
+                int col = 0;
         for (Project project : projectModel.getUserProjects(userModel.getLoggedInUser().getId())) {
-            StackPane stackPane = generateEventPane(project);
+            StackPane stackPane = null;
+            try {
+                stackPane = generateEventPane(project);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             paneProject.getChildren().add(stackPane);
             paneProject.setStyle("-fx-background-color: #fafafa; -fx-border-color: #000000");
             AnchorPane.setTopAnchor(stackPane, 10 + row * 145.0);
@@ -125,7 +134,10 @@ public class ProjectsViewController implements Initializable {
                 row++;
             }
         }
-    }
+     }
+    };
+        ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).addListener(currentListener);
+}
 
 
     /**
@@ -310,7 +322,12 @@ public class ProjectsViewController implements Initializable {
         }
 
         private void changeViewList () {
-            ObservableList<Project> observableList = projectModel.getProjects();
+            ObservableList observableList;
+            if(userModel.getLoggedInUser().getType()==2)
+                observableList = projectModel.getUserProjects(userModel.getLoggedInUser().getId());
+
+            else observableList = projectModel.getProjects();
+
             TableView tableView = new TableView(observableList);
             TableColumn<Project, String> nameColumn = new TableColumn<>("Project Name");
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -341,9 +358,13 @@ public class ProjectsViewController implements Initializable {
           }
 
         private void changeViewGrid() throws IOException {
+        if(userModel.getLoggedInUser().getType()==2){
+            loadUserProjectData();
+        }
+        else{
             paneProject.getChildren().clear();
             loadData();
             projectModel.fetchAllProjects();
-
         }
+    }
 }

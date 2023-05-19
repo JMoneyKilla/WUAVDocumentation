@@ -2,7 +2,11 @@ package GUI.Models;
 
 import be.User;
 import bll.FacadeManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel {
@@ -10,6 +14,9 @@ public class UserModel {
     private static UserModel instance;
 
     FacadeManager bll = new FacadeManager();
+    private final ObservableList<User> users;
+    private final ObservableList<User> techs;
+    private final ObservableList<User> missingTechs;
     User loggedInUser;
 
     public static UserModel getInstance(){
@@ -18,13 +25,53 @@ public class UserModel {
         return instance;
     }
 
-    public List getAllUsers(){
+    public UserModel(){
+        users = FXCollections.observableArrayList();
+        techs = FXCollections.observableArrayList();
+        missingTechs = FXCollections.observableArrayList();
+        fetchAllUsers();
+        fetchAllTechs();
+    }
+
+    public void fetchAllUsers(){
+        users.clear();
         try {
-            return bll.getAllUsers();
+             users.addAll(bll.getAllUsers());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public void fetchAllTechs(){
+        techs.clear();
+        try {
+            techs.addAll((bll.getTechnicians()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void fetchAllMissingTechs(int project_id){
+        missingTechs.clear();
+        try {
+            missingTechs.addAll(bll.getMissingTechs(project_id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObservableList<User> getAllUsers(){
+        return users;
+    }
+
+    public ObservableList<User> getAllTechs(){
+        return techs;
+    }
+
+    public ObservableList<User> getMissingTechs(){
+        return missingTechs;
+    }
+
 
     public boolean validateLogin(String email, String password){
         try {

@@ -8,6 +8,7 @@ import bll.managers.DeviceManager;
 import bll.managers.DocumentManager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FacadeManager {
@@ -87,6 +88,14 @@ public class FacadeManager {
 
     public List getAllUsers() throws SQLException {
         return userManager.getAllUsers();
+    }
+
+    public List getTechnicians() throws SQLException {
+        return userManager.getAllTechnicians();
+    }
+
+    public List<User> getMissingTechs(int project_id) throws SQLException {
+        return userManager.getMissingTechs(project_id);
     }
 
     public String getEmail(User user) throws SQLException{
