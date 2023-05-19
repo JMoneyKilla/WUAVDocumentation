@@ -71,8 +71,6 @@ public class MainViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList("Address", "Customer name", "Project name", "Zip code");
         comboBox.setItems(choiceBoxOptions);
-
-
         lableUserName.setText("" + userModel.getLoggedInUser().getName());
         textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                     try {
@@ -147,7 +145,7 @@ public class MainViewController implements Initializable {
                 btnCreateNewProject.setVisible(false);
             }
         }
-            
+
             public void projectsSwitch() throws IOException {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectsView.fxml"));
                 projectsViewController = fxmlLoader.getController();
@@ -194,13 +192,13 @@ public class MainViewController implements Initializable {
                 Parent root;
                 try {
                     root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/CreateNewProjectView.fxml"));
-                    Stage createNewUserView = new Stage();
-                    createNewUserView.setScene(new Scene(root));
-                    createNewUserView.setTitle("New Project");
-                    createNewUserView.initModality(Modality.WINDOW_MODAL);
-                    createNewUserView.centerOnScreen();
-                    createNewUserView.initOwner(stage);
-                    createNewUserView.show();
+                    Stage createNewProject = new Stage();
+                    createNewProject.setScene(new Scene(root));
+                    createNewProject.setTitle("New Project");
+                    createNewProject.initModality(Modality.WINDOW_MODAL);
+                    createNewProject.centerOnScreen();
+                    createNewProject.initOwner(stage);
+                    createNewProject.show();
 
 
                 } catch (IOException e) {
@@ -248,5 +246,24 @@ public class MainViewController implements Initializable {
             public void clickGetReport(ActionEvent actionEvent){
                 pdfReportGenerator.generatePDF(projectModel.getSelectedProject());
             }
-       }
+
+    public void clickGetCustomerInfo(ActionEvent actionEvent) {
+        Node n = (Node) actionEvent.getSource();
+        Window stage = n.getScene().getWindow();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/CustomerInformationView.fxml"));
+            Stage customerInfo = new Stage();
+            customerInfo.setScene(new Scene(root));
+            customerInfo.initModality(Modality.WINDOW_MODAL);
+            customerInfo.centerOnScreen();
+            customerInfo.initOwner(stage);
+            customerInfo.show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
 

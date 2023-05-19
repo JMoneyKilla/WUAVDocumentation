@@ -7,15 +7,19 @@ import javafx.beans.property.StringProperty;
 
 public class Project {
 
-    private IntegerProperty id = new SimpleIntegerProperty();
+    private int id;
     private StringProperty name = new SimpleStringProperty();
     private StringProperty dateLastVisited = new SimpleStringProperty();
     private StringProperty customerName = new SimpleStringProperty();
     private StringProperty companyAddress = new SimpleStringProperty();
     private IntegerProperty zipCode = new SimpleIntegerProperty();
-    private IntegerProperty companyType = new SimpleIntegerProperty();
+    private int companyType;
 
-    public Project(int id, String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType){
+    private int phoneNumber;
+    private String customerEmail;
+
+
+    public Project(int id, String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType, int phoneNumber, String customerEmail){
         setId(id);
         setName(name);
         setDateLastVisited(dateLastChecked);
@@ -23,23 +27,27 @@ public class Project {
         setZipCode(zipCode);
         setCompanyAddress(companyAddress);
         setCompanyType(companyType);
+        setPhoneNumber(phoneNumber);
+        setCustomerEmail(customerEmail);
     }
 
-    public Project(String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType){
+    public Project(String name, String dateLastChecked, String customerName, String companyAddress, int zipCode, int companyType, int phoneNumber, String customerEmail){
         setName(name);
         setDateLastVisited(dateLastChecked);
         setCustomerName(customerName);
         setCompanyAddress(companyAddress);
         setZipCode(zipCode);
         setCompanyType(companyType);
+        setPhoneNumber(phoneNumber);
+        setCustomerEmail(customerEmail);
     }
 
     public int getId() {
-        return id.get();
+        return id;
     }
 
     public void setId(int id) {
-        this.id.set(id);
+        this.id = id;
     }
 
     public String getName() {
@@ -93,15 +101,11 @@ public class Project {
     }
 
     public int getCompanyType(){
-        return companyType.get();
+        return companyType;
     }
 
     public void setCompanyType(int companyType) {
-        this.companyType.set(companyType);
-    }
-
-    public IntegerProperty idProperty() {
-        return id;
+        this.companyType=companyType;
     }
 
     public int getZipCode() {
@@ -114,6 +118,22 @@ public class Project {
 
     public void setZipCode(int zipCode) {
         this.zipCode.set(zipCode);
+    }
+
+    private void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber=phoneNumber;
+    }
+
+    private void setCustomerEmail(String customerEmail) {
+        this.customerEmail=customerEmail;
+    }
+
+    public int getPhoneNumber(){
+        return phoneNumber;
+    }
+
+    public String getCustomerEmail(){
+        return customerEmail;
     }
 }
 

@@ -329,7 +329,16 @@ public class ProjectsViewController implements Initializable {
             paneProject.getChildren().add(tableView);
             tableView.getStylesheets().add(
                     getClass().getResource("/GUI/Views/MainStyleSheet.css").toExternalForm());
-        }
+
+            tableView.setOnMouseClicked(event ->{
+                if(event.getClickCount() == 2){
+            Project selectedProject = (Project) tableView.getSelectionModel().getSelectedItem();
+            if(selectedProject!=null){
+                projectModel.setSelectedProject(selectedProject);
+                projectModel.setIsProjectSelected(true);}
+                }
+            });
+          }
 
         private void changeViewGrid() throws IOException {
             paneProject.getChildren().clear();
