@@ -118,10 +118,10 @@ public class CreateNewProjectViewController implements Initializable {
     }
 
     public void clickCancel(ActionEvent actionEvent) {
-        //projectModel.setSelectedProject(null);
-        //Node n = (Node) actionEvent.getSource();
-        //Stage stage = (Stage) n.getScene().getWindow();
-        //stage.close();
-        System.out.println(txtFieldEmail.getText());
+        projectModel.setSelectedProject(null);
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
+
     }
 }
