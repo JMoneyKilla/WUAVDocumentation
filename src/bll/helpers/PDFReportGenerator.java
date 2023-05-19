@@ -3,11 +3,6 @@ package bll.helpers;
 import GUI.Models.ProjectModel;
 import be.Project;
 import be.documents.IDocument;
-import io.github.palexdev.materialfx.utils.SwingFXUtils;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -16,9 +11,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class PDFReportGenerator {
@@ -96,11 +89,28 @@ public class PDFReportGenerator {
                 }
                 if(d.getDocumentType() == 1 || d.getDocumentType() == 2){
                     PDImageXObject pdfImage = PDImageXObject.createFromFile(d.getImageFile().getPath(), document);
-                    contentStream.drawImage(pdfImage, 10, pageHeight-currentHeight-140, pageWidth/4, 140);
+                    contentStream.drawImage(pdfImage, 50, pageHeight-currentHeight-pageWidth/3, pageWidth/3, pageWidth/3);
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 15);
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(pageWidth/3+60, pageHeight-currentHeight-20);
+                    contentStream.showText(d.getDocumentName());
+                    contentStream.setFont(PDType1Font.HELVETICA, 12);
+                    contentStream.newLineAtOffset(0, -18);
+                    contentStream.showText(d.getDescription());
+
+
                 }
                 if (d.getDocumentType() == 3) {
-                    break;
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 15);
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(50, pageHeight-currentHeight-20);
+                    contentStream.showText(d.getDocumentName());
+                    contentStream.setFont(PDType1Font.HELVETICA, 12);
+                    contentStream.newLineAtOffset(0, -18);
+                    contentStream.showText(d.getDescription());
                 }
+                contentStream.endText();
+
                 docNum++;
                 currentHeight += 200;
             }
