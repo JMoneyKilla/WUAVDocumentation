@@ -8,7 +8,6 @@ import bll.*;
 import bll.helpers.PDFReportGenerator;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
-import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -244,9 +243,11 @@ public class MainViewController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
-
             public void clickGetReport(ActionEvent actionEvent){
-                pdfReportGenerator.generatePDF(projectModel.getSelectedProject());
+                pdfReportGenerator.generatePDFProfessionel(projectModel.getSelectedProject());
             }
-       }
+            public void clickGetReportSimple(ActionEvent actionEvent) {
+                  pdfReportGenerator.generatePDFSimple(projectModel.getSelectedProject());
+            }
+}
 

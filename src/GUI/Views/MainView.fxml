@@ -85,15 +85,32 @@
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <MFXButton fx:id="buttonGetReport" buttonType="RAISED" onAction="#clickGetReport" text="Get report">
+                        <MFXButton fx:id="buttonGetReportSimple" buttonType="RAISED" onAction="#clickGetReportSimple" text="Get customer report">
                            <font>
-                              <Font name="Segoe UI Semibold" size="16.0" />
+                              <Font name="Segoe UI Semibold" size="13.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="5.0" top="10.0" />
+                           </VBox.margin>
+                        </MFXButton>
+                        <MFXButton fx:id="buttonGetReport" buttonType="RAISED" onAction="#clickGetReport" text="Get technical report">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="5.0" top="10.0" />
+                           </VBox.margin>
                         </MFXButton>
                      </children>
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
                   </VBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" />
                </children>
