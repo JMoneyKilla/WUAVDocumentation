@@ -1,5 +1,6 @@
 package GUI.Models;
 
+import be.Project;
 import be.User;
 import bll.FacadeManager;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ public class UserModel {
     private final ObservableList<User> users;
     private final ObservableList<User> techs;
     private final ObservableList<User> missingTechs;
+    private final ObservableList<User> assignedTechs;
     User loggedInUser;
 
     public static UserModel getInstance(){
@@ -29,6 +31,7 @@ public class UserModel {
         users = FXCollections.observableArrayList();
         techs = FXCollections.observableArrayList();
         missingTechs = FXCollections.observableArrayList();
+        assignedTechs = FXCollections.observableArrayList();
         fetchAllUsers();
         fetchAllTechs();
     }
@@ -58,6 +61,19 @@ public class UserModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void fetchAssignedTechs(int project_id){
+        assignedTechs.clear();
+        try {
+            assignedTechs.addAll(bll.getTechsInProject(project_id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObservableList<User> getAssignedTechs(){
+        return assignedTechs;
     }
 
     public ObservableList<User> getAllUsers(){
@@ -112,6 +128,23 @@ public class UserModel {
             throw new RuntimeException(e);
         }
     }
+
+    public void addUserToSpecificProject(User user, Project project){
+        try {
+            bll.addUserToSpecificProject(user, project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteUserFromProject(User user, Project project){
+        try {
+            bll.deleteUserFromProject(user, project);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getUserName(int userId){
         try {
             return bll.getUserName(userId);

@@ -95,6 +95,10 @@ public class FacadeManager {
         return userManager.getMissingTechs(project_id);
     }
 
+    public List<User> getTechsInProject(int project_id) throws SQLException {
+        return userManager.getTechByProject(project_id);
+    }
+
     public String getEmail(User user) throws SQLException{
         return userManager.getEmail(user);
     }
@@ -113,6 +117,10 @@ public class FacadeManager {
 
     public void deleteUserLogin(User user) throws SQLException{
         userManager.deleteUserLogin(user);
+    }
+
+    public void deleteUserFromProject(User user, Project project) throws SQLException {
+        userManager.deleteUserFromProject(user, project);
     }
 
     public void updateUser(User user) throws SQLException{
@@ -137,6 +145,10 @@ public class FacadeManager {
 
     public void addUserToProject(User user) throws SQLException {
         userManager.addUserToProject(user);
+    }
+
+    public void addUserToSpecificProject(User user, Project project) throws SQLException {
+        userManager.addUserToSpecificProject(user, project);
     }
 
     public String getUserName(int userId) throws SQLException {

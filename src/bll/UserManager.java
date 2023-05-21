@@ -28,6 +28,17 @@ public class UserManager {
         return missingTechs;
     }
 
+    public List<User> getTechByProject(int project_id) throws SQLException {
+        List<User> userProjects = userDAO.getUserByProject(project_id);
+        List<User> techsInProject = new ArrayList<>();
+        for(User u : userProjects){
+            if(u.getType() == 2){
+                techsInProject.add(u);
+            }
+        }
+        return techsInProject;
+    }
+
     public String getEmail(User user) throws SQLException{
         return userDAO.getEmail(user);
     }
@@ -46,6 +57,10 @@ public class UserManager {
 
     public void deleteUserLogin(User user) throws SQLException {
         userDAO.deleteUserLogin(user);
+    }
+
+    public void deleteUserFromProject(User user, Project project) throws SQLException {
+        userDAO.deleteUserFromProject(user, project);
     }
 
     public void updateUser(User user) throws SQLException{
@@ -71,6 +86,11 @@ public class UserManager {
     public void addUserToProject(User user) throws SQLException {
         userDAO.addUserToProject(user);
     }
+
+    public void addUserToSpecificProject(User user, Project project) throws SQLException {
+        userDAO.addUserToSpecificProject(user, project);
+    }
+
     public String getUserName(int userId) throws SQLException {
         return userDAO.getUserName(userId);
     }

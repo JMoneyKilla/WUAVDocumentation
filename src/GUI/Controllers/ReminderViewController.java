@@ -92,11 +92,10 @@ public class ReminderViewController implements Initializable {
 
 
     public void clickCancel(ActionEvent actionEvent) {
-        /*Node n = (Node) actionEvent.getSource();
+        Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
-        stage.close();*/
-        System.out.println(tableViewProjects.getSelectionModel().getSelectedItems());
-        System.out.println(isAllSelected);
+        stage.close();
+        projectModel.fetchAllProjects();
     }
 
     @Override

@@ -38,6 +38,7 @@ public class DeleteConfirmationController implements Initializable {
                 projectModel.setSelectedProject(null);
                 projectModel.setMultipleIds(null);
                 projectModel.fetchAllOldProjects();
+                projectModel.fetchAllProjects();
                 Node n = (Node) actionEvent.getSource();
                 Stage stage = (Stage) n.getScene().getWindow();
                 stage.close();
@@ -48,6 +49,7 @@ public class DeleteConfirmationController implements Initializable {
                 projectModel.setSelectedProject(null);
                 projectModel.setMultipleIds(null);
                 projectModel.fetchAllOldProjects();
+                projectModel.fetchAllProjects();
                 Node n = (Node) actionEvent.getSource();
                 Stage stage = (Stage) n.getScene().getWindow();
                 stage.close();

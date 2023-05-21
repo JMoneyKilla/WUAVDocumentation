@@ -34,10 +34,14 @@ public class ProjectTemplateController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(userModel.getLoggedInUser().getType()!=1){
+        if(userModel.getLoggedInUser().getType()==3){
             btnAssign.setVisible(false);
             btnDelete.setVisible(false);
             btnEdit.setVisible(false);
+        }
+        if(userModel.getLoggedInUser().getType()==2){
+            btnAssign.setVisible(false);
+            btnDelete.setVisible(false);
         }
     }
 

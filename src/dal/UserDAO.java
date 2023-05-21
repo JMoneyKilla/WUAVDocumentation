@@ -245,6 +245,31 @@ public class UserDAO {
         }
     }
 
+    public void addUserToSpecificProject(User user, Project project) throws SQLException {
+        int userId = user.getId();
+        int projectId = project.getId();
+        String sql = "INSERT INTO UserProject(project_id, user_id) VALUES (?,?)";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            ps.execute();
+        }
+    }
+
+    public void deleteUserFromProject(User user, Project project) throws SQLException {
+        int projectId = project.getId();
+        int userId = user.getId();
+        String sql = "DELETE FROM UserProject WHERE project_id = ? AND user_id = ?";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            ps.execute();
+        }
+    }
+
+
     public List<User> getUserByProject(int project_id) throws SQLException {
         List<User> userByProject = new ArrayList<>();
         String sql = "SELECT * FROM [User] u\n" +

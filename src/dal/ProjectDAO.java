@@ -140,6 +140,21 @@ public class ProjectDAO {
         }
     }
 
+    public void addMultipleUsersToProject(List<Integer> ids, Project project) throws SQLException {
+        String sql = "INSERT INTO UserProject (project_id, user_id) VALUES (?,?)";
+        try (Connection con = dbc.getConnection();) {
+            PreparedStatement statement = con.prepareStatement(sql);
+            List<Integer> idsToDelete = ids;
+            for (int user_id : idsToDelete) {
+                statement.setInt(1, user_id);
+                statement.setInt(2, project.getId());
+                statement.addBatch();
+            }
+            int[] rowsAffected = statement.executeBatch();
+            System.out.println(rowsAffected.length + " rows deleted.");
+        }
+    }
+
     public void updateProject(Project project) throws SQLException{
         int id = project.getId();
         String name = project.getName();

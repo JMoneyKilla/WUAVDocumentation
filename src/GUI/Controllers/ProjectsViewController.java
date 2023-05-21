@@ -109,11 +109,6 @@ public class ProjectsViewController implements Initializable {
 
 
     public void loadUserProjectData() throws IOException {
-        if (currentListener != null)
-            ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).removeListener(currentListener);
-
-        currentListener = c -> {
-            if(!isListViewTrue) {
             paneProject.getChildren().clear();
                 int row = 0;
                 int col = 0;
@@ -134,10 +129,7 @@ public class ProjectsViewController implements Initializable {
                 row++;
             }
         }
-     }
-    };
-        ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).addListener(currentListener);
-}
+      }
 
 
     /**

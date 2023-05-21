@@ -6,17 +6,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="420.0" prefWidth="407.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AssignViewController">
+<AnchorPane fx:id="anchorPane" onMouseClicked="#clickAnchorPane" prefHeight="420.0" prefWidth="407.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AssignViewController">
    <children>
-      <TableView fx:id="tableView" layoutX="37.0" layoutY="101.0" prefHeight="196.0" prefWidth="334.0">
+      <TableView fx:id="tableView" layoutX="38.0" layoutY="121.0" prefHeight="197.0" prefWidth="153.0">
         <columns>
-          <TableColumn fx:id="tableColumnTech" prefWidth="194.6666774749756" text="Technician" />
+          <TableColumn fx:id="tableColumnTech" prefWidth="150.0" text="Technician" />
         </columns>
       </TableView>
-      <Button layoutX="261.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickSave" text="Save" />
-      <Button layoutX="318.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickCancel" text="Cancel" />
-      <Label fx:id="lblAssign" layoutX="38.0" layoutY="317.0" prefHeight="33.0" prefWidth="334.0" />
+      <Button layoutX="190.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickAdd" text="Assign" />
+      <Button layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickClose" text="Close" />
       <Pane prefHeight="71.0" prefWidth="407.0" style="-fx-background-color: #856a6a;" />
+      <TableView fx:id="tableViewAssigned" layoutX="206.0" layoutY="121.0" prefHeight="197.0" prefWidth="153.0">
+         <columns>
+            <TableColumn fx:id="tableColumnAssignedTech" prefWidth="150.0" text="Technician" />
+         </columns>
+      </TableView>
+      <Button layoutX="252.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickRemove" text="Remove" />
+      <Text layoutX="218.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned" />
+      <Label fx:id="lblInform" layoutX="38.0" layoutY="334.0" prefHeight="17.0" prefWidth="351.0" />
    </children>
 </AnchorPane>
