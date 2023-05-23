@@ -24,7 +24,7 @@
                      <children>
                         <ImageView fx:id="imgView" fitHeight="47.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" translateX="10.0">
                            <image>
-                              <Image url="@../../../icons/logo.png" />
+                              <Image url="@../../resource/icons/logo.png" />
                            </image></ImageView>
                         <Label prefHeight="30.0" prefWidth="87.0" text="Hello " textFill="WHITE" translateX="5.0">
                            <HBox.margin>
