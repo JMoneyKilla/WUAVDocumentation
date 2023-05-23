@@ -4,7 +4,6 @@ import GUI.Models.ProjectModel;
 import be.Project;
 import be.documents.IDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDFormContentStream;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
@@ -33,54 +32,13 @@ public class PDFReportGenerator {
 
             // Create a new content stream for adding content
             PDPageContentStream contentStream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
-            String name = project.getName();
-            String customerName = project.getCustomerName();
-            String companyAddress = project.getCompanyAddress();
-            int zipCode = project.getZipCode();
 
-            // Get the width and height of the page
-            pageWidth = page.getMediaBox().getWidth();
-            pageHeight = page.getMediaBox().getHeight();
-
-            // Calculate the width of the text
-            String titleText = "Report: " + name;
-            float textWidth = PDType1Font.HELVETICA.getStringWidth(titleText) / 1000 * 25;
-
-            // Calculate the x-coordinate for centering the text
-            float centerX = (pageWidth - textWidth) / 2;
-
-            // Calculate the y-coordinate for placing the text
-            float y = pageHeight - 50;
-
-            // Add text to the page
-            contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 25);
-            contentStream.newLineAtOffset(centerX, y);
-            contentStream.showText(titleText);
-            contentStream.endText();
-
-
-
-            // Set the font and font size
-            contentStream.setFont(PDType1Font.HELVETICA, 12);
-
-            // Set the initial starting position
-            float startX = 50;
-            float startY = 750;
-
-            // Add text with line breaks
-            contentStream.beginText();
-            contentStream.newLineAtOffset(startX, startY);
-            contentStream.showText("Customer name: " + customerName);
-            contentStream.newLineAtOffset(0, -15);
-            contentStream.showText("Company address: " + companyAddress + ", " + zipCode);
-            contentStream.endText();
+            initPDFReport(contentStream, project, page);
             page = new PDPage(PDRectangle.A4);
             document.addPage(page);
             contentStream.close();
-            currentHeight = 20;
-
             contentStream = new PDPageContentStream(document, page);
+            currentHeight = 20;
             int docNum = 1;
 
             // Add an image to the page
@@ -99,17 +57,13 @@ public class PDFReportGenerator {
                 if (d.getDocumentType() == 3) {
                     pdfTextDocGen(contentStream, d);
                 }
-
                 docNum++;
                 currentHeight += 200;
             }
-
             // Close the content stream
             contentStream.close();
-
             // Save the document to a file
             document.save("Reports/report.pdf");
-
             // Closes the document and opens it
             document.close();
             Desktop desktop = Desktop.getDesktop();
@@ -129,8 +83,12 @@ public class PDFReportGenerator {
             // Create a new content stream for adding content
             PDPageContentStream contentStream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
 
-            initPDFReport(document, contentStream, project, page);
-
+            initPDFReport(contentStream, project, page);
+            page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+            contentStream.close();
+            contentStream = new PDPageContentStream(document, page);
+            currentHeight = 20;
             int docNum = 1;
 
             // Add an image to the page
@@ -147,21 +105,16 @@ public class PDFReportGenerator {
                     pdfPicDiaGen(contentStream, d, document);
                     docNum++;
                     currentHeight += 200;
-
                 }
                 if(d.getDocumentType() == 2){
                     continue;
                 }
-
                 if (d.getDocumentType() == 3) {
                     pdfTextDocGen(contentStream, d);
                     docNum++;
                     currentHeight += 200;
                 }
-
             }
-
-            // Close the content stream
             contentStream.close();
 
             // Save the document to a file
@@ -175,6 +128,7 @@ public class PDFReportGenerator {
             e.printStackTrace();
         }
     }
+
     public void pdfTextDocGen(PDPageContentStream contentStream, IDocument d) throws IOException {
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 15);
         contentStream.beginText();
@@ -183,7 +137,7 @@ public class PDFReportGenerator {
         String[] splitAtNewLine = d.getDescription().split("\n");
         for (String s : splitAtNewLine) {
             contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.newLineAtOffset(0, -10);
+            contentStream.newLineAtOffset(0, -13);
             contentStream.showText(s);
         }
         contentStream.endText();
@@ -199,13 +153,13 @@ public class PDFReportGenerator {
         String[] splitAtNewLine = d.getDescription().split("\n");
         for (String s : splitAtNewLine) {
             contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.newLineAtOffset(0, -10);
+            contentStream.newLineAtOffset(0, -13);
             contentStream.showText(s);
         }
         contentStream.endText();
     }
 
-    public void initPDFReport(PDDocument document, PDPageContentStream contentStream, Project project, PDPage page) throws IOException {
+    public void initPDFReport(PDPageContentStream contentStream, Project project, PDPage page) throws IOException {
         String name = project.getName();
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
@@ -248,11 +202,6 @@ public class PDFReportGenerator {
         contentStream.newLineAtOffset(0, -15);
         contentStream.showText("Company address: " + companyAddress + ", " + zipCode);
         contentStream.endText();
-        page = new PDPage(PDRectangle.A4);
-        document.addPage(page);
-        contentStream.close();
-        contentStream = new PDPageContentStream(document, page);
-        currentHeight = 20;
     }
 }
 
