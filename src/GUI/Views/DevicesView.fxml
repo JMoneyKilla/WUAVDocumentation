@@ -44,7 +44,10 @@
                         <Insets right="5.0" />
                      </VBox.margin>
                      <content>
-                        <VBox fx:id="devicesBox" />
+                        <VBox fx:id="devicesBox">
+                           <children>
+                              <AnchorPane fx:id="devicePane" prefHeight="200.0" prefWidth="200.0" />
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>

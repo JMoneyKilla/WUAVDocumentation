@@ -30,6 +30,8 @@ public class ProjectModel {
     UserModel userModel = UserModel.getInstance();
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
+    private BooleanProperty addedDocument = new SimpleBooleanProperty(false);
+    private BooleanProperty addedDevice = new SimpleBooleanProperty(false);
 
     private String inputText;
     ProjectValidator validator = new ProjectValidator();
@@ -78,10 +80,6 @@ public class ProjectModel {
         fetchAllOldProjects();
 
     }
-
-    /*public List<Project> getProjects() {
-        return facadeManager.getProjects();
-    }*/
 
     public void fetchAllProjects(){
         projects.clear();
@@ -269,5 +267,44 @@ public class ProjectModel {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void deleteDocument(IDocument document){
+        try {
+            facadeManager.deleteDocument(document);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deleteDevice(Device device){
+        try {
+            facadeManager.deleteDevice(device);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isAddedDocument() {
+        return addedDocument.get();
+    }
+
+    public BooleanProperty addedDocumentProperty() {
+        return addedDocument;
+    }
+
+    public void setAddedDocument(boolean addedDocument) {
+        this.addedDocument.set(addedDocument);
+    }
+
+    public boolean isAddedDevice() {
+        return addedDevice.get();
+    }
+
+    public BooleanProperty addedDeviceProperty() {
+        return addedDevice;
+    }
+
+    public void setAddedDevice(boolean addedDevice) {
+        this.addedDevice.set(addedDevice);
     }
 }

@@ -72,12 +72,14 @@ public class NewDocumentViewController implements Initializable {
         if((documentType == 1 || documentType == 2) && documentValidator.isDiagramOrPictureDocValid(docName, docDescription, docFilePath)){
                 documentModel.createDocument(documentBuilder.build(documentType));
                 projectModel.refreshProjectDocuments();
+                projectModel.setAddedDocument(true);
                 Stage stage = (Stage) buttonAddDocument.getScene().getWindow();
                 stage.close();
         }
         if(documentType == 3 && documentValidator.isTextDocValid(docName, docDescription)){
             documentModel.createDocument(documentBuilder.build(documentType));
             projectModel.refreshProjectDocuments();
+            projectModel.setAddedDocument(true);
             Stage stage = (Stage) buttonAddDocument.getScene().getWindow();
             stage.close();
         }

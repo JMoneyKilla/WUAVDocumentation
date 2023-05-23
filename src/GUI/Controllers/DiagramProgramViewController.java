@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
@@ -36,10 +37,13 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class DiagramProgramViewController implements Initializable {
+
     @FXML
-    private MFXButton buttonSave;
+    private HBox controlBox, powerBox, cabelBox, screenBox, projectorBox, speakerBox;
     @FXML
-    private ImageView symbolScreen, symbolControl;
+    private MFXButton buttonSave, buttonCancel;
+    @FXML
+    private ImageView symbolScreen, symbolControl, symbolPower, symbolSpeaker, symbolProjector;
     @FXML
     private Pane mainPane;
     private Image selectedImage;
@@ -127,12 +131,24 @@ public class DiagramProgramViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Image screen = new Image("resource/screenSymbol.png");
         Image control = new Image("resource/controlCenterSymbol.png");
+        Image power = new Image("resource/powerSymbol.png");
+        Image speaker = new Image("resource/speakerSymbol.png");
+        Image projector = new Image("resource/projectorSymbol.png");
 
         symbolScreen.setImage(screen);
         symbolScreen.setCursor(Cursor.HAND);
 
         symbolControl.setImage(control);
         symbolControl.setCursor(Cursor.HAND);
+
+        symbolPower.setImage(power);
+        symbolPower.setCursor(Cursor.HAND);
+
+        symbolSpeaker.setImage(speaker);
+        symbolSpeaker.setCursor(Cursor.HAND);
+
+        symbolProjector.setImage(projector);
+        symbolProjector.setCursor(Cursor.HAND);
 
         cabel.setCursor(Cursor.HAND);
     }
@@ -144,5 +160,12 @@ public class DiagramProgramViewController implements Initializable {
 
     public void clickSave(ActionEvent actionEvent) {
         takeAndSaveScreenshot();
+        Stage stage = (Stage) buttonSave.getScene().getWindow();
+        stage.close();
+    }
+
+    public void clickCancel(ActionEvent actionEvent) {
+        Stage stage = (Stage) buttonCancel.getScene().getWindow();
+        stage.close();
     }
 }

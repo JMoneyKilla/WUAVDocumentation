@@ -37,6 +37,7 @@ public class NewDeviceViewController {
             try {
                 facadeManager.createDevice(device);
                 projectModel.refreshProjectDevices();
+                projectModel.setAddedDevice(true);
                 Stage stage = (Stage) buttonAddDevice.getScene().getWindow();
                 stage.close();
             } catch (SQLException e) {

@@ -30,7 +30,7 @@
          <children>
             <ImageView fitHeight="63.0" fitWidth="84.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../icons/logo.png" />
+                  <Image url="@../../resource/icons/logo.png" />
                </image>
             </ImageView>
          </children></Pane>

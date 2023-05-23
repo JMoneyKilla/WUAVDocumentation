@@ -44,7 +44,10 @@
                         <Insets right="5.0" />
                      </VBox.margin>
                      <content>
-                        <VBox fx:id="documentsBox" />
+                        <VBox fx:id="documentsBox">
+                           <children>
+                              <AnchorPane fx:id="documentPane" prefHeight="200.0" prefWidth="200.0" />
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>

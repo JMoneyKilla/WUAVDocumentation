@@ -13,7 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +27,8 @@ import java.util.ResourceBundle;
 public class DevicesViewController implements Initializable {
 
     @FXML
+    private AnchorPane devicePane;
+    @FXML
     private MFXButton buttonBack, buttonDocuments, buttonDevices, buttonAddDevice, buttonGetReport;
     @FXML
     private VBox devicesBox;
@@ -35,16 +39,13 @@ public class DevicesViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try{
-            for (Device device : projectModel.getProjectDevices()) {
-                devicesBox.getChildren().add(deviceBoxGenerator.buildDeviceBox(device));
+        projectModel.addedDeviceProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) {
+                populateDeviceView();
+                projectModel.setAddedDevice(false);
             }
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("No documents");
-        }
-        if(userModel.getLoggedInUser().getType()==3){
-            buttonAddDevice.setVisible(false);
-        }
+        });
+        populateDeviceView();
     }
     public void clickAddDevice(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/NewDeviceView.fxml"));
@@ -61,6 +62,31 @@ public class DevicesViewController implements Initializable {
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.showAndWait();
     }
+    public void populateDeviceView(){
+        int row = 0;
+        devicePane.getChildren().clear();
+        for (Device d: projectModel.getProjectDevices()) {
+            StackPane sp = generateDevicePane(d);
+            devicePane.getChildren().add(sp);
+            AnchorPane.setTopAnchor(sp, 10 + row * 160.0);
+            row++;
+            devicePane.setMinHeight(250 + row*160);
+        }
+    }
+    public StackPane generateDevicePane(Device device){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/TextDocumentView.fxml"));
+        StackPane sp = null;
+        try {
+            sp = loader.load();
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        TextDocumentViewController controller = loader.getController();
+        controller.setDeviceLabels(device);
+        controller.setDevice(device);
+
+        return sp;
+    }
 
 }

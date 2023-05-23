@@ -26,7 +26,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="screenBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
                         <Label text="Screen">
                            <HBox.margin>
@@ -40,9 +40,9 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="cabelBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
-                        <Label text="HDMI">
+                        <Label text="Cabel">
                            <HBox.margin>
                               <Insets left="5.0" top="10.0" />
                            </HBox.margin>
@@ -54,21 +54,21 @@
                         </Line>
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="speakerBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
                         <Label text="Speaker">
                            <HBox.margin>
                               <Insets left="5.0" top="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ImageView fitHeight="35.0" fitWidth="50.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="symbolSpeaker" fitHeight="35.0" fitWidth="50.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="controlBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
                         <Label text="Control Center">
                            <HBox.margin>
@@ -82,28 +82,28 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="powerBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
                         <Label text="Power Outlet">
                            <HBox.margin>
                               <Insets left="5.0" top="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ImageView fitHeight="35.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="symbolPower" fitHeight="35.0" fitWidth="50.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
+                  <HBox fx:id="projectorBox" prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
                         <Label text="Projector">
                            <HBox.margin>
                               <Insets left="5.0" top="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ImageView fitHeight="35.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="symbolProjector" fitHeight="35.0" fitWidth="50.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
@@ -112,28 +112,18 @@
                   </HBox>
                   <HBox prefHeight="39.0" prefWidth="185.0" style="-fx-border-color: #000000;">
                      <children>
-                        <Label text="Label">
+                        <MFXButton fx:id="buttonSave" onAction="#clickSave" text="Save">
                            <HBox.margin>
-                              <Insets left="5.0" top="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <ImageView fitHeight="35.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                              <Insets left="5.0" top="5.0" />
+                           </HBox.margin></MFXButton>
+                        <MFXButton fx:id="buttonCancel" onAction="#clickCancel" text="Cancel">
                            <HBox.margin>
-                              <Insets left="20.0" />
+                              <Insets left="75.0" top="5.0" />
                            </HBox.margin>
-                        </ImageView>
+                        </MFXButton>
                      </children>
                   </HBox>
-                  <HBox prefHeight="52.0" prefWidth="168.0" style="-fx-border-color: #000000;">
-                     <children>
-                        <Label text="Label">
-                           <HBox.margin>
-                              <Insets left="5.0" top="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <MFXButton fx:id="buttonSave" onAction="#clickSave" />
-                     </children>
-                  </HBox>
+                  <HBox prefHeight="52.0" prefWidth="168.0" style="-fx-border-color: #000000;" />
                </children>
                <HBox.margin>
                   <Insets />
