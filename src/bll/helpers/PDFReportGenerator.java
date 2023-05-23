@@ -16,7 +16,6 @@ import java.io.IOException;
 
 public class PDFReportGenerator {
     ProjectModel projectModel = ProjectModel.getInstance();
-    DocumentBoxGenerator docBoxGenerator = new DocumentBoxGenerator();
     float pageWidth = 0;
     float pageHeight = 0;
     int currentHeight = 20;

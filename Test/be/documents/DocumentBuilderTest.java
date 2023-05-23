@@ -15,7 +15,7 @@ class DocumentBuilderTest {
         documentBuilder.documentType(1);
         documentBuilder.refNumber(2338);
         documentBuilder.description("diagram document");
-        documentBuilder.absolutePath("/folder/user/picture");
+        documentBuilder.absolutePath(null);
         documentBuilder.documentName("Sound diagram");
         documentBuilder.dateAdded("01/01/2021");
         DiagramDoc diagramDoc = (DiagramDoc) documentBuilder.buildDiagramDoc();
@@ -24,7 +24,7 @@ class DocumentBuilderTest {
         assertEquals(1, diagramDoc.getDocumentType());
         assertEquals(2338, diagramDoc.getRefNumber());
         assertEquals("diagram document", diagramDoc.getDescription());
-        assertEquals("/folder/user/picture", diagramDoc.getImageFile());
+        assertNull(diagramDoc.getImageFile());
         assertEquals("Sound diagram", diagramDoc.getDocumentName());
         assertEquals("01/01/2021", diagramDoc.getDateAdded());
     }
@@ -37,7 +37,7 @@ class DocumentBuilderTest {
         documentBuilder.documentType(2);
         documentBuilder.refNumber(2338);
         documentBuilder.description("picture document");
-        documentBuilder.absolutePath("/folder/user/picture");
+        documentBuilder.absolutePath(null);
         documentBuilder.documentName("Speaker picture");
         documentBuilder.dateAdded("01/01/2021");
         PictureDoc pictureDoc = (PictureDoc) documentBuilder.buildPictureDoc();
@@ -46,7 +46,7 @@ class DocumentBuilderTest {
         assertEquals(2, pictureDoc.getDocumentType());
         assertEquals(2338, pictureDoc.getRefNumber());
         assertEquals("picture document", pictureDoc.getDescription());
-        assertEquals("/folder/user/picture", pictureDoc.getImageFile());
+        assertNull(pictureDoc.getImageFile());
         assertEquals("Speaker picture", pictureDoc.getDocumentName());
         assertEquals("01/01/2021", pictureDoc.getDateAdded());
     }
