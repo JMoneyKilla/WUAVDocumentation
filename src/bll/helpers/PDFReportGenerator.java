@@ -3,6 +3,8 @@ package bll.helpers;
 import GUI.Models.ProjectModel;
 import be.Project;
 import be.documents.IDocument;
+import javafx.scene.image.Image;
+import javafx.scene.text.TextAlignment;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -31,8 +33,7 @@ public class PDFReportGenerator {
 
             // Create a new content stream for adding content
             PDPageContentStream contentStream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
-
-            initPDFReport(contentStream, project, page);
+            initPDFReport(contentStream, project, page, document);
             page = new PDPage(PDRectangle.A4);
             document.addPage(page);
             contentStream.close();
@@ -82,7 +83,8 @@ public class PDFReportGenerator {
             // Create a new content stream for adding content
             PDPageContentStream contentStream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
 
-            initPDFReport(contentStream, project, page);
+            initPDFReport(contentStream, project, page, document);
+
             page = new PDPage(PDRectangle.A4);
             document.addPage(page);
             contentStream.close();
@@ -158,7 +160,15 @@ public class PDFReportGenerator {
         contentStream.endText();
     }
 
-    public void initPDFReport(PDPageContentStream contentStream, Project project, PDPage page) throws IOException {
+    public void initPDFReport(PDPageContentStream contentStream, Project project, PDPage page, PDDocument document) throws IOException {
+        String logoImagePath = "resource/icons/logo.png";
+        String absoluteImagePath = getClass().getClassLoader().getResource(logoImagePath).getPath();
+
+
+        PDImageXObject logoImage = PDImageXObject.createFromFile(absoluteImagePath, document);
+        // Draw the company logo at the top left corner
+        contentStream.drawImage(logoImage, (page.getMediaBox().getWidth()- 384)/2, (page.getMediaBox().getHeight()-192)/2, 384, 192);
+
         String name = project.getName();
         String customerName = project.getCustomerName();
         String companyAddress = project.getCompanyAddress();
@@ -169,8 +179,7 @@ public class PDFReportGenerator {
         pageHeight = page.getMediaBox().getHeight();
 
         // Calculate the width of the text
-        String titleText = "Report: " + name;
-        float textWidth = PDType1Font.HELVETICA.getStringWidth(titleText) / 1000 * 25;
+        float textWidth = PDType1Font.HELVETICA.getStringWidth(name) / 1000 * 25;
 
         // Calculate the x-coordinate for centering the text
         float centerX = (pageWidth - textWidth) / 2;
@@ -182,7 +191,7 @@ public class PDFReportGenerator {
         contentStream.beginText();
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 25);
         contentStream.newLineAtOffset(centerX, y);
-        contentStream.showText(titleText);
+        contentStream.showText(name);
         contentStream.endText();
 
 
@@ -192,15 +201,23 @@ public class PDFReportGenerator {
 
         // Set the initial starting position
         float startX = 50;
-        float startY = 750;
+        float startY = 700;
 
         // Add text with line breaks
         contentStream.beginText();
         contentStream.newLineAtOffset(startX, startY);
         contentStream.showText("Customer name: " + customerName);
-        contentStream.newLineAtOffset(0, -15);
-        contentStream.showText("Company address: " + companyAddress + ", " + zipCode);
+        contentStream.newLineAtOffset(0, -20);
+        contentStream.showText("Customer address: " + companyAddress + ", " + zipCode);
+
+        contentStream.newLineAtOffset(0, -550);
+        contentStream.showText("Contact Us:");
+        contentStream.newLineAtOffset(0, -30);
+        contentStream.showText("Phone: " + project.getPhoneNumber());
+        contentStream.newLineAtOffset(0, -30);
+        contentStream.showText("Email: " + project.getCustomerEmail());
         contentStream.endText();
+
     }
 }
 

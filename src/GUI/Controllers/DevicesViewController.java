@@ -3,9 +3,6 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Device;
-import be.User;
-import be.documents.IDocument;
-import bll.helpers.DeviceBoxGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -32,7 +28,6 @@ public class DevicesViewController implements Initializable {
     private MFXButton buttonBack, buttonDocuments, buttonDevices, buttonAddDevice, buttonGetReport;
     @FXML
     private VBox devicesBox;
-    DeviceBoxGenerator deviceBoxGenerator = new DeviceBoxGenerator();
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
 

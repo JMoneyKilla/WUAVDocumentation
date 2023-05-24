@@ -3,7 +3,6 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.documents.IDocument;
-import bll.helpers.DocumentBoxGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

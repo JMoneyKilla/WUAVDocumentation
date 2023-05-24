@@ -29,7 +29,7 @@ public class ProjectValidator {
 
     public boolean isNumberValid(String number){
         if(number!=null){
-        if(number.matches("[0-9]+"))
+        if(number.matches("[0-9]+") && (number.length() == 8 || number.length() == 10))
             return true;
         }
         return false;
