@@ -45,7 +45,7 @@ public class ProjectsViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(projectModel.getProjects());
 
-        if (userModel.getLoggedInUser().getType() == 2) {
+        if (userModel.getLoggedInUser().getType()==2) {
             try {
                 loadUserProjectData();
             } catch (IOException e) {
@@ -86,7 +86,7 @@ public class ProjectsViewController implements Initializable {
                     for (Project project : projectModel.getProjects()) {
                         StackPane stackPane;
                         try {
-                            stackPane = generateEventPane(project);
+                            stackPane = generateStackPane(project);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -113,9 +113,9 @@ public class ProjectsViewController implements Initializable {
                 int row = 0;
                 int col = 0;
         for (Project project : projectModel.getUserProjects(userModel.getLoggedInUser().getId())) {
-            StackPane stackPane = null;
+            StackPane stackPane;
             try {
-                stackPane = generateEventPane(project);
+                stackPane = generateStackPane(project);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -138,7 +138,7 @@ public class ProjectsViewController implements Initializable {
      * @param project
      * @return
      */
-    public StackPane generateEventPane(Project project) throws IOException {
+    public StackPane generateStackPane(Project project) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectTemplateView.fxml"));
         StackPane sp = loader.load();
         ProjectTemplateController controller = loader.getController();
@@ -147,10 +147,12 @@ public class ProjectsViewController implements Initializable {
         sp.setOnMousePressed(e -> {
             ProjectModel projectModel = ProjectModel.getInstance();
             projectModel.setSelectedProject(project);
-            projectModel.setIsProjectSelected(true);});
+            projectModel.setIsProjectSelected(true);
+        });
 
 
         return sp;
+    }
 
         /*StackPane stackPane = new StackPane();
 
@@ -188,7 +190,6 @@ public class ProjectsViewController implements Initializable {
         customerName.setText("Customer: " + project.getCustomerName());
         customerName.setPadding(new Insets(5, 5, 5, 10));
         customerName.setId("customerName");
-
         Label date = new Label();
         date.setPrefSize(stackPane.getPrefWidth(), 11);
         date.setFont(Font.font(13));
@@ -305,7 +306,7 @@ public class ProjectsViewController implements Initializable {
         });
 
         return stackPane;*/
-    }
+
 
 
         public void toggleView (ActionEvent actionEvent){

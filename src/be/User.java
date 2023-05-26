@@ -8,17 +8,12 @@ import javafx.beans.property.StringProperty;
 public class User {
     private IntegerProperty id =  new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
-    private IntegerProperty type = new SimpleIntegerProperty();
+    private int type;
 
     public User(int id, String name, int type){
         setId(id);
         setName(name);
         setType(type);
-    }
-
-    public User(String name)
-    {
-        setName(name);
     }
 
     public int getId() {
@@ -42,10 +37,8 @@ public class User {
     }
 
     public int getType() {
-        return type.get();
+        return type;
     }
 
-    public void setType(int type){
-        this.type.set(type);
-    }
+    public void setType(int type){this.type=type;}
 }

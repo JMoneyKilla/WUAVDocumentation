@@ -3,7 +3,6 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,7 +33,7 @@ public class ProjectTemplateController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(userModel.getLoggedInUser().getType()==3){
+        if(userModel.getLoggedInUser().getType()!=1){
             btnAssign.setVisible(false);
             btnDelete.setVisible(false);
             btnEdit.setVisible(false);
