@@ -1,4 +1,4 @@
-package bll;
+package bll.managers;
 
 import be.Project;
 import dal.ProjectDAO;

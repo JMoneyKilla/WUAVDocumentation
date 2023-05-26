@@ -1,15 +1,12 @@
-package bll;
+package bll.managers;
 
 import be.Device;
 import be.Project;
 import be.User;
 import be.documents.IDocument;
-import bll.managers.DeviceManager;
-import bll.managers.DocumentManager;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FacadeManager {

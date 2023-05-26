@@ -1,10 +1,9 @@
 package bll.helpers;
 
 import GUI.Models.ProjectModel;
+import be.enums.DocumentType;
 import be.Project;
 import be.documents.IDocument;
-import javafx.scene.image.Image;
-import javafx.scene.text.TextAlignment;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -15,14 +14,21 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class PDFReportGenerator {
     ProjectModel projectModel = ProjectModel.getInstance();
+    Project project;
+    List<IDocument> documentList;
     float pageWidth = 0;
     float pageHeight = 0;
     int currentHeight = 20;
 
-    public void generatePDFProfessionel(Project project){
+    public PDFReportGenerator(Project project, List<IDocument> documentList){
+        this.project = project;
+        this.documentList = documentList;
+    }
+    public void generatePDFProfessionel(){
         try {
             // Create a new PDF document
             PDDocument document = new PDDocument();
@@ -42,7 +48,7 @@ public class PDFReportGenerator {
             int docNum = 1;
 
             // Add an image to the page
-            for (IDocument d: projectModel.getProjectDocuments()) {
+            for (IDocument d: documentList) {
                 if(docNum > 4){
                     page = new PDPage(PDRectangle.A4);
                     document.addPage(page);
@@ -51,10 +57,10 @@ public class PDFReportGenerator {
                     currentHeight = 20;
                     docNum = 1;
                 }
-                if(d.getDocumentType() == 1 || d.getDocumentType() == 2){
+                if(d.getDocumentType() == DocumentType.DIAGRAM_DOC || d.getDocumentType() == DocumentType.PICTURE_DOC){
                     pdfPicDiaGen(contentStream, d, document);
                 }
-                if (d.getDocumentType() == 3) {
+                if (d.getDocumentType() == DocumentType.TEXT_DOC) {
                     pdfTextDocGen(contentStream, d);
                 }
                 docNum++;
@@ -72,7 +78,7 @@ public class PDFReportGenerator {
             e.printStackTrace();
         }
     }
-    public void generatePDFSimple(Project project){
+    public void generatePDFSimple(){
         try {
             // Create a new PDF document
             PDDocument document = new PDDocument();
@@ -93,7 +99,7 @@ public class PDFReportGenerator {
             int docNum = 1;
 
             // Add an image to the page
-            for (IDocument d: projectModel.getProjectDocuments()) {
+            for (IDocument d: documentList) {
                 if(docNum > 4){
                     page = new PDPage(PDRectangle.A4);
                     document.addPage(page);
@@ -102,15 +108,15 @@ public class PDFReportGenerator {
                     currentHeight = 20;
                     docNum = 1;
                 }
-                if(d.getDocumentType() == 2){
+                if(d.getDocumentType() == DocumentType.PICTURE_DOC){
                     pdfPicDiaGen(contentStream, d, document);
                     docNum++;
                     currentHeight += 200;
                 }
-                if(d.getDocumentType() == 2){
+                if(d.getDocumentType() == DocumentType.DIAGRAM_DOC){
                     continue;
                 }
-                if (d.getDocumentType() == 3) {
+                if (d.getDocumentType() == DocumentType.TEXT_DOC) {
                     pdfTextDocGen(contentStream, d);
                     docNum++;
                     currentHeight += 200;

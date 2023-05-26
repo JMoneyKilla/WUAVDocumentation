@@ -4,8 +4,9 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 
 import be.Project;
-import bll.*;
+import be.enums.UserType;
 import bll.helpers.PDFReportGenerator;
+import bll.managers.InputManager;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 
 import javafx.beans.value.ChangeListener;
@@ -24,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -66,7 +66,7 @@ public class MainViewController implements Initializable {
     ProjectModel projectModel = ProjectModel.getInstance();
 
     InputManager inputManager = new InputManager();
-    PDFReportGenerator pdfReportGenerator = new PDFReportGenerator();
+    PDFReportGenerator pdfReportGenerator;
 
 
 
@@ -74,7 +74,6 @@ public class MainViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList("Address", "Customer name", "Project name", "Zip code");
         comboBox.setItems(choiceBoxOptions);
-
         lableUserName.setText("" + userModel.getLoggedInUser().getName());
         textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                     try {
@@ -145,7 +144,7 @@ public class MainViewController implements Initializable {
 
             lableUserName.setText("" + userModel.getLoggedInUser().getName());
 
-            if (userModel.getLoggedInUser().getType() != 1) {
+            if (userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
                 btnCreateNewProject.setVisible(false);
             }
         }
@@ -247,10 +246,12 @@ public class MainViewController implements Initializable {
                 }
             }
             public void clickGetReport(ActionEvent actionEvent){
-                pdfReportGenerator.generatePDFProfessionel(projectModel.getSelectedProject());
+                pdfReportGenerator = new PDFReportGenerator(projectModel.getSelectedProject(), projectModel.getProjectDocuments());
+                pdfReportGenerator.generatePDFProfessionel();
             }
             public void clickGetReportSimple(ActionEvent actionEvent) {
-                  pdfReportGenerator.generatePDFSimple(projectModel.getSelectedProject());
+                pdfReportGenerator = new PDFReportGenerator(projectModel.getSelectedProject(), projectModel.getProjectDocuments());
+                pdfReportGenerator.generatePDFSimple();
             }
 
     public void clickGetCustomerInfo(ActionEvent actionEvent) {

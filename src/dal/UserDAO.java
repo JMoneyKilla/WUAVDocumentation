@@ -24,6 +24,7 @@ public class UserDAO {
                 int id = rs.getInt("user_id");
                 String name = rs.getString("user_name");
                 int type = rs.getInt("user_type");
+
                 User user = new User(id, name, type);
                 allUsers.add(user);
             }
@@ -157,7 +158,7 @@ public class UserDAO {
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO [User] (user_name, user_type) VALUES (?,?)";
         String name = user.getName();
-        int type = user.getType();
+        int type = user.getType().getTypeId();
 
         try (Connection con = dbc.getConnection();) {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -193,7 +194,7 @@ public class UserDAO {
     public void updateUser(User user) throws SQLException {
         int id = user.getId();
         String name = user.getName();
-        int userType = user.getType();
+        int userType = user.getType().getTypeId();
 
         String sql = "Update [User] SET user_name = ?, user_type = ? WHERE id = ?";
 

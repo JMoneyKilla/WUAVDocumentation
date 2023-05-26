@@ -1,21 +1,22 @@
 package be.documents;
 
+import be.enums.DocumentType;
+
 import java.io.File;
 
 public class TextDoc implements IDocument{
     private int projectId;
     private int userId;
     private int documentId;
-    private int documentType;
+    private DocumentType documentType = DocumentType.TEXT_DOC;
     private String description;
     private String documentName;
     private String dateAdded;
-    TextDoc(int projectId, int userId, int documentId, int documentType,
+    TextDoc(int projectId, int userId, int documentId,
             String description, String documentName, String dateAdded){
         this.projectId = projectId;
         this.userId = userId;
         this.documentId = documentId;
-        this.documentType = documentType;
         this.description = description;
         this.documentName = documentName;
         this.dateAdded = dateAdded;
@@ -42,17 +43,13 @@ public class TextDoc implements IDocument{
         this.userId = userId;
     }
 
-    public int getDocumentType() {
+    public DocumentType getDocumentType() {
         return documentType;
     }
 
     @Override
     public int getRefNumber() {
         return -4;
-    }
-
-    public void setDocumentType(int documentType) {
-        this.documentType = documentType;
     }
 
     public String getDescription() {

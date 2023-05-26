@@ -4,6 +4,7 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
 
+import be.enums.UserType;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -45,7 +46,7 @@ public class ProjectsViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(projectModel.getProjects());
 
-        if (userModel.getLoggedInUser().getType() == 2) {
+        if (userModel.getLoggedInUser().getType() == UserType.TECHNICIAN) {
             try {
                 loadUserProjectData();
             } catch (IOException e) {
@@ -315,7 +316,7 @@ public class ProjectsViewController implements Initializable {
 
         private void changeViewList () {
             ObservableList observableList;
-            if(userModel.getLoggedInUser().getType()==2)
+            if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN)
                 observableList = projectModel.getUserProjects(userModel.getLoggedInUser().getId());
 
             else observableList = projectModel.getProjects();
@@ -350,7 +351,7 @@ public class ProjectsViewController implements Initializable {
           }
 
         private void changeViewGrid() throws IOException {
-        if(userModel.getLoggedInUser().getType()==2){
+        if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN){
             loadUserProjectData();
         }
         else{

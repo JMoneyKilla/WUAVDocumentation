@@ -2,13 +2,11 @@ package GUI.Models;
 
 import be.Project;
 import be.User;
-import bll.FacadeManager;
+import bll.managers.FacadeManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserModel {
 

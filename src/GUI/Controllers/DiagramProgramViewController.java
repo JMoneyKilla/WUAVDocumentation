@@ -109,7 +109,6 @@ public class DiagramProgramViewController implements Initializable {
         // Capture the screenshot of the Pane
         WritableImage image = mainPane.snapshot(new SnapshotParameters(), null);
 
-
         // Create the folder if it doesn't exist
         File folder = new File("savedImages");
         if (!folder.exists()) {

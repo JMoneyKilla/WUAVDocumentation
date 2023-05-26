@@ -1,5 +1,7 @@
 package be.documents;
 
+import be.enums.DocumentType;
+
 import java.io.File;
 
 public interface IDocument {
@@ -9,7 +11,7 @@ public interface IDocument {
     String getDescription();
     File getImageFile();
     String getDocumentName();
-    int getDocumentType();
+    DocumentType getDocumentType();
     int getRefNumber();
     String getDateAdded();
 }

@@ -1,7 +1,8 @@
-package bll;
+package bll.managers;
 
 import be.Project;
 import be.User;
+import be.enums.UserType;
 import dal.UserDAO;
 
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class UserManager {
         List<User> userProjects = userDAO.getUserByProject(project_id);
         List<User> techsInProject = new ArrayList<>();
         for(User u : userProjects){
-            if(u.getType() == 2){
+            if(u.getType() == UserType.TECHNICIAN){
                 techsInProject.add(u);
             }
         }

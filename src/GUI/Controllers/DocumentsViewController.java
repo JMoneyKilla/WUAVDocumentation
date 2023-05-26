@@ -1,11 +1,8 @@
 package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
-import GUI.Models.UserModel;
+import be.enums.DocumentType;
 import be.documents.IDocument;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,18 +10,13 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DocumentsViewController implements Initializable {
@@ -75,7 +67,7 @@ public class DocumentsViewController implements Initializable {
     }
 
     public StackPane generateDocumentPane(IDocument document) {
-        if(document.getDocumentType() == 1 || document.getDocumentType() == 2){
+        if(document.getDocumentType() == DocumentType.DIAGRAM_DOC || document.getDocumentType() == DocumentType.PICTURE_DOC){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/DiagramPictureDocumentView.fxml"));
             StackPane sp = null;
             try {

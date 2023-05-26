@@ -1,7 +1,7 @@
 package GUI.Models;
 
 import be.documents.IDocument;
-import bll.FacadeManager;
+import bll.managers.FacadeManager;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -85,7 +85,7 @@ public class DocumentDAO {
         if(document.getImageFile() != null)
             absolutePath = Files.readAllBytes(document.getImageFile().toPath());
         String documentName = document.getDocumentName();
-        int documentType = document.getDocumentType();
+        int documentType = document.getDocumentType().getTypeId();
         int refNumber = document.getRefNumber();
         String dateAdded = document.getDateAdded();
 

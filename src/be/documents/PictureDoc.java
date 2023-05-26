@@ -1,23 +1,24 @@
 package be.documents;
 
+import be.enums.DocumentType;
+
 import java.io.File;
 
 public class PictureDoc implements IDocument{
     private int projectId;
     private int userId;
     private int documentId;
-    private int documentType;
+    private DocumentType documentType = DocumentType.PICTURE_DOC;
     private int refNumber;
     private String description;
     private File imageFile;
     private String documentName;
     private String dateAdded;
-    PictureDoc(int projectId, int userId, int documentId, int documentType, int refNumber,
+    PictureDoc(int projectId, int userId, int documentId, int refNumber,
                String description, File imageFile, String documentName, String dateAdded){
         this.projectId = projectId;
         this.userId = userId;
         this.documentId = documentId;
-        this.documentType = documentType;
         this.refNumber = refNumber;
         this.description = description;
         this.imageFile = imageFile;
@@ -46,12 +47,8 @@ public class PictureDoc implements IDocument{
         this.userId = userId;
     }
 
-    public int getDocumentType() {
+    public DocumentType getDocumentType() {
         return documentType;
-    }
-
-    public void setDocumentType(int documentType) {
-        this.documentType = documentType;
     }
 
     public int getRefNumber() {

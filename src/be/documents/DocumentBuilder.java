@@ -64,16 +64,16 @@ public class DocumentBuilder {
     }
 
     public IDocument buildDiagramDoc(){
-        return new DiagramDoc(projectId, userId, documentId, documentType, refNumber, description, imageFile,
+        return new DiagramDoc(projectId, userId, documentId, refNumber, description, imageFile,
                 documentName, dateAdded);
     }
 
     public IDocument buildPictureDoc(){
-        return new PictureDoc(projectId, userId, documentId, documentType, refNumber, description, imageFile,
+        return new PictureDoc(projectId, userId, documentId, refNumber, description, imageFile,
                 documentName, dateAdded);
     }
 
     public IDocument buildTextDoc(){
-        return new TextDoc(projectId, userId, documentId, documentType, description, documentName, dateAdded);
+        return new TextDoc(projectId, userId, documentId, description, documentName, dateAdded);
     }
 }

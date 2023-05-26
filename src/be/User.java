@@ -1,5 +1,6 @@
 package be;
 
+import be.enums.UserType;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,12 +9,16 @@ import javafx.beans.property.StringProperty;
 public class User {
     private IntegerProperty id =  new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
-    private IntegerProperty type = new SimpleIntegerProperty();
+    private UserType type;
 
-    public User(int id, String name, int type){
+    public User(int id, String name, int userType){
         setId(id);
         setName(name);
-        setType(type);
+        switch (userType) {
+            case 1 -> this.type = UserType.PROJECT_MANAGER;
+            case 2 -> this.type = UserType.TECHNICIAN;
+            case 3 -> this.type = UserType.SALES_PERSON;
+        }
     }
 
     public User(String name)
@@ -41,11 +46,8 @@ public class User {
         this.name.set(name);
     }
 
-    public int getType() {
-        return type.get();
+    public UserType getType() {
+        return type;
     }
 
-    public void setType(int type){
-        this.type.set(type);
-    }
 }
