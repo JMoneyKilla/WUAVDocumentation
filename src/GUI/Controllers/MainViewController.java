@@ -2,18 +2,14 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
-
-import be.Project;
 import be.enums.UserType;
 import bll.helpers.PDFReportGenerator;
 import bll.managers.InputManager;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,13 +27,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import java.io.IOException;
 import java.net.URL;
-
-import java.sql.SQLException;
-import java.util.List;
-
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -64,8 +55,6 @@ public class MainViewController implements Initializable {
     private Button btnCreateNewProject;
 
     ProjectModel projectModel = ProjectModel.getInstance();
-
-    InputManager inputManager = new InputManager();
     PDFReportGenerator pdfReportGenerator;
 
 
@@ -93,7 +82,7 @@ public class MainViewController implements Initializable {
                 }
             });
 
-            if (!projectModel.getOldProjects().isEmpty() && userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
+            if (!projectModel.getOldProjects().isEmpty()) {
                 // Load the FXML file
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ReminderView.fxml"));
                 Parent root = null;
@@ -136,7 +125,7 @@ public class MainViewController implements Initializable {
 
             lableUserName.setText("" + userModel.getLoggedInUser().getName());
 
-            if (userModel.getLoggedInUser().getType() != UserType.PROJECT_MANAGER) {
+            if (userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
                 btnCreateNewProject.setVisible(false);
             }
         }

@@ -69,15 +69,7 @@ public class TextDoc implements IDocument{
         return documentName;
     }
 
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
-    }
-
     public String getDateAdded() {
         return dateAdded;
-    }
-
-    public void setDateAdded(String dateAdded) {
-        this.dateAdded = dateAdded;
     }
 }

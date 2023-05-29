@@ -25,6 +25,8 @@ public class NewDeviceViewController {
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
     InputManager inputManager = new InputManager();
+
+
     public void clickAddDevice(ActionEvent actionEvent) {
         String deviceName = textFieldDeviceName.getText();
         String description = textAreDescription.getText();

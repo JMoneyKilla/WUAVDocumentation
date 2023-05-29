@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class PDFReportGenerator {
-    ProjectModel projectModel = ProjectModel.getInstance();
     Project project;
     List<IDocument> documentList;
     float pageWidth = 0;
@@ -219,9 +218,9 @@ public class PDFReportGenerator {
         contentStream.newLineAtOffset(0, -550);
         contentStream.showText("Contact Us:");
         contentStream.newLineAtOffset(0, -30);
-        contentStream.showText("Phone: " + project.getPhoneNumber());
+        contentStream.showText("Phone: " + "+45 75 11 91 91");
         contentStream.newLineAtOffset(0, -30);
-        contentStream.showText("Email: " + project.getCustomerEmail());
+        contentStream.showText("Email: " + "info@wuav.dk");
         contentStream.endText();
 
     }

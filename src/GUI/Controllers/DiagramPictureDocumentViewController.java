@@ -6,14 +6,11 @@ import be.documents.IDocument;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class DiagramPictureDocumentViewController{
     @FXML

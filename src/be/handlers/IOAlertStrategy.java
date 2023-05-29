@@ -1,17 +1,14 @@
 package be.handlers;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
 
-import java.util.Optional;
-
 public class IOAlertStrategy implements AlertBoxStrategy{
     @Override
-    public Optional<ButtonType> showGenericAlert(Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    public void showGenericAlert(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
         alert.setContentText(e.getMessage());
         alert.getDialogPane().getChildren()
@@ -22,12 +19,12 @@ public class IOAlertStrategy implements AlertBoxStrategy{
         alert.setResizable(false);
         alert.getDialogPane().setMaxWidth(350);
         alert.initStyle(StageStyle.UNDECORATED);
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 
     @Override
-    public Optional<ButtonType> showCustomAlert(String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    public void showCustomAlert(String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.getDialogPane().getChildren()
@@ -38,6 +35,6 @@ public class IOAlertStrategy implements AlertBoxStrategy{
         alert.setResizable(false);
         alert.getDialogPane().setMaxWidth(350);
         alert.initStyle(StageStyle.UNDECORATED);
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 }

@@ -55,10 +55,6 @@ public class PictureDoc implements IDocument{
         return refNumber;
     }
 
-    public void setRefNumber(int refNumber) {
-        this.refNumber = refNumber;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -71,23 +67,11 @@ public class PictureDoc implements IDocument{
         return imageFile;
     }
 
-    public void setImageFile(File imageFile) {
-        this.imageFile = imageFile;
-    }
-
     public String getDocumentName() {
         return documentName;
     }
 
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
-    }
-
     public String getDateAdded() {
         return dateAdded;
-    }
-
-    public void setDateAdded(String dateAdded) {
-        this.dateAdded = dateAdded;
     }
 }
