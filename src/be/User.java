@@ -9,7 +9,10 @@ import javafx.beans.property.StringProperty;
 public class User {
     private IntegerProperty id =  new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
+
     private UserType type;
+
+
 
     public User(int id, String name, int userType){
         setId(id);
@@ -19,11 +22,6 @@ public class User {
             case 2 -> this.type = UserType.TECHNICIAN;
             case 3 -> this.type = UserType.SALES_PERSON;
         }
-    }
-
-    public User(String name)
-    {
-        setName(name);
     }
 
     public int getId() {
@@ -46,8 +44,8 @@ public class User {
         this.name.set(name);
     }
 
+
     public UserType getType() {
         return type;
     }
-
 }

@@ -3,7 +3,9 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
+
 import be.enums.UserType;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
