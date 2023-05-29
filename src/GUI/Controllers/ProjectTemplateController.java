@@ -72,13 +72,24 @@ public class ProjectTemplateController implements Initializable {
         });
 
         btnDelete.setOnAction(e->{
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove " + project.getName() + "?", ButtonType.YES, ButtonType.NO);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.YES) {
-            projectModel.deleteProjectFromUserProject(project);
-            projectModel.deleteProject(project);
-            projectModel.fetchAllProjects();}
-            else alert.close();
+            projectModel.setSelectedProject(project);
+            Node n = (Node) e.getSource();
+            Window stage = n.getScene().getWindow();
+            Parent root;
+            try {
+                root = FXMLLoader.load(getClass().getClassLoader().getResource("GUI/Views/DeleteConfirmation.fxml"));
+                Stage deleteConfirmation = new Stage();
+                deleteConfirmation.setScene(new Scene(root));
+                deleteConfirmation.setTitle("Delete Project");
+                deleteConfirmation.initModality(Modality.WINDOW_MODAL);
+                deleteConfirmation.centerOnScreen();
+                deleteConfirmation.initOwner(stage);
+                deleteConfirmation.show();
+
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
         btnEdit.setOnAction(e->{
