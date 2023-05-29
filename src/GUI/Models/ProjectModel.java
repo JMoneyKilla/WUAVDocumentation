@@ -118,10 +118,10 @@ public class ProjectModel {
         return oldProjects;
     }
 
-    public List<IDocument> getProjectDocuments(){
+    public ObservableList<IDocument> getProjectDocuments(){
         return projectDocuments;
     }
-    public List<Device> getProjectDevices(){
+    public ObservableList<Device> getProjectDevices(){
         return projectDevices;
     }
 

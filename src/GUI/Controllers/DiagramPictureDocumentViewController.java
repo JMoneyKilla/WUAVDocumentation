@@ -44,6 +44,6 @@ public class DiagramPictureDocumentViewController{
 
     public void clickDelete(ActionEvent actionEvent) {
         projectModel.deleteDocument(document);
-        projectModel.setAddedDocument(true);
+        projectModel.refreshProjectDocuments();
     }
 }

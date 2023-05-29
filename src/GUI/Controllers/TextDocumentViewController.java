@@ -55,11 +55,11 @@ public class TextDocumentViewController {
     public void clickDelete(ActionEvent actionEvent) {
         if(document != null) {
             ProjectModel.getInstance().deleteDocument(document);
-            ProjectModel.getInstance().setAddedDocument(true);
+            ProjectModel.getInstance().refreshProjectDocuments();
         }
         if(device != null){
             ProjectModel.getInstance().deleteDevice(device);
-            ProjectModel.getInstance().setAddedDevice(true);
+            ProjectModel.getInstance().refreshProjectDevices();
         }
     }
 

@@ -2,7 +2,9 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import be.Device;
+import be.Project;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,16 +29,12 @@ public class DevicesViewController implements Initializable {
     @FXML
     private VBox devicesBox;
     ProjectModel projectModel = ProjectModel.getInstance();
+    private ListChangeListener<Device> currentListener;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        projectModel.addedDeviceProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) {
-                populateDeviceView();
-                projectModel.setAddedDevice(false);
-            }
-        });
         populateDeviceView();
+        projectModel.refreshProjectDevices();
     }
     public void clickAddDevice(ActionEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/NewDeviceView.fxml"));
@@ -54,7 +52,11 @@ public class DevicesViewController implements Initializable {
         popupStage.showAndWait();
     }
     public void populateDeviceView(){
-        int row = 0;
+        if (currentListener != null)
+            ProjectModel.getInstance().getProjectDevices().removeListener(currentListener);
+
+        currentListener = c -> {
+            int row = 0;
         devicePane.getChildren().clear();
         for (Device d: projectModel.getProjectDevices()) {
             StackPane sp = generateDevicePane(d);
@@ -63,6 +65,8 @@ public class DevicesViewController implements Initializable {
             row++;
             devicePane.setMinHeight(250 + row*160);
         }
+        };
+        ProjectModel.getInstance().getProjectDevices().addListener(currentListener);
     }
     public StackPane generateDevicePane(Device device){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/TextDocumentView.fxml"));

@@ -125,7 +125,7 @@ public class MainViewController implements Initializable {
 
             lableUserName.setText("" + userModel.getLoggedInUser().getName());
 
-            if (userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
+            if (userModel.getLoggedInUser().getType() != UserType.PROJECT_MANAGER) {
                 btnCreateNewProject.setVisible(false);
             }
         }

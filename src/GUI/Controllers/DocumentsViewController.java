@@ -2,10 +2,12 @@ package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
+import be.Device;
 import be.enums.DocumentType;
 import be.documents.IDocument;
 import be.enums.UserType;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,20 +32,18 @@ public class DocumentsViewController implements Initializable {
     MFXButton buttonAddDocument;
     ProjectModel projectModel = ProjectModel.getInstance();
     UserModel userModel = UserModel.getInstance();
+    private ListChangeListener<IDocument> currentListener;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        projectModel.addedDocumentProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) {
-                populateDocumentView();
-                projectModel.setAddedDocument(false);
-            }
-        });
         populateDocumentView();
+        projectModel.refreshProjectDocuments();
         if(userModel.getLoggedInUser().getType()== UserType.SALES_PERSON){
             buttonAddDocument.setVisible(false);
         }
+
     }
 
 
@@ -64,15 +64,22 @@ public class DocumentsViewController implements Initializable {
     }
 
     public void populateDocumentView(){
-        int row = 0;
-        documentPane.getChildren().clear();
-        for (IDocument d: projectModel.getProjectDocuments()) {
-            StackPane sp = generateDocumentPane(d);
-            documentPane.getChildren().add(sp);
-            AnchorPane.setTopAnchor(sp, 10 + row * 160.0);
-            row++;
-            documentPane.setMinHeight(250 + row*160);
-        }
+        if (currentListener != null)
+            ProjectModel.getInstance().getProjectDocuments().removeListener(currentListener);
+
+        currentListener = c -> {
+            int row = 0;
+            documentPane.getChildren().clear();
+            for (IDocument d : projectModel.getProjectDocuments()) {
+                StackPane sp = generateDocumentPane(d);
+                documentPane.getChildren().add(sp);
+                AnchorPane.setTopAnchor(sp, 10 + row * 160.0);
+                row++;
+                documentPane.setMinHeight(250 + row * 160);
+            }
+        };
+        ProjectModel.getInstance().getProjectDocuments().addListener(currentListener);
+
     }
 
     public StackPane generateDocumentPane(IDocument document) {
