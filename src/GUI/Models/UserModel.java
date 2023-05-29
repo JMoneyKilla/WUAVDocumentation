@@ -2,6 +2,8 @@ package GUI.Models;
 
 import be.Project;
 import be.User;
+import be.handlers.AlertBoxStrategy;
+import be.handlers.SQLAlertStrategy;
 import bll.managers.FacadeManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,8 @@ public class UserModel {
     private final ObservableList<User> missingTechs;
     private final ObservableList<User> assignedTechs;
     User loggedInUser;
+    AlertBoxStrategy alertBoxStrategy;
+
 
     public static UserModel getInstance(){
         if(instance==null)
@@ -39,8 +43,9 @@ public class UserModel {
         try {
              users.addAll(bll.getAllUsers());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while retrieving users from database " +
+                    "Check that your internet connection is stable and contact your system administrator");        }
     }
 
     public void fetchAllTechs(){
@@ -91,8 +96,11 @@ public class UserModel {
         try {
             return bll.validateLogin(email, password);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not validate user login. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
+        return false;
     }
 
     public int getUserIdFromEmail(String email){
@@ -107,8 +115,10 @@ public class UserModel {
         try {
             return bll.getUserFromLoginById(id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
+        return null;
     }
 
     public void setLoggedInUser(User user){
@@ -123,7 +133,8 @@ public class UserModel {
         try {
             bll.addUserToProject(user);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 
@@ -131,7 +142,8 @@ public class UserModel {
         try {
             bll.addUserToSpecificProject(user, project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 
@@ -139,7 +151,8 @@ public class UserModel {
         try {
             bll.deleteUserFromProject(user, project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 
@@ -147,7 +160,9 @@ public class UserModel {
         try {
             return bll.getUserName(userId);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
+        return null;
     }
     }

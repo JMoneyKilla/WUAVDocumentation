@@ -3,6 +3,9 @@ package GUI.Models;
 import be.Device;
 import be.Project;
 import be.documents.IDocument;
+import be.handlers.AlertBoxStrategy;
+import be.handlers.IOAlertStrategy;
+import be.handlers.SQLAlertStrategy;
 import bll.managers.InputManager;
 import bll.managers.FacadeManager;
 import javafx.collections.FXCollections;
@@ -28,6 +31,7 @@ public class ProjectModel {
     private List ids;
     FacadeManager facadeManager = new FacadeManager();
     UserModel userModel = UserModel.getInstance();
+    AlertBoxStrategy alertBoxStrategy;
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
     private BooleanProperty addedDocument = new SimpleBooleanProperty(false);
@@ -48,8 +52,13 @@ public class ProjectModel {
         try {
             projectDocuments.clear();
             projectDocuments.addAll(facadeManager.getAllProjectDocuments(selectedProject.getId()));
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not retrieve project documents from the database." +
+                    "please check your internet connection is stable or contact your system administrator.");
+        } catch (IOException e) {
+            alertBoxStrategy = new IOAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
     public void refreshProjectDevices(){
@@ -57,7 +66,9 @@ public class ProjectModel {
             projectDevices.clear();
             projectDevices.addAll(facadeManager.getDevicesOnProject(selectedProject.getId()));
         } catch (SQLException e){
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not retrieve project devices from the database." +
+                    "please check your internet connection is stable or contact your system administrator.");
         }
     }
 
@@ -95,7 +106,8 @@ public class ProjectModel {
         try {
             oldProjects.addAll(inputManager.getOldProjects());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
 
     }
@@ -116,7 +128,8 @@ public class ProjectModel {
         try {
             userProjects.addAll(facadeManager.getUserProjects(userId));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not retrieve projects for logged in user.");
         }
         return userProjects;
     }
@@ -159,7 +172,9 @@ public class ProjectModel {
         try {
             facadeManager.updateProject(project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Unable to connect to database to update project. Please check you" +
+                    "have a stable connection and try again.");
         }
     }
 
@@ -167,7 +182,9 @@ public class ProjectModel {
         try {
             facadeManager.deleteProject(project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not delete project from database." +
+                    "check your connection is stable and contact your system administrator");
         }
     }
 
@@ -175,7 +192,9 @@ public class ProjectModel {
         try {
             facadeManager.deleteProjectFromUserProject(project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Could not delete project from database." +
+                    "check your connection is stable and contact your system administrator");
         }
     }
 
@@ -192,7 +211,9 @@ public class ProjectModel {
         try {
             facadeManager.deleteMultipleProjectsFromUserProject(ids);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to delete old projects." +
+                    "Please check your connection is stable, or try manual deletion of old projects");
         }
     }
 
@@ -201,7 +222,9 @@ public class ProjectModel {
             ids = getMultipleIds();
             facadeManager.deleteMultipleProjects(ids);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to delete old projects." +
+                    "Please check your connection is stable, or try manual deletion of old projects");
         }
     }
 
@@ -238,7 +261,9 @@ public class ProjectModel {
         try {
             projects.addAll(inputManager.searchCompanyAddress(str));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects address. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
 
@@ -247,7 +272,9 @@ public class ProjectModel {
         try {
             projects.addAll(inputManager.searchCustomerName(str));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by customer name. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
 
@@ -256,7 +283,9 @@ public class ProjectModel {
         try {
             projects.addAll(inputManager.searchProjectName(str));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by project name. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
 
@@ -265,7 +294,9 @@ public class ProjectModel {
         try {
             projects.addAll(inputManager.searchZipCode(str));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by zip code. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
 
@@ -273,14 +304,18 @@ public class ProjectModel {
         try {
             facadeManager.deleteDocument(document);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to delete document from the project. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
     public void deleteDevice(Device device){
         try {
             facadeManager.deleteDevice(device);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("An error occured while trying to delete document from the project. " +
+                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
 

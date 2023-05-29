@@ -2,6 +2,7 @@ package dal;
 
 
 
+import be.handlers.SQLAlertStrategy;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 import java.sql.Connection;
@@ -34,7 +35,10 @@ public class DataBaseConnection {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            throw new DALException(e.getMessage());
+            SQLAlertStrategy sqlAlertStrategy = new SQLAlertStrategy();
+            sqlAlertStrategy.showCustomAlert("Could not extablish connection to database." +
+                    "Please check your internet connection is stable, else contact your system administrator");
+            throw new RuntimeException();
         }
     }
 }
