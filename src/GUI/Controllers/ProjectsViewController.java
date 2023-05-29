@@ -53,6 +53,7 @@ public class ProjectsViewController implements Initializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            projectModel.fetchAllUserProjects(userModel.getLoggedInUser().getId());
         } else {
             try {
                 loadData();
@@ -75,6 +76,13 @@ public class ProjectsViewController implements Initializable {
             }
         });
     }
+
+    /**
+     * Loads data (projects) onto stackpanes. CurrentListener is added to listen when getProjects() changes. (When using filter)
+     * Checks first if currentListener is not null, then removes it.
+     * Else everytime the method would be called multiple listeners will be added and the method will throw errors.
+     * @throws IOException
+     */
 
     public void loadData() throws IOException {
             if (currentListener != null)
@@ -111,6 +119,11 @@ public class ProjectsViewController implements Initializable {
 
 
     public void loadUserProjectData() throws IOException {
+        if (currentListener != null)
+            ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).removeListener(currentListener);
+
+        currentListener = c -> {
+            if(!isListViewTrue) {
             paneProject.getChildren().clear();
                 int row = 0;
                 int col = 0;
@@ -130,8 +143,11 @@ public class ProjectsViewController implements Initializable {
                 col = 0;
                 row++;
             }
+          }
         }
-      }
+       };
+        ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).addListener(currentListener);
+    }
 
 
     /**
@@ -354,7 +370,9 @@ public class ProjectsViewController implements Initializable {
 
         private void changeViewGrid() throws IOException {
         if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN){
+            paneProject.getChildren().clear();
             loadUserProjectData();
+            projectModel.fetchAllUserProjects(userModel.getLoggedInUser().getId());
         }
         else{
             paneProject.getChildren().clear();

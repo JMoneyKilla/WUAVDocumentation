@@ -2,7 +2,9 @@ package GUI.Models;
 
 import be.Device;
 import be.Project;
+import be.User;
 import be.documents.IDocument;
+import be.enums.UserType;
 import bll.managers.InputManager;
 import bll.managers.FacadeManager;
 import javafx.collections.FXCollections;
@@ -77,6 +79,7 @@ public class ProjectModel {
         userProjects = FXCollections.observableArrayList();
         oldProjects = FXCollections.observableArrayList();
         fetchAllProjects();
+        fetchAllUserProjects(userModel.getLoggedInUser().getId());
         fetchAllOldProjects();
 
     }
@@ -111,13 +114,16 @@ public class ProjectModel {
         return projectDevices;
     }
 
-    public ObservableList<Project> getUserProjects(int userId){
+    public void fetchAllUserProjects(int userId){
         userProjects.clear();
         try {
             userProjects.addAll(facadeManager.getUserProjects(userId));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<Project> getUserProjects(int userId){
         return userProjects;
     }
 
@@ -227,46 +233,84 @@ public class ProjectModel {
         return validator.isNumberValid(number);
     }
 
+    public boolean isZipCodeValid(String number){
+        return validator.isZipCodeValid(number);
+    }
+
     // Input methods
 
     public String getDateToday(){
         return inputManager.getDateToday();
     }
 
-    public void searchAddress(String str){
-        projects.clear();
+    public void searchAddress(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchCompanyAddress(str, user));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{ projects.clear();
         try {
-            projects.addAll(inputManager.searchCompanyAddress(str));
+            projects.addAll(inputManager.searchCompanyAddress(str, user));
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }}
+    }
+
+    public void searchCustomerName(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchCustomerName(str, user));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {projects.clear();
+        try {
+            projects.addAll(inputManager.searchCustomerName(str, user));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }}
+    }
+
+    public void searchProjectName(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchProjectName(str, user));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+        projects.clear();
+        try {
+            projects.addAll(inputManager.searchProjectName(str, user));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         }
     }
 
-    public void searchCustomerName(String str){
-        projects.clear();
+    public void searchZipCode(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchZipCode(str, user));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{ projects.clear();
         try {
-            projects.addAll(inputManager.searchCustomerName(str));
+            projects.addAll(inputManager.searchZipCode(str, user));
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public void searchProjectName(String str){
-        projects.clear();
-        try {
-            projects.addAll(inputManager.searchProjectName(str));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void searchZipCode(String str){
-        projects.clear();
-        try {
-            projects.addAll(inputManager.searchZipCode(str));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        }}
     }
 
     public void deleteDocument(IDocument document){

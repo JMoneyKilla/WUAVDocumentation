@@ -75,33 +75,25 @@ public class MainViewController implements Initializable {
         ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList("Address", "Customer name", "Project name", "Zip code");
         comboBox.setItems(choiceBoxOptions);
         lableUserName.setText("" + userModel.getLoggedInUser().getName());
-        textSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                    try {
-                        List<Project> filteredList = inputManager.searchProjectName(textSearch.getText());
-                        //loadData(filteredList);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
             textSearch.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                     if (comboBox.getSelectionModel().getSelectedItem().equals("Address")) {
-                        projectModel.searchAddress(newValue);
+                        projectModel.searchAddress(newValue, userModel.getLoggedInUser());
                     }
                     if (comboBox.getSelectionModel().getSelectedItem().equals("Customer name")) {
-                        projectModel.searchCustomerName(newValue);
+                        projectModel.searchCustomerName(newValue, userModel.getLoggedInUser());
                     }
                     if (comboBox.getSelectionModel().getSelectedItem().equals("Project name")) {
-                        projectModel.searchProjectName(newValue);
+                        projectModel.searchProjectName(newValue, userModel.getLoggedInUser());
                     }
                     if (comboBox.getSelectionModel().getSelectedItem().equals("Zip code")) {
-                        projectModel.searchZipCode(newValue);
+                        projectModel.searchZipCode(newValue, userModel.getLoggedInUser());
                     }
                 }
             });
 
-            if (!projectModel.getOldProjects().isEmpty()) {
+            if (!projectModel.getOldProjects().isEmpty() && userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
                 // Load the FXML file
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ReminderView.fxml"));
                 Parent root = null;
@@ -144,7 +136,7 @@ public class MainViewController implements Initializable {
 
             lableUserName.setText("" + userModel.getLoggedInUser().getName());
 
-            if (userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
+            if (userModel.getLoggedInUser().getType() != UserType.PROJECT_MANAGER) {
                 btnCreateNewProject.setVisible(false);
             }
         }

@@ -34,4 +34,12 @@ public class ProjectValidator {
         }
         return false;
     }
+
+    public boolean isZipCodeValid(String number){
+        if(number!=null){
+            if(number.matches("[0-9]+"))
+                return true;
+        }
+        return false;
+    }
 }
