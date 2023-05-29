@@ -37,16 +37,8 @@ public class Device {
         return deviceId;
     }
 
-    public void setDeviceId(int deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public String getDeviceName() {
         return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
     }
 
     public String getDescription() {
@@ -59,9 +51,5 @@ public class Device {
 
     public String getDateAdded() {
         return dateAdded;
-    }
-
-    public void setDateAdded(String dateAdded) {
-        this.dateAdded = dateAdded;
     }
 }

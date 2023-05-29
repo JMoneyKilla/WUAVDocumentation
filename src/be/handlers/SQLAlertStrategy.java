@@ -1,16 +1,13 @@
 package be.handlers;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
 
-import java.util.Optional;
-
 public class SQLAlertStrategy implements AlertBoxStrategy{
     @Override
-    public Optional<ButtonType> showGenericAlert(Exception e) {
+    public void showGenericAlert(Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(e.getMessage());
@@ -22,15 +19,14 @@ public class SQLAlertStrategy implements AlertBoxStrategy{
         alert.setResizable(false);
         alert.getDialogPane().setMaxWidth(350);
         alert.initStyle(StageStyle.UNDECORATED);
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 
     @Override
-    public Optional<ButtonType> showCustomAlert(String content) {
+    public void showCustomAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setContentText("There was an error connecting to the SQL Server. Please check that you have a" +
-                "stable internet connection, or that your server provider allows access to your device.");
+        alert.setContentText(content);
         alert.getDialogPane().getChildren()
                 .stream()
                 .filter(node -> node instanceof Label)
@@ -39,6 +35,6 @@ public class SQLAlertStrategy implements AlertBoxStrategy{
         alert.setResizable(false);
         alert.getDialogPane().setMaxWidth(350);
         alert.initStyle(StageStyle.UNDECORATED);
-        return alert.showAndWait();
+        alert.showAndWait();
     }
 }

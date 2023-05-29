@@ -79,14 +79,6 @@ public class UserModel {
         return assignedTechs;
     }
 
-    public ObservableList<User> getAllUsers(){
-        return users;
-    }
-
-    public ObservableList<User> getAllTechs(){
-        return techs;
-    }
-
     public ObservableList<User> getMissingTechs(){
         return missingTechs;
     }

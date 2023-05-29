@@ -1,7 +1,6 @@
 package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
-import GUI.Models.UserModel;
 import be.Device;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -15,7 +14,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,8 +27,6 @@ public class DevicesViewController implements Initializable {
     @FXML
     private VBox devicesBox;
     ProjectModel projectModel = ProjectModel.getInstance();
-    UserModel userModel = UserModel.getInstance();
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

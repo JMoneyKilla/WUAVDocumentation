@@ -5,7 +5,6 @@ import be.handlers.AlertBoxStrategy;
 import be.handlers.IOAlertStrategy;
 import be.handlers.SQLAlertStrategy;
 import bll.managers.FacadeManager;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

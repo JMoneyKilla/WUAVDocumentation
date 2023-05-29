@@ -54,17 +54,8 @@ public class Project {
         return name.get();
     }
 
-
-    public StringProperty nameProperty() {
-        return name;
-    }
-
     public void setName(String name){
         this.name.set(name);
-    }
-
-    public StringProperty dateLastVisitedProperty(){
-        return dateLastVisited;
     }
 
     public String getDateLastVisited(){
@@ -78,22 +69,12 @@ public class Project {
         return customerName.get();
     }
 
-
-    public StringProperty customerNameProperty() {
-        return customerName;
-    }
-
     public void setCustomerName(String customerName){
         this.customerName.set(customerName);
     }
 
     public String getCompanyAddress() {
         return companyAddress.get();
-    }
-
-
-    public StringProperty companyAddressProperty() {
-        return companyAddress;
     }
 
     public void setCompanyAddress(String companyName){
@@ -110,10 +91,6 @@ public class Project {
 
     public int getZipCode() {
         return zipCode.get();
-    }
-
-    public IntegerProperty zipCodeProperty() {
-        return zipCode;
     }
 
     public void setZipCode(int zipCode) {

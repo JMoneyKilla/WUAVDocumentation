@@ -39,7 +39,6 @@ public class ProjectModel {
     private BooleanProperty addedDocument = new SimpleBooleanProperty(false);
     private BooleanProperty addedDevice = new SimpleBooleanProperty(false);
 
-    private String inputText;
     ProjectValidator validator = new ProjectValidator();
     InputManager inputManager = new InputManager();
 
@@ -234,14 +233,6 @@ public class ProjectModel {
         }
     }
 
-    public void setInputText(String inputText){
-        this.inputText=inputText;
-    }
-
-    public String getInputText(){
-        return inputText;
-    }
-
     // Validator methods
 
     public boolean isProjectValid(String name, String companyName, String address, String zipcode, String phoneNumber, String email){
@@ -271,10 +262,10 @@ public class ProjectModel {
             userProjects.clear();
             try {
                 userProjects.addAll(inputManager.searchCompanyAddress(str, user));
+            } catch (SQLException e) {
                 alertBoxStrategy = new SQLAlertStrategy();
                 alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects address. " +
                         "Check that your internet connection is stable and contact your system administrator");
-            } catch (SQLException e) {
             }
         }
         else{ projects.clear();
@@ -374,10 +365,6 @@ public class ProjectModel {
         }
     }
 
-    public boolean isAddedDocument() {
-        return addedDocument.get();
-    }
-
     public BooleanProperty addedDocumentProperty() {
         return addedDocument;
     }
@@ -386,9 +373,6 @@ public class ProjectModel {
         this.addedDocument.set(addedDocument);
     }
 
-    public boolean isAddedDevice() {
-        return addedDevice.get();
-    }
 
     public BooleanProperty addedDeviceProperty() {
         return addedDevice;

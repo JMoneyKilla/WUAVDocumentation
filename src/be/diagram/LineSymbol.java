@@ -1,6 +1,5 @@
 package be.diagram;
 
-import javafx.scene.Cursor;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
