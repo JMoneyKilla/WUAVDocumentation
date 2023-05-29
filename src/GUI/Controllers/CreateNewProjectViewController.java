@@ -4,6 +4,7 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Project;
 import be.User;
+import be.enums.UserType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,7 +62,7 @@ public class CreateNewProjectViewController implements Initializable {
             invalidFields += "Email, ";
             isValid = false;
         }
-        if (!projectModel.isNumberValid(txtFieldZipcode.getText())) {
+        if (!projectModel.isZipCodeValid(txtFieldZipcode.getText())) {
             invalidFields += "Zipcode, ";
             isValid = false;
         }
@@ -99,8 +100,10 @@ public class CreateNewProjectViewController implements Initializable {
                         companyType, Integer.parseInt(txtFieldPhoneNumber.getText().trim()),
                         txtFieldEmail.getText().trim()));
                 projectModel.setSelectedProject(null);
-                projectModel.fetchAllProjects();
-
+                if(userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER)
+                    projectModel.fetchAllProjects();
+                if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN)
+                    projectModel.fetchAllUserProjects(userModel.getLoggedInUser().getId());
                 Node n = (Node) actionEvent.getSource();
                 Stage stage = (Stage) n.getScene().getWindow();
                 stage.close();

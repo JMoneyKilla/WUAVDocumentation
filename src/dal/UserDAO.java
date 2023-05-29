@@ -14,6 +14,12 @@ public class UserDAO {
 
     DataBaseConnection dbc = DataBaseConnection.getInstance();
 
+
+    /**
+     * Returns list of all Users.
+     * @return
+     * @throws SQLException
+     */
     public List<User> getAllUsers() throws SQLException {
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM [User]";
@@ -32,6 +38,11 @@ public class UserDAO {
         return allUsers;
     }
 
+    /**
+     * Returns list of all Users of user_type = 2. (Technicians).
+     * @return
+     * @throws SQLException
+     */
     public List getAllTechnicians() throws SQLException {
         List<User> allTechUsers = new ArrayList<>();
         String sql = "SELECT * FROM [User] WHERE user_type = 2";
@@ -107,6 +118,13 @@ public class UserDAO {
         return password;
     }
 
+    /**
+     * Validates email and password. Returns true if the string matches email and password in database.
+     * @param email
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public boolean validateLogin(String email, String password) throws SQLException {
         String sql = "SELECT * FROM Login WHERE email = '" + email + "';";
         try (Connection con = dbc.getConnection()) {

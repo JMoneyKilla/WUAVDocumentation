@@ -136,7 +136,6 @@ public class ProjectDAO {
                 statement.addBatch();
             }
             int[] rowsAffected = statement.executeBatch();
-            System.out.println(rowsAffected.length + " rows deleted.");
         }
     }
 

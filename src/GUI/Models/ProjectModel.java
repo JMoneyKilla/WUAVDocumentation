@@ -2,10 +2,12 @@ package GUI.Models;
 
 import be.Device;
 import be.Project;
+import be.User;
 import be.documents.IDocument;
 import be.handlers.AlertBoxStrategy;
 import be.handlers.IOAlertStrategy;
 import be.handlers.SQLAlertStrategy;
+import be.enums.UserType;
 import bll.managers.InputManager;
 import bll.managers.FacadeManager;
 import javafx.collections.FXCollections;
@@ -88,6 +90,7 @@ public class ProjectModel {
         userProjects = FXCollections.observableArrayList();
         oldProjects = FXCollections.observableArrayList();
         fetchAllProjects();
+        fetchAllUserProjects(userModel.getLoggedInUser().getId());
         fetchAllOldProjects();
 
     }
@@ -123,7 +126,7 @@ public class ProjectModel {
         return projectDevices;
     }
 
-    public ObservableList<Project> getUserProjects(int userId){
+    public void fetchAllUserProjects(int userId){
         userProjects.clear();
         try {
             userProjects.addAll(facadeManager.getUserProjects(userId));
@@ -131,6 +134,9 @@ public class ProjectModel {
             alertBoxStrategy = new SQLAlertStrategy();
             alertBoxStrategy.showCustomAlert("Could not retrieve projects for logged in user.");
         }
+    }
+
+    public ObservableList<Project> getUserProjects(int userId){
         return userProjects;
     }
 
@@ -250,55 +256,104 @@ public class ProjectModel {
         return validator.isNumberValid(number);
     }
 
+    public boolean isZipCodeValid(String number){
+        return validator.isZipCodeValid(number);
+    }
+
     // Input methods
 
     public String getDateToday(){
         return inputManager.getDateToday();
     }
 
-    public void searchAddress(String str){
-        projects.clear();
+    public void searchAddress(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchCompanyAddress(str, user));
+                alertBoxStrategy = new SQLAlertStrategy();
+                alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects address. " +
+                        "Check that your internet connection is stable and contact your system administrator");
+            } catch (SQLException e) {
+            }
+        }
+        else{ projects.clear();
         try {
-            projects.addAll(inputManager.searchCompanyAddress(str));
+            projects.addAll(inputManager.searchCompanyAddress(str, user));
         } catch (SQLException e) {
             alertBoxStrategy = new SQLAlertStrategy();
             alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects address. " +
                     "Check that your internet connection is stable and contact your system administrator");
-        }
+        }}
     }
 
-    public void searchCustomerName(String str){
-        projects.clear();
+    public void searchCustomerName(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchCustomerName(str, user));
+            } catch (SQLException e) {
+                alertBoxStrategy = new SQLAlertStrategy();
+                alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by customer name. " +
+                        "Check that your internet connection is stable and contact your system administrator");
+            }
+        }
+        else {projects.clear();
         try {
-            projects.addAll(inputManager.searchCustomerName(str));
+            projects.addAll(inputManager.searchCustomerName(str, user));
         } catch (SQLException e) {
             alertBoxStrategy = new SQLAlertStrategy();
             alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by customer name. " +
                     "Check that your internet connection is stable and contact your system administrator");
-        }
+        }}
     }
 
-    public void searchProjectName(String str){
+    public void searchProjectName(String str, User user){
+        if(user.getType()== UserType.TECHNICIAN){
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchProjectName(str, user));
+            } catch (SQLException e) {
+                alertBoxStrategy = new SQLAlertStrategy();
+                alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by project name. " +
+                        "Check that your internet connection is stable and contact your system administrator");
+
+            }
+        }
+        else{
         projects.clear();
         try {
-            projects.addAll(inputManager.searchProjectName(str));
+            projects.addAll(inputManager.searchProjectName(str, user));
         } catch (SQLException e) {
             alertBoxStrategy = new SQLAlertStrategy();
             alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by project name. " +
                     "Check that your internet connection is stable and contact your system administrator");
         }
-    }
-
-    public void searchZipCode(String str){
-        projects.clear();
-        try {
-            projects.addAll(inputManager.searchZipCode(str));
-        } catch (SQLException e) {
-            alertBoxStrategy = new SQLAlertStrategy();
-            alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by zip code. " +
-                    "Check that your internet connection is stable and contact your system administrator");
         }
     }
+
+    public void searchZipCode(String str, User user) {
+        if (user.getType() == UserType.TECHNICIAN) {
+            userProjects.clear();
+            try {
+                userProjects.addAll(inputManager.searchZipCode(str, user));
+            } catch (SQLException e) {
+                alertBoxStrategy = new SQLAlertStrategy();
+                alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by zip code. " +
+                        "Check that your internet connection is stable and contact your system administrator");
+            }
+        } else {
+            projects.clear();
+            try {
+                projects.addAll(inputManager.searchZipCode(str, user));
+            } catch (SQLException e) {
+                alertBoxStrategy = new SQLAlertStrategy();
+                alertBoxStrategy.showCustomAlert("An error occured while trying to filter projects by zip code. " +
+                        "Check that your internet connection is stable and contact your system administrator");
+            }
+        }
+    }
+
 
     public void deleteDocument(IDocument document){
         try {

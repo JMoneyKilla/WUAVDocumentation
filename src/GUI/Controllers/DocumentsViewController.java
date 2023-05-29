@@ -1,8 +1,11 @@
 package GUI.Controllers;
 
 import GUI.Models.ProjectModel;
+import GUI.Models.UserModel;
 import be.enums.DocumentType;
 import be.documents.IDocument;
+import be.enums.UserType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +26,10 @@ public class DocumentsViewController implements Initializable {
 
     @FXML
     private AnchorPane documentPane;
+    @FXML
+    MFXButton buttonAddDocument;
     ProjectModel projectModel = ProjectModel.getInstance();
+    UserModel userModel = UserModel.getInstance();
 
 
     @Override
@@ -35,6 +41,9 @@ public class DocumentsViewController implements Initializable {
             }
         });
         populateDocumentView();
+        if(userModel.getLoggedInUser().getType()== UserType.SALES_PERSON){
+            buttonAddDocument.setVisible(false);
+        }
     }
 
 

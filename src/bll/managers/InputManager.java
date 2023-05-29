@@ -1,6 +1,8 @@
 package bll.managers;
 
 import be.Project;
+import be.User;
+import be.enums.UserType;
 import dal.ProjectDAO;
 
 import java.sql.SQLException;
@@ -49,8 +51,13 @@ public class InputManager {
 
         // Filter input
 
-    public List<Project> searchProjectName(String str) throws SQLException {
-        List<Project> getAllProjects = projectDAO.getAllProjects();
+    public List<Project> searchProjectName(String str, User user) throws SQLException {
+        List<Project> getAllProjects;
+        if(user.getType()==UserType.TECHNICIAN)
+            getAllProjects = projectDAO.getUserProjects(user.getId());
+
+            else getAllProjects = projectDAO.getAllProjects();
+
         List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
@@ -61,8 +68,12 @@ public class InputManager {
         return filtered;
     }
 
-    public List<Project> searchCustomerName(String str) throws SQLException {
-    List<Project> getAllProjects = projectDAO.getAllProjects();
+    public List<Project> searchCustomerName(String str, User user) throws SQLException {
+        List<Project> getAllProjects;
+        if(user.getType()==UserType.TECHNICIAN)
+            getAllProjects = projectDAO.getUserProjects(user.getId());
+
+        else getAllProjects = projectDAO.getAllProjects();
     List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
@@ -73,8 +84,12 @@ public class InputManager {
         return filtered;
     }
 
-    public List<Project> searchCompanyAddress(String str) throws SQLException {
-        List<Project> getAllProjects = projectDAO.getAllProjects();
+    public List<Project> searchCompanyAddress(String str, User user) throws SQLException {
+        List<Project> getAllProjects;
+        if(user.getType()==UserType.TECHNICIAN)
+            getAllProjects = projectDAO.getUserProjects(user.getId());
+
+        else getAllProjects = projectDAO.getAllProjects();
         List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
@@ -85,8 +100,12 @@ public class InputManager {
         return filtered;
     }
 
-    public List<Project> searchZipCode(String str) throws SQLException {
-        List<Project> getAllProjects = projectDAO.getAllProjects();
+    public List<Project> searchZipCode(String str, User user) throws SQLException {
+        List<Project> getAllProjects;
+        if(user.getType()==UserType.TECHNICIAN)
+            getAllProjects = projectDAO.getUserProjects(user.getId());
+
+        else getAllProjects = projectDAO.getAllProjects();
         List<Project> filtered = new ArrayList<>();
 
         for(Project p : getAllProjects){
