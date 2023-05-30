@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="700.0" styleClass="root-document" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.TextDocumentViewController">
+   <children>
+      <HBox prefHeight="150.0" prefWidth="700.0">
+         <children>
+            <VBox prefHeight="157.0" prefWidth="203.0">
+               <children>
+                  <Label fx:id="lblDocName" prefHeight="17.0" prefWidth="219.0" text="Document Name">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblCreatedBy" text="Created By: ">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblDateAdded" text="Date Added: ">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblRefNum" text="Reference Number: ">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lblDocId" text="Document ID: ">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="150.0" prefWidth="477.0">
+               <children>
+                  <HBox prefHeight="47.0" prefWidth="477.0">
+                     <children>
+                        <MFXButton fx:id="buttonDelete" onAction="#clickDelete" text="Delete">
+                           <HBox.margin>
+                              <Insets left="420.0" top="10.0" />
+                           </HBox.margin>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="textAreaDescription" prefHeight="119.0" prefWidth="401.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</StackPane>

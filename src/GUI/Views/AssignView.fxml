@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPane" onMouseClicked="#clickAnchorPane" prefHeight="420.0" prefWidth="407.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AssignViewController">
+   <children>
+      <TableView fx:id="tableView" layoutX="38.0" layoutY="121.0" prefHeight="197.0" prefWidth="153.0">
+        <columns>
+          <TableColumn fx:id="tableColumnTech" prefWidth="150.0" text="Technician" />
+        </columns>
+      </TableView>
+      <Button layoutX="190.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickAdd" text="Assign" />
+      <Button layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickClose" text="Close" />
+      <Pane prefHeight="71.0" prefWidth="407.0" style="-fx-background-color: #856a6a;" />
+      <TableView fx:id="tableViewAssigned" layoutX="206.0" layoutY="121.0" prefHeight="197.0" prefWidth="153.0">
+         <columns>
+            <TableColumn fx:id="tableColumnAssignedTech" prefWidth="150.0" text="Technician" />
+         </columns>
+      </TableView>
+      <Button layoutX="252.0" layoutY="366.0" mnemonicParsing="false" onAction="#clickRemove" text="Remove" />
+      <Text layoutX="218.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned" />
+      <Label fx:id="lblInform" layoutX="38.0" layoutY="334.0" prefHeight="17.0" prefWidth="351.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="368.0" prefWidth="351.0" stylesheets="@MainStyleSheet.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.CustomerInformationController">
+   <children>
+      <Pane layoutX="-4.0" layoutY="-10.0" prefHeight="81.0" prefWidth="355.0" style="-fx-background-color: #856a6a;" />
+      <Text layoutX="80.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer information:" wrappingWidth="124.37310791015625" />
+      <Label fx:id="lblName" layoutX="86.0" layoutY="134.0" prefHeight="17.0" prefWidth="228.0" text="name" />
+      <Label fx:id="lblAddress" layoutX="86.0" layoutY="163.0" prefHeight="17.0" prefWidth="220.0" text="address" />
+      <Label fx:id="lblZipCode" layoutX="86.0" layoutY="186.0" prefHeight="17.0" prefWidth="113.0" text="zip" />
+      <Text layoutX="80.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact information:" wrappingWidth="113.33333333333326" />
+      <Label fx:id="lblEmail" ellipsisString="" layoutX="84.0" layoutY="272.0" prefHeight="17.0" prefWidth="203.0" text="gggg@live.dk" textOverrun="CLIP" />
+      <Label fx:id="lblPhoneNumber" layoutX="84.0" layoutY="299.0" prefHeight="17.0" prefWidth="184.0" text="phone number" />
+   </children>
+</AnchorPane>
