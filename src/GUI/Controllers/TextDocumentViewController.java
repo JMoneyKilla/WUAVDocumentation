@@ -4,13 +4,18 @@ import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.Device;
 import be.documents.IDocument;
+import be.enums.UserType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-public class TextDocumentViewController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class TextDocumentViewController implements Initializable {
     @FXML
     private MFXButton buttonDelete;
     @FXML
@@ -73,4 +78,11 @@ public class TextDocumentViewController {
     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if(UserModel.getInstance().getLoggedInUser().getType() == UserType.SALES_PERSON){
+            buttonDelete.setDisable(true);
+            buttonDelete.setVisible(false);
+        }
+    }
 }

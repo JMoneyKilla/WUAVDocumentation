@@ -3,16 +3,21 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import GUI.Models.UserModel;
 import be.documents.IDocument;
+import be.enums.UserType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DiagramPictureDocumentViewController{
+
+public class DiagramPictureDocumentViewController implements Initializable {
     @FXML
     private MFXButton buttonDelete;
     @FXML
@@ -49,5 +54,13 @@ public class DiagramPictureDocumentViewController{
     public void clickDelete(ActionEvent actionEvent) {
         projectModel.deleteDocument(document);
         projectModel.refreshProjectDocuments();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if(UserModel.getInstance().getLoggedInUser().getType() == UserType.SALES_PERSON){
+            buttonDelete.setDisable(true);
+            buttonDelete.setVisible(false);
+        }
     }
 }
