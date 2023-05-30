@@ -1,5 +1,6 @@
 package be.documents;
 
+import be.enums.DocumentType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class DocumentBuilderTest {
         DiagramDoc diagramDoc = (DiagramDoc) documentBuilder.buildDiagramDoc();
         assertEquals(1, diagramDoc.getProjectId());
         assertEquals(2, diagramDoc.getUserId());
-        assertEquals(1, diagramDoc.getDocumentType());
+        assertEquals(DocumentType.DIAGRAM_DOC, diagramDoc.getDocumentType());
         assertEquals(2338, diagramDoc.getRefNumber());
         assertEquals("diagram document", diagramDoc.getDescription());
         assertNull(diagramDoc.getImageFile());
@@ -43,7 +44,7 @@ class DocumentBuilderTest {
         PictureDoc pictureDoc = (PictureDoc) documentBuilder.buildPictureDoc();
         assertEquals(1, pictureDoc.getProjectId());
         assertEquals(2, pictureDoc.getUserId());
-        assertEquals(2, pictureDoc.getDocumentType());
+        assertEquals(DocumentType.PICTURE_DOC, pictureDoc.getDocumentType());
         assertEquals(2338, pictureDoc.getRefNumber());
         assertEquals("picture document", pictureDoc.getDescription());
         assertNull(pictureDoc.getImageFile());
@@ -63,7 +64,7 @@ class DocumentBuilderTest {
         TextDoc textDoc = (TextDoc) documentBuilder.buildTextDoc();
         assertEquals(1, textDoc.getProjectId());
         assertEquals(2, textDoc.getUserId());
-        assertEquals(3, textDoc.getDocumentType());
+        assertEquals(DocumentType.TEXT_DOC, textDoc.getDocumentType());
         assertEquals("documentation in text form", textDoc.getDescription());
         assertEquals("text document", textDoc.getDocumentName());
         assertEquals("01/01/2021", textDoc.getDateAdded());
