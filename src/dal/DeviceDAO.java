@@ -13,6 +13,12 @@ import java.util.List;
 public class DeviceDAO {
     DataBaseConnection dbc = DataBaseConnection.getInstance();
 
+    /**
+     * Returns list of devices from Device table using a given project id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public List<Device> getDevicesOnProject(int id) throws SQLException {
         List<Device> projectDevices = new ArrayList<>();
         String sql = "SELECT * FROM Device WHERE project_id = " + id + ";";
@@ -32,6 +38,7 @@ public class DeviceDAO {
         }
         return projectDevices;
     }
+
     public void createDevice(Device device) throws SQLException{
         int projectId = device.getProjectId();
         int userId = device.getUserId();
@@ -65,19 +72,4 @@ public class DeviceDAO {
         }
         return false;
     }
-   public void updateDevice(Device device) throws SQLException{
-        int deviceId = device.getDeviceId();
-       String name = device.getDeviceName();
-       String description = device.getDescription();
-
-       String sql = "Update Device SET device_name = ?, description = ? WHERE id = ?";
-
-       try (Connection con = dbc.getConnection();) {
-           PreparedStatement ps = con.prepareStatement(sql);
-           ps.setString(1, name);
-           ps.setString(2, description);
-           ps.setInt(3, deviceId);
-           ps.execute();
-       }
-   }
 }

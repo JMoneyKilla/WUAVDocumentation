@@ -43,6 +43,7 @@ public class ProjectTemplateController implements Initializable {
         }
     }
 
+    //Sets project information to be displayed as well as on action events
     public void setLabels(Project project){
         lblProjectName.setText("Project name: "+project.getName());
         lblCustomerName.setText("Customer name: "+project.getCustomerName());

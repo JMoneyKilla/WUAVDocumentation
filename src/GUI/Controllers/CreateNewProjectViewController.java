@@ -51,12 +51,13 @@ public class CreateNewProjectViewController implements Initializable {
          txtFieldEmail.setText(projectModel.getSelectedProject().getCustomerEmail());
          txtFieldPhoneNumber.setText(Integer.toString(projectModel.getSelectedProject().getPhoneNumber()));
          txtFieldZipcode.setText(Integer.toString(projectModel.getSelectedProject().getZipCode()));
-         System.out.println(isEditTrue);
      }
     }
 
     public void clickSave(ActionEvent actionEvent) {
         String invalidFields = "Invalid fields: ";
+
+        //Checks for valid inputs, and notifies user of invalid fields
 
         if (!projectModel.isEmailValid(txtFieldEmail.getText())) {
             invalidFields += "Email, ";
@@ -87,6 +88,10 @@ public class CreateNewProjectViewController implements Initializable {
                 case "Private" -> 2;
                 default -> 0;
             };
+
+            /*If editing existing project, project is updated.
+              If Creating new project, project is created.
+             */
 
             lblWarning.setText("");
             if (isEditTrue) {

@@ -3,15 +3,12 @@ package GUI.Controllers;
 import GUI.Models.ProjectModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class DeleteConfirmationController implements Initializable {
+public class DeleteConfirmationController{
 
     @FXML
     private TextField txtFieldDelete;
@@ -20,12 +17,8 @@ public class DeleteConfirmationController implements Initializable {
 
     ProjectModel projectModel = ProjectModel.getInstance();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(projectModel.getSelectedProject());
-        System.out.println(projectModel.getMultipleIds());
-    }
 
+    //Deletes either one selected project or all projects if user selected all.
     public void clickDelete(ActionEvent actionEvent) {
         if(!txtFieldDelete.getText().equals("DELETE")){
             labelWarning.setText("Please input DELETE in all caps");

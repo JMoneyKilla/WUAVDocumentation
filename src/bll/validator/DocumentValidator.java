@@ -2,6 +2,8 @@ package bll.validator;
 
 public class DocumentValidator {
 
+    //Makes sure paramerters for given document are not blank or null
+
     public boolean isTextDocValid(String name, String description){
         if(name.isBlank() || name.isEmpty())
             return false;

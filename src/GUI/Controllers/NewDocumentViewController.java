@@ -56,7 +56,6 @@ public class NewDocumentViewController implements Initializable {
         try{
             refNum = Integer.parseInt(textFieldRefNum.getText());
         } catch (NumberFormatException e){
-            System.out.println("ref num is not an int");
             return;
         }
         int documentType = switch ((String) choiceBoxDocumentType.getSelectionModel().getSelectedItem()) {
@@ -65,15 +64,20 @@ public class NewDocumentViewController implements Initializable {
             case "Text" -> 3;
             default -> 0;
         };
+
+        //Uses DocumentBuilder to build a new document
         String dateAdded = inputManager.getDateToday();
         documentBuilder.documentName(docName).description(docDescription).absolutePath(new File(docFilePath)).
                 projectId(projectId).userId(userId).documentType(documentType).dateAdded(dateAdded).refNumber(refNum);
+
+        //Picture/Diagram documents
         if((documentType == 1 || documentType == 2) && documentValidator.isDiagramOrPictureDocValid(docName, docDescription, docFilePath)){
                 documentModel.createDocument(documentBuilder.build(documentType));
                 projectModel.refreshProjectDocuments();
                 Stage stage = (Stage) buttonAddDocument.getScene().getWindow();
                 stage.close();
         }
+        //Text documents
         if(documentType == 3 && documentValidator.isTextDocValid(docName, docDescription)){
             documentModel.createDocument(documentBuilder.build(documentType));
             projectModel.refreshProjectDocuments();

@@ -35,6 +35,11 @@ public class ReminderViewController implements Initializable {
 
     private boolean isAllSelected = false;
 
+    /**
+     * Displays confirmation for user before deletion.
+     *
+     * @param actionEvent
+     */
     public void clickDelete(ActionEvent actionEvent) {
         if (isAllSelected) {
             List<Project> projects = tableViewProjects.getSelectionModel().getSelectedItems();

@@ -53,7 +53,8 @@ public class UserModel {
         try {
             techs.addAll((bll.getTechnicians()));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 
@@ -62,7 +63,8 @@ public class UserModel {
         try {
             missingTechs.addAll(bll.getMissingTechs(project_id));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 
@@ -71,7 +73,8 @@ public class UserModel {
         try {
             assignedTechs.addAll(bll.getTechsInProject(project_id));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showGenericAlert(e);
         }
     }
 

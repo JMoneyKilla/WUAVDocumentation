@@ -15,6 +15,14 @@ import java.util.List;
 
 public class DocumentDAO {
     DataBaseConnection dbc = DataBaseConnection.getInstance();
+
+    /**
+     * Retrieves all documents from Document table using given project id.
+     * @param id
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
     public List<IDocument> getAllProjectDocuments(int id) throws SQLException, IOException {
         List<IDocument> projectDocuments = new ArrayList<>();
         DocumentBuilder documentBuilder = new DocumentBuilder();
@@ -44,6 +52,7 @@ public class DocumentDAO {
         }
         return projectDocuments;
     }
+
     public boolean deleteDocument(IDocument document) throws SQLException{
         try (Connection con = dbc.getConnection()) {
             int id = document.getDocumentId();
@@ -56,6 +65,7 @@ public class DocumentDAO {
         }
         return false;
     }
+
     public void updateDocument(IDocument document) throws SQLException, IOException {
         int id = document.getDocumentId();
         String description = document.getDescription();
@@ -77,6 +87,7 @@ public class DocumentDAO {
             ps.execute();
         }
     }
+
     public void createDocument(IDocument document) throws SQLException, IOException {
         int projectId = document.getProjectId();
         int userId = document.getUserId();

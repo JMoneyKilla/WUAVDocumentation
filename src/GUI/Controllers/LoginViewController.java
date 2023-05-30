@@ -33,6 +33,7 @@ public class LoginViewController implements Initializable {
 
     UserModel userModel = UserModel.getInstance();
 
+    //Logs in user and switches view
     public void clickEnter(ActionEvent actionEvent) {
         String email = txtFieldUsername.getText().trim();
         String password = txtFieldPassword.getText();

@@ -83,7 +83,7 @@ public class MainViewController implements Initializable {
             });
 
             if (!projectModel.getOldProjects().isEmpty()) {
-                // Load the FXML file
+                // Load the FXML file for old project reminder
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ReminderView.fxml"));
                 Parent root = null;
                 try {
@@ -104,7 +104,7 @@ public class MainViewController implements Initializable {
             }
 
 
-            //listens for the user to click on a project so it can switch to the documents
+            //listens for the user to click on a project, so it can switch to the documents
             borderPane.getChildren().remove(sideBar);
             projectModel.isProjectSelectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue == true) {
@@ -130,46 +130,41 @@ public class MainViewController implements Initializable {
             }
         }
 
+        //Switches center to project view
             public void projectsSwitch() throws IOException {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/ProjectsView.fxml"));
                 projectsViewController = fxmlLoader.getController();
-                System.out.println("ProjectsView loaded");
                 borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
                 try {
                     borderPane.setCenter(fxmlLoader.load());
-                    System.out.println(borderPane.getCenter());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
+            //Switches center view to document view
             public void documentsSwitch() throws IOException {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DocumentsView.fxml"));
-                System.out.println("DocumentsView loaded");
                 borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
                 try {
                     borderPane.setCenter(fxmlLoader.load());
-                    System.out.println(borderPane.getCenter());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
+            //Switches center to device view
             public void devicesSwitch() throws IOException {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI/Views/DevicesView.fxml"));
-                System.out.println("DevicesView loaded");
                 borderPane.getChildren().remove(borderPane.getCenter()); //remove existing fxml from center.
                 try {
                     borderPane.setCenter(fxmlLoader.load());
-                    System.out.println(borderPane.getCenter());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
-
+            //Loads the new project view
             public void clickCreateNewProject(ActionEvent actionEvent){
                 Node n = (Node) actionEvent.getSource();
                 Window stage = n.getScene().getWindow();
@@ -188,10 +183,6 @@ public class MainViewController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-
-            public BorderPane getBorderPane() {
-                return borderPane;
             }
 
             public void clickBack (ActionEvent actionEvent){
@@ -226,10 +217,14 @@ public class MainViewController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
+
+            //Creates technical report for selected project
             public void clickGetReport(ActionEvent actionEvent){
                 pdfReportGenerator = new PDFReportGenerator(projectModel.getSelectedProject(), projectModel.getProjectDocuments());
                 pdfReportGenerator.generatePDFProfessionel();
             }
+
+            //Creates simple report for selected project
             public void clickGetReportSimple(ActionEvent actionEvent) {
                 pdfReportGenerator = new PDFReportGenerator(projectModel.getSelectedProject(), projectModel.getProjectDocuments());
                 pdfReportGenerator.generatePDFSimple();

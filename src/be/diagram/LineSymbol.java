@@ -12,6 +12,9 @@ public class LineSymbol extends Line {
     private double initialMouseX;
     private double initialMouseY;
 
+    //Custom Line class with on actions to change start, end, and absolute position of line
+
+
     public LineSymbol(double startX, double startY, double endX, double endY) {
         super(startX, startY, endX, endY);
         this.startX = startX;

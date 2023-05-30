@@ -135,7 +135,7 @@ public class ProjectDAO {
                 statement.setInt(1, project_id);
                 statement.addBatch();
             }
-            int[] rowsAffected = statement.executeBatch();
+            statement.executeBatch();
         }
     }
 

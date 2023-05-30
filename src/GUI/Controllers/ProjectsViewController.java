@@ -42,9 +42,6 @@ public class ProjectsViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(projectModel.getProjects());
-
-
         if (userModel.getLoggedInUser().getType() == UserType.TECHNICIAN) {
             try {
                 loadUserProjectData();
@@ -115,7 +112,11 @@ public class ProjectsViewController implements Initializable {
         }
 
 
-
+    /**
+     * Works the same as loadData() except it only gets projects that logged in user
+     * is assigned to.
+     * @throws IOException
+     */
     public void loadUserProjectData() throws IOException {
         if (currentListener != null)
             ProjectModel.getInstance().getUserProjects(userModel.getLoggedInUser().getId()).removeListener(currentListener);
@@ -173,9 +174,9 @@ public class ProjectsViewController implements Initializable {
 
     public void toggleView (ActionEvent actionEvent){
         toggleView.set(!toggleView.get());
-        System.out.println(isListViewTrue);
     }
 
+    //Switches the project view to display projects in list form.
     private void changeViewList () {
         ObservableList observableList;
         if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN)
@@ -211,6 +212,7 @@ public class ProjectsViewController implements Initializable {
             });
     }
 
+    //Changes project view to display projects using StackPanes
         private void changeViewGrid() throws IOException {
         if(userModel.getLoggedInUser().getType() == UserType.TECHNICIAN){
             paneProject.getChildren().clear();

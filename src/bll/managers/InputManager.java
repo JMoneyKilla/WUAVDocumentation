@@ -37,6 +37,9 @@ public class InputManager {
 
     }
 
+    /*
+    Gets all projects older than 48 months
+     */
     public List getOldProjects() throws SQLException {
         List<Project> getAllProjects = projectDAO.getAllProjects();
         List<Project> oldProjects = new ArrayList<>();
@@ -49,7 +52,7 @@ public class InputManager {
         return oldProjects;
     }
 
-        // Filter input
+    // Search Filter inputs
 
     public List<Project> searchProjectName(String str, User user) throws SQLException {
         List<Project> getAllProjects;

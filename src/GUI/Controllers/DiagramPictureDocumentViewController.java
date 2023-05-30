@@ -28,6 +28,10 @@ public class DiagramPictureDocumentViewController{
         this.document = document;
     }
 
+    /**
+     * Fills out document information
+     * @param document
+     */
     public void setDocumentLabels(IDocument document) {
         imgViewDoc.setImage(new Image(document.getImageFile().getAbsolutePath()));
 

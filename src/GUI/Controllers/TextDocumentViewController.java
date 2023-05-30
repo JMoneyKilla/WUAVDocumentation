@@ -29,6 +29,10 @@ public class TextDocumentViewController {
         this.device = device;
     }
 
+    /**
+     * Sets information of document to be displayed
+     * @param document
+     */
     public void setDocumentLabels(IDocument document) {
         lblDocName.setText(document.getDocumentName());
         lblCreatedBy.setText("Created By: " + UserModel.getInstance().getUserName(document.getUserId()));
@@ -40,6 +44,11 @@ public class TextDocumentViewController {
         textAreaDescription.setText(document.getDescription());
         textAreaDescription.setEditable(false);
     }
+
+    /**
+     * Sets information of device to be displayed
+     * @param device
+     */
     public void setDeviceLabels(Device device){
         lblDocName.setText(device.getDeviceName());
         lblCreatedBy.setText("Created By: " + UserModel.getInstance().getUserName(device.getUserId()));

@@ -1,6 +1,8 @@
 package GUI.Controllers;
 
 import be.diagram.LineSymbol;
+import be.handlers.AlertBoxStrategy;
+import be.handlers.IOAlertStrategy;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -70,6 +72,11 @@ public class DiagramProgramViewController implements Initializable {
             isDrawing = false;
         }
     }
+
+    /**
+     * Makes Nodes click and draggable when creating diagram
+     * @param node
+     */
     public void makeDraggable(Node node){
         // a = b - c
         // a + c = b
@@ -92,6 +99,10 @@ public class DiagramProgramViewController implements Initializable {
 
         });
     }
+
+    /**
+     * Captures the main pane where diagram is drawn and saves it as a png image
+     */
     private void takeAndSaveScreenshot() {
         // Capture the screenshot of the Pane
         WritableImage image = mainPane.snapshot(new SnapshotParameters(), null);
@@ -108,9 +119,9 @@ public class DiagramProgramViewController implements Initializable {
         try {
             // Write the image to the file
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            System.out.println("Screenshot saved successfully.");
         } catch (IOException e) {
-            System.out.println("Error saving screenshot: " + e.getMessage());
+            AlertBoxStrategy alertBoxStrategy = new IOAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Error saving diagram screenshot. Please restart program and try again.");
         }
     }
     @Override

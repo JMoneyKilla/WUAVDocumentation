@@ -27,6 +27,10 @@ public class PDFReportGenerator {
         this.project = project;
         this.documentList = documentList;
     }
+
+    /*
+    Generates PDF Report with all Document Types
+     */
     public void generatePDFProfessionel(){
         try {
             // Create a new PDF document
@@ -77,6 +81,10 @@ public class PDFReportGenerator {
             e.printStackTrace();
         }
     }
+
+    /*
+    Generates PDF report without diagram documents
+     */
     public void generatePDFSimple(){
         try {
             // Create a new PDF document
@@ -135,6 +143,9 @@ public class PDFReportGenerator {
         }
     }
 
+    /*
+    Places text document onto given PDF document
+     */
     public void pdfTextDocGen(PDPageContentStream contentStream, IDocument d) throws IOException {
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 15);
         contentStream.beginText();
@@ -149,6 +160,9 @@ public class PDFReportGenerator {
         contentStream.endText();
     }
 
+    /*
+    Places picture or diagram document on the given PDF document
+     */
     public void pdfPicDiaGen(PDPageContentStream contentStream, IDocument d, PDDocument document) throws IOException {
         PDImageXObject pdfImage = PDImageXObject.createFromFile(d.getImageFile().getPath(), document);
         contentStream.drawImage(pdfImage, 50, pageHeight-currentHeight-pageWidth/3, pageWidth/3, pageWidth/3);
@@ -165,6 +179,9 @@ public class PDFReportGenerator {
         contentStream.endText();
     }
 
+    /*
+    Generates first page of PDF report with company logo, project info, and contact info
+     */
     public void initPDFReport(PDPageContentStream contentStream, Project project, PDPage page, PDDocument document) throws IOException {
         String logoImagePath = "resource/icons/logo.png";
         String absoluteImagePath = getClass().getClassLoader().getResource(logoImagePath).getPath();

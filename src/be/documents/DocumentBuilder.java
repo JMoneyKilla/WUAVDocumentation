@@ -13,6 +13,8 @@ public class DocumentBuilder {
     private String documentName;
     private String dateAdded;
 
+    //Builder class used to build all types of documents
+
     public DocumentBuilder projectId(int projectId){
         this.projectId = projectId;
         return this;

@@ -2,6 +2,9 @@ package bll.validator;
 
 public class ProjectValidator {
 
+    /*
+    Checks if all given information of project is valid
+     */
     public boolean isProjectValid(String name, String customerName, String companyAddress, String zipcode, String phoneNumber, String email){
         if(name.isBlank() || name.isEmpty())
             return false;
@@ -27,7 +30,7 @@ public class ProjectValidator {
             } return false;
     }
 
-    public boolean isNumberValid(String number){
+    public boolean isPhoneNumberValid(String number){
         if(number!=null){
         if(number.matches("[0-9]+") && (number.length() == 8 || number.length() == 10))
             return true;

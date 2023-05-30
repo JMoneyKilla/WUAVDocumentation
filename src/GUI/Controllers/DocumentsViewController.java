@@ -63,6 +63,10 @@ public class DocumentsViewController implements Initializable {
         popupStage.showAndWait();
     }
 
+    /**
+     *  Adds listener to project documents. Iterates through project device list to generate
+     *  stack panes to display different documents
+     */
     public void populateDocumentView(){
         if (currentListener != null)
             ProjectModel.getInstance().getProjectDocuments().removeListener(currentListener);

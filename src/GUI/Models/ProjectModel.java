@@ -36,8 +36,6 @@ public class ProjectModel {
     AlertBoxStrategy alertBoxStrategy;
 
     private BooleanProperty isProjectSelected = new SimpleBooleanProperty(false);
-    private BooleanProperty addedDocument = new SimpleBooleanProperty(false);
-    private BooleanProperty addedDevice = new SimpleBooleanProperty(false);
 
     ProjectValidator validator = new ProjectValidator();
     InputManager inputManager = new InputManager();
@@ -70,15 +68,6 @@ public class ProjectModel {
             alertBoxStrategy = new SQLAlertStrategy();
             alertBoxStrategy.showCustomAlert("Could not retrieve project devices from the database." +
                     "please check your internet connection is stable or contact your system administrator.");
-        }
-    }
-
-    public void refreshUserProjects(){
-        projects.clear();
-        try {
-            projects.addAll(facadeManager.getUserProjects(userModel.getLoggedInUser().getId()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -169,7 +158,9 @@ public class ProjectModel {
         try {
             facadeManager.createProject(project);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            alertBoxStrategy = new SQLAlertStrategy();
+            alertBoxStrategy.showCustomAlert("Unable to create new project," +
+                    " Check your internet connection is stable and contact system administrator");
         }
     }
 
@@ -244,7 +235,7 @@ public class ProjectModel {
     }
 
     public boolean isNumberValid(String number){
-        return validator.isNumberValid(number);
+        return validator.isPhoneNumberValid(number);
     }
 
     public boolean isZipCodeValid(String number){
@@ -363,22 +354,5 @@ public class ProjectModel {
             alertBoxStrategy.showCustomAlert("An error occured while trying to delete document from the project. " +
                     "Check that your internet connection is stable and contact your system administrator");
         }
-    }
-
-    public BooleanProperty addedDocumentProperty() {
-        return addedDocument;
-    }
-
-    public void setAddedDocument(boolean addedDocument) {
-        this.addedDocument.set(addedDocument);
-    }
-
-
-    public BooleanProperty addedDeviceProperty() {
-        return addedDevice;
-    }
-
-    public void setAddedDevice(boolean addedDevice) {
-        this.addedDevice.set(addedDevice);
     }
 }

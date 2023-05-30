@@ -51,6 +51,11 @@ public class DevicesViewController implements Initializable {
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.showAndWait();
     }
+
+    /**
+     * Adds listener to project devices. Iterates through project device list to generate
+     * stack panes to display different devices
+     */
     public void populateDeviceView(){
         if (currentListener != null)
             ProjectModel.getInstance().getProjectDevices().removeListener(currentListener);
@@ -68,6 +73,12 @@ public class DevicesViewController implements Initializable {
         };
         ProjectModel.getInstance().getProjectDevices().addListener(currentListener);
     }
+
+    /**
+     * Creates stack pane from given device to display device for user
+     * @param device
+     * @return StackPane
+     */
     public StackPane generateDevicePane(Device device){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/TextDocumentView.fxml"));
         StackPane sp = null;

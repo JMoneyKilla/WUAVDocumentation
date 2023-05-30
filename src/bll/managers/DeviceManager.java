@@ -18,7 +18,4 @@ public class DeviceManager {
     public boolean deleteDevice(Device device) throws SQLException{
         return deviceDAO.deleteDevice(device);
     }
-    public void updateDevice(Device device) throws SQLException{
-        deviceDAO.updateDevice(device);
-    }
 }

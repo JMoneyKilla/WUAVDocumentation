@@ -21,6 +21,12 @@ public class UserManager {
         return userDAO.getAllTechnicians();
     }
 
+    /**
+     * Gets all technicians that are not already assigned to given project
+     * @param project_id
+     * @return List of missing Users
+     * @throws SQLException
+     */
     public List<User> getMissingTechs(int project_id) throws SQLException {
         List<User> getAllTechs = userDAO.getAllTechnicians();
         List<User> userProjects = userDAO.getUserByProject(project_id);
@@ -29,6 +35,12 @@ public class UserManager {
         return missingTechs;
     }
 
+    /**
+     * Gets all technicians assigned to given project
+     * @param project_id
+     * @return list of users on project
+     * @throws SQLException
+     */
     public List<User> getTechByProject(int project_id) throws SQLException {
         List<User> userProjects = userDAO.getUserByProject(project_id);
         List<User> techsInProject = new ArrayList<>();
@@ -40,37 +52,11 @@ public class UserManager {
         return techsInProject;
     }
 
-    public String getEmail(User user) throws SQLException{
-        return userDAO.getEmail(user);
-    }
-
-    public String getPassword(User user) throws SQLException{
-        return userDAO.getPassWord(user);
-    }
-
-    public void createUser(User user) throws SQLException{
-        userDAO.createUser(user);
-    }
-
-    public void deleteUser(User user) throws SQLException{
-        userDAO.deleteUser(user);
-    }
-
-    public void deleteUserLogin(User user) throws SQLException {
-        userDAO.deleteUserLogin(user);
-    }
 
     public void deleteUserFromProject(User user, Project project) throws SQLException {
         userDAO.deleteUserFromProject(user, project);
     }
 
-    public void updateUser(User user) throws SQLException{
-        userDAO.updateUser(user);
-    }
-
-    public void updateUserLogin(User user, String email, String password) throws SQLException {
-        userDAO.updateUserLogin(user, email, password);
-    }
 
     public boolean validateLogin(String email, String password) throws SQLException{
         return userDAO.validateLogin(email, password);
@@ -80,14 +66,32 @@ public class UserManager {
         return userDAO.getUserIdFromEmail(email);
     }
 
+    /**
+     * Gets User from database using Login table. Used to set logged in user.
+     * @param id
+     * @return User
+     * @throws SQLException
+     */
     public User getUserFromLoginById(int id) throws SQLException {
         return userDAO.getUserInLoginById(id);
     }
 
+    /**
+     * Adds user to most recently created project. Used because freshly created projects do not immediately
+     * have an ID while program is running.
+     * @param user
+     * @throws SQLException
+     */
     public void addUserToProject(User user) throws SQLException {
         userDAO.addUserToProject(user);
     }
 
+    /**
+     * Adds user to an already existing/old project.
+     * @param user
+     * @param project
+     * @throws SQLException
+     */
     public void addUserToSpecificProject(User user, Project project) throws SQLException {
         userDAO.addUserToSpecificProject(user, project);
     }
