@@ -81,8 +81,7 @@ public class MainViewController implements Initializable {
                     }
                 }
             });
-
-            if (!projectModel.getOldProjects().isEmpty()) {
+            if (!projectModel.getOldProjects().isEmpty() && userModel.getLoggedInUser().getType() == UserType.PROJECT_MANAGER) {
                 // Load the FXML file for old project reminder
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Views/ReminderView.fxml"));
                 Parent root = null;
